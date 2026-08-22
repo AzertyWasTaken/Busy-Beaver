@@ -1,0 +1,6 @@
+Clean up this code to make it clearer, simpler, and more maintainable.
+Preserve all existing behavior and functionality.
+Remove unnecessary complexity, duplication, dead code, and poor naming.
+Follow modern JavaScript best practices.
+Do not make unrelated changes.
+Do not add comments.
