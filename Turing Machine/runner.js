@@ -1,21 +1,39 @@
 "use strict";
-export function run(ruleset, maxSteps = 100) {
+export function newMachine(code, maxSteps) {
     let state = 0;
     let tape = [];
     let pointer = 0;
     let steps = 0;
 
-    while (true) {
+    function step() {
+        // Increment steps count
         steps++;
-        if (steps > maxSteps) return -1;
+        if (steps > maxSteps) return "timed out";
 
+        // Get current instruction
         const symbol = tape[pointer] ?? 0;
-        const instruction = ruleset?.[state]?.[symbol];
-        if (!instruction || instruction.length < 3)
-            return steps;
+        const instruction = code?.[state]?.[symbol];
+        if (!instruction || instruction.length < 3) return "halted";
 
+        // Update the Turing machine
         tape[pointer] = instruction[0];
         pointer += instruction[1];
         state = instruction[2];
+
+        return "running";
     }
+
+    function run() {
+        while (true) {
+            const status = step();
+            if (status === "halted") return steps;
+            if (status === "timed out") return -1;
+        }
+    }
+
+    function getData() {
+        return {state, symbol: tape[pointer] ?? 0};
+    }
+
+    return {step, run, getData};
 }

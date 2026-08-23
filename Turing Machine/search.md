@@ -14,6 +14,17 @@ The initial transition must be `1RB`.
 
 - For any TM starting with `A0 → 1RA`, the head gets stuck on state `A`, at the end of the tape. Hence it is nonhalting.
 
+### Tree Normal Form
+
+Enumerate all TMs by recursively expanding a "family tree" of machines:
+
+- Start with a completely undefined TM of the desired size, this is the root node.
+- For each unexplored node, run that TM on a blank tape until it reaches an undefined transition or times out.
+- If you reach an undefined transition, then create children nodes from this node for each allowed transitions.
+- Repeat this on every leaf node until all transitions but one are defined.
+
+It prevents enumerating TMs with unused transitions.
+
 ## Deciders
 
 A **decider** proves a program **does not halt**.
@@ -25,3 +36,7 @@ Not implemented yet.
 Rules used to **speed up** halting (or not) programs execution.
 
 Not implemented yet.
+
+## See Also
+
+- [Tree Normal Form](https://wiki.bbchallenge.org/wiki/Tree_Normal_Form)

@@ -9,26 +9,33 @@
 - Enumerate BB(2)
 - Enumerate BB(3)
 - Enumerate BB(2,3)
-- Create README
+- Create `README.md`
 - Create spec
 - Create results
 - Champions analysis
 - Enumeration tricks list
+- Refractor `runner.js`
+- Define BB-index
+- TNF enumeration
+- Explain TNF enumeration
 
 ## Enumeration
 
-- [ ] Class object for runner
-- [ ] TNF enumeration
+- [ ] Post tag
+- [ ] Optimize TNF enumeration (save and clone tm & return steps count)
+- [ ] Maximum state and symbol
+- [ ] Run from starting holdouts list
+- [ ] Cycler decider
+- [ ] Translated cycler decider
 
 ## Documentation
 
-- [ ] Publish on GitHub
-- [ ] BB-index
-
 ## Ideas
 
-- Post tag
-- CounterScript
 - Pebble automaton
+- Cellular automaton
+- Counter machine
 - Brainfuck
+- CounterScript
 - Debruijn
+- Website to run programs

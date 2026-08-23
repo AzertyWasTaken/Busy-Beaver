@@ -1,7 +1,5 @@
 # README
 
-<!-- BB-index: 10 -->
-
 ## Champions
 
 | Domain | Runtime | Champion |
@@ -29,19 +27,26 @@
 
 | Domain | Holdouts |
 | - | - |
-| BB(2) | 86 |
-| BB(3) | 56,871 |
-| BB(2,3) | 64,050 |
+| BB(2) | 26 |
+| BB(3) | 2,678 |
+| BB(4) | 872,452 |
+| BB(2,3) | 1,967 |
+| BB(2,4) | 462,836 |
 
 ## BB(2)
 
-Has cyclers and translated cyclers.
+### Cycler — `1RB1RB_0LA---`
+
+- Cycles every 2 steps.
+
+### Translated Cycler — `1RB---_0LB0RA`
+
+- Moves a cell further every 3 steps.
 
 ### Champion — `1RB1LB_1LA1RZ`
 
 - Runs for 6 steps before halting.
 - Transitions `B0` and `A0` are used twice.
-- Not enough steps to be analyzed.
 
 ## BB(3)
 
