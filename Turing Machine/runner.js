@@ -1,9 +1,23 @@
 "use strict";
 export function newMachine(code, maxSteps) {
+    let rTape = [];
+    let lTape = [];
+
     let state = 0;
-    let tape = [];
-    let pointer = 0;
+    let head = 0;
     let steps = 0;
+
+    function readCell() {
+        return (head < 0 ? lTape[-head - 1] : rTape[head]) ?? 0;
+    }
+
+    function setCell(symbol) {
+        if (head < 0) {
+            lTape[-head - 1] = symbol;
+        } else {
+            rTape[head] = symbol;
+        }
+    }
 
     function step() {
         // Increment steps count
@@ -11,13 +25,13 @@ export function newMachine(code, maxSteps) {
         if (steps > maxSteps) return "timed out";
 
         // Get current instruction
-        const symbol = tape[pointer] ?? 0;
+        const symbol = readCell();
         const instruction = code?.[state]?.[symbol];
         if (!instruction || instruction.length < 3) return "halted";
 
         // Update the Turing machine
-        tape[pointer] = instruction[0];
-        pointer += instruction[1];
+        setCell(instruction[0]);
+        head += instruction[1];
         state = instruction[2];
 
         return "running";
@@ -32,8 +46,8 @@ export function newMachine(code, maxSteps) {
     }
 
     function getData() {
-        return {state, symbol: tape[pointer] ?? 0};
+        return {rTape, lTape, state, head, steps};
     }
 
-    return {step, run, getData};
+    return {readCell, step, run, getData};
 }
