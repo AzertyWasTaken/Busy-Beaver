@@ -2,35 +2,13 @@
 
 ## Update log
 
-- Create parser
-- Create enumerator
-- Create runner
-- Create file writer
-- Enumerate BB(2)
-- Enumerate BB(3)
-- Enumerate BB(2,3)
+- Turing machine
 - Create `README.md`
-- Create spec
-- Create results
-- Champions analysis
-- Enumeration tricks list
-- Refractor `runner.js`
 - Define BB-index
-- TNF enumeration
-- Explain TNF enumeration
+- Post tag
+- Home page website
 
-## Enumeration
-
-- [ ] Post tag
-- [ ] Optimize TNF enumeration (save and clone tm & return steps count)
-- [ ] Maximum state and symbol
-- [ ] Run from starting holdouts list
-- [ ] Cycler decider
-- [ ] Translated cycler decider
-
-## Documentation
-
-## Ideas
+## Project
 
 - Pebble automaton
 - Cellular automaton
@@ -38,4 +16,3 @@
 - Brainfuck
 - CounterScript
 - Debruijn
-- Website to run programs
