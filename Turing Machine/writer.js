@@ -7,9 +7,9 @@ import {newMachine} from "./runner.js";
 import {unparse} from "./parser.js";
 
 const STATES = 2;
-const SYMBOLS = 2;
-const MAX_STEPS = 100;
-const MAX_MACHINES = 1_000_000;
+const SYMBOLS = 4;
+const MAX_STEPS = 1_000;
+const MAX_MACHINES = 500_000;
 
 const scriptPath = path.dirname(url.fileURLToPath(import.meta.url));
 const filename = SYMBOLS > 2
@@ -48,7 +48,10 @@ async function newHoldoutsList() {
         // Check if the machine timed out
         if (steps < 0) {
             machines.push(unparse(code));
-            if (machines.length >= MAX_MACHINES) break;
+            if (machines.length >= MAX_MACHINES) {
+                console.log("Maximum machines count reached!");
+                break;
+            }
             continue;
         }
 
