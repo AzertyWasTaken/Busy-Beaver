@@ -9,10 +9,12 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 
 ## Goals
 
-- Enumerate all programs up to a given length
-- Decide holdouts (prove they are halting or nonhalting)
-- Find new champions (longest-halting programs)
-- Find cryptids (mathematically hard to decide)
+- **Explore** various computational systems.
+- **Enumerate** all programs up to a given length.
+- **Decide holdouts** (prove they are halting or nonhalting).
+- **Find new champions** (longest-halting programs).
+- **Find cryptids** (mathematically hard to decide).
+- **Document** results and findings.
 
 ## How to run?
 
@@ -20,7 +22,14 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 - Configure `STATES`, `SYMBOLS` and `MAX_STEPS`
 - Run the script
 
-## BB-index
+## Stats
+
+| System | BB-index | Active Code Size |
+| - | - | - |
+| Turing Machine | 35 | 120 |
+| Post Tag System | 12 | 60 |
+
+### BB-index
 
 BB-index is an estimation of how advanced research is for a computational model.
 A machine is studied if it is decided or analyzed.
@@ -33,6 +42,7 @@ BBCS is used as a reference to rate programs complexity.
 For example, a simple bouncer is about 9 since it is the length of smallest possible bouncers in CounterScript.
 Fibonacci function is applied for better scaling, so 9 becomes F(9) = 34.
 
-| System | BB-index |
-| - | - |
-| Turing Machine | 30 |
+### Active Code Size
+
+Active Code Size is a metric to determine how many code is used for research.
+It is an approximation of the total lines count of scripts used for enumeration or simulation, excluding writer and website scripts.
