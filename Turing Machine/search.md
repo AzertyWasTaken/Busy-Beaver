@@ -8,7 +8,7 @@ Rules that identify **structurally different programs** that behave the same.
 
 The initial transition must be `1RB`.
 
-- For any TM starting with `A0 → 0RB`, the TM that starts in state `B` instead will run for exactly one step less. By iterating this process at most *n − 1* times, any *n*-state `A0 → 0RB` machine can be transformed into a corresponding `A0 → 1RB` machine with at most *n − 1* shorter runtime.
+- For any TM starting with `A0 → 0RB`, the TM that starts in state `B` instead will run for exactly one step less. By iterating this process at most $n−1$ times, any $n$-state `A0 → 0RB` machine can be transformed into a corresponding `A0 → 1RB` machine with at most $n−1$ shorter runtime.
 
 - Any TM starting with `A0 → 1LB` is symmetrical to the TM that starts with `A0 → 1RB` instead.
 
@@ -24,6 +24,10 @@ Enumerate all TMs by recursively expanding a "family tree" of machines:
 - Repeat this on every leaf node until all transitions but one are defined.
 
 It prevents enumerating TMs with unused transitions.
+
+### Maximum State and Symbol
+
+The TM must not "skip" a state or a symbol during execution.
 
 ## Deciders
 
