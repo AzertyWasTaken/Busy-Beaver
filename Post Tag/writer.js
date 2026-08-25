@@ -4,37 +4,41 @@ import path from "path";
 import url from "url";
 import {enumerate} from "./enumerator.js";
 import {newTag} from "./runner.js";
-import {unparse} from "./parser.js";
-
-const SIZE = 7;
-const MAX_STEPS = 1_000;
-const MAX_TAGS = 100_000;
+import {unparse, parse} from "./parser.js";
+import {decideCycler} from "./cyclerDecider.js";
 
 const scriptPath = path.dirname(url.fileURLToPath(import.meta.url));
-const filename = `BBPT(${SIZE}).txt`;
-const filePath = path.resolve(path.join(scriptPath, filename));
 
-async function resetFile() {
+function getPath(size, dir = "") {
+    const filePath = `BBPT(${size}).txt`;
+    return path.resolve(path.join(scriptPath, dir + filePath));
+}
+
+async function createFile(filePath, content) {
     try {
-        await fs.writeFile(filePath, "", 'utf8');
-        console.log(`Successfully created: ${filename}`);
+        await fs.writeFile(filePath, content, 'utf8');
+        console.log(`Successfully created: ${filePath}`);
     } catch (error) {
-        console.error('Failed to write file:', error.message);
+        console.error('Failed to create file:', error.message);
     }
 }
 
-async function appendFile(content) {
+async function readFile(filePath) {
     try {
-        await fs.appendFile(filePath, content, 'utf8');
-        console.log(`Successfully appended: ${filename}`);
+        const content = await fs.readFile(filePath, 'utf8');
+        console.log(`Successfully read: ${filePath}`);
+        return content;
     } catch (error) {
-        console.error('Failed to append file:', error.message);
+        console.error('Failed to read file:', error.message);
     }
 }
 
-async function newHoldoutsList() {
-    await resetFile();
-    let tags = [];
+async function enumValue() {
+    const SIZE = 3;
+    const MAX_STEPS = 1_000;
+    const MAX_PROGRAMS = 100_000;
+
+    const programs = [];
     let record = 0;
 
     for (const code of enumerate(SIZE)) {
@@ -44,9 +48,9 @@ async function newHoldoutsList() {
 
         // Check if the tag system timed out
         if (steps < 0) {
-            tags.push(unparse(code));
-            if (tags.length >= MAX_TAGS) {
-                console.log("Maximum tags count reached!");
+            programs.push(unparse(code));
+            if (programs.length >= MAX_PROGRAMS) {
+                console.log("Maximum programs count reached!");
                 break;
             }
             continue;
@@ -59,7 +63,34 @@ async function newHoldoutsList() {
         }
     }
 
-    await appendFile(tags.join("\n"));
+    const newFilePath = getPath(SIZE);
+    await createFile(newFilePath, programs.join("\n"));
 }
 
-await newHoldoutsList();
+async function siftValue() {
+    const SIZE = 4;
+
+    const filePath = getPath(SIZE, "Holdouts/");
+    const content = await readFile(filePath);
+    const holdouts = content.replaceAll("\r", "").split("\n");
+
+    const programs = [];
+    let counter = 0;
+
+    for (const code of holdouts) {
+        if (!decideCycler(parse(code))) {
+            programs.push(code);
+        } else {
+            console.log("Decided:", code);
+            counter++;
+        }
+    }
+
+    console.log(`Total decided: ${counter}`);
+    const newFilePath = getPath(SIZE);
+    await createFile(newFilePath, programs.join("\n"));
+}
+
+await enumValue();
+
+// await siftValue();

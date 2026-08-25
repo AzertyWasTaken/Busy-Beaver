@@ -15,7 +15,7 @@ export function enumerate(maxSize) {
             symbolCode.pop();
         }
 
-        if (code.length + 1 <= recSymbol) {
+        if (code.length + 1 <= recSymbol && symbolCode.length > 0) {
             code.push(symbolCode);
             yield* nextRule(currSize, code, [], recSymbol);
             code.pop();

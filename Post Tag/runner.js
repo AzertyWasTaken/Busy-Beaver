@@ -28,5 +28,9 @@ export function newTag(code, maxSteps) {
         }
     }
 
-    return {step, run};
+    function getData() {
+        return {string, steps};
+    }
+
+    return {step, run, getData};
 }
