@@ -26,8 +26,8 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 
 | System | BB-index | Active Code Size |
 | - | - | - |
-| Turing Machine | 35 | 120 |
-| Post Tag System | 12 | 60 |
+| Turing Machine | 50 | 190 |
+| Post Tag System | 80 | 90 |
 
 ### BB-index
 
@@ -46,3 +46,8 @@ Fibonacci function is applied for better scaling, so 9 becomes F(9) = 34.
 
 Active Code Size is a metric to determine how many code is used for research.
 It is an approximation of the total lines count of scripts used for enumeration or simulation, excluding writer and website scripts.
+
+## Size Metrics Conventions
+
+- Do not count unecessary stuff. If anything can be ignored without created infinitely many nonequivalent programs, do not count it.
+- The ratio between size and the actual length of the program must remain finite.

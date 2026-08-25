@@ -1,5 +1,7 @@
 # TODO
 
+- [Github Repository](https://github.com/AzertyWasTaken/Busy-Beaver)
+
 ## Update log
 
 - Turing machine
@@ -11,8 +13,13 @@
 ## Project
 
 - Pebble automaton
-- Cellular automaton
 - Counter machine
 - Brainfuck
 - CounterScript
 - Debruijn
+
+## Global
+
+- Complete README conventions
+- Fix canvas not displaying last halting step
+- Create global module for writer scripts
