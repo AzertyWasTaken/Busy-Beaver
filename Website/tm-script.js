@@ -26,7 +26,7 @@ function explore() {
         const colorTape = [0]
         .concat(data.lTape.toReversed())
         .concat(data.rTape)
-        .map((symbol) => SYMBOL_COLORS[symbol]);
+        .map((symbol) => SYMBOL_COLORS[symbol - 1]);
 
         colorTape[data.head - offsetX + 1] = STATE_COLORS[data.state];
 

@@ -15,7 +15,6 @@ export const STATE_COLORS = [
 ];
 
 export const SYMBOL_COLORS = [
-    "#000000",
     "#FFFFFF",
     "#808080",
     "#C0C0C0",

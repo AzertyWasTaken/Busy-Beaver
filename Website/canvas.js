@@ -25,7 +25,7 @@ export function createCanvas(canvas) {
         const half = cells / 2;
 
         for (let x = 0; x < rowArray.length; x++) {
-            ctx.fillStyle = rowArray[x];
+            ctx.fillStyle = rowArray[x] ?? "#000000";
             drawPixel(x + half + offsetX, rows);
         }
 
