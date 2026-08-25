@@ -27,11 +27,11 @@
 
 | Domain | Holdouts |
 | - | - |
-| BB(2) | 26 |
-| BB(3) | 2,678 |
-| BB(4) | 436,278 |
-| BB(2,3) | 1,967 |
-| BB(2,4) | 231,419 |
+| BB(2) | 15 |
+| BB(3) | 1,837 |
+| BB(4) | 323,858 |
+| BB(2,3) | 1,550 |
+| BB(2,4) | 192,101 |
 
 ## BB(2)
 
@@ -39,9 +39,10 @@
 
 - Cycles every 2 steps.
 
-### Translated Cycler — `1RB---_0LB0RA`
+### Translated Cycler — `1RB0LA_0LA---`
 
-- Moves a cell further every 3 steps.
+- Cycles 1 cell rightward then 2 cells leftward.
+- The total period is 3 steps and 1 cell leftward.
 
 ### Champion — `1RB1LB_1LA---`
 
@@ -53,23 +54,46 @@
 ### Champion — `1RB---_1LB0RC_1LC1LA`
 
 - Runs for 21 steps before halting.
-- Has a chaotic behavior.
+
+```txt
+// Trajectory
+start → F(0) → F(1) → F(3) → halt
+
+// Definition
+F(n) := _<A 1^n_
+```
 
 ## BB(4)
 
 ### Champion — `1RB1LB_1LA0LC_---1LD_1RD0RA`
 
 - Runs for 107 steps before halting.
-- Computes the function:
-  $$F(0) → F(3) → F(5) → F(4) → F(2) → halt$$
-  Where F(n) = `0* 1^n 01 B> 0`
+- Follows a permutation-like trajectory.
+
+```txt
+// Trajectory
+start → F(0) → F(3) → F(5) → F(4) → F(2) → halt
+
+// Definition
+F(n) := _1^n 01 B>_
+```
 
 ## BB(2,3)
 
 ### Champion — `1RB2LB---_2LA2RB1LB`
 
 - Runs for 38 steps before halting.
-- Bounces back and forth until the string ends with a one.
+- Bounces back and forth until there is no twos at right end of the string.
+
+```txt
+// Function
+start → F(2)
+F(n+1) → F(n)
+F(0) → halt
+
+// Definition
+F(n) := _<B 1^k 2^n_
+```
 
 ## See Also
 

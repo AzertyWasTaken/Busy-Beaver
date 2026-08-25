@@ -14,18 +14,20 @@
 - Maximum state and symbol
 - Create BB(4) analysis
 - Create simulator website
+- Run from starting holdouts list
+- Spin out decider
+- Cycler decider
 
 ## Enumeration
 
-- [ ] Run from starting holdouts list
-- [ ] Spin out decider
-- [ ] Cycler decider
+- [ ] Cyclic state spin out decider
+- [ ] Closed transitions graph decider
 - [ ] Translated cycler decider
 - [ ] Optimize TNF enumeration (save and clone tm & return steps count)
 
 ## Documentation
 
-- [ ] Document maximum state and symbol enumeration
+- [ ] Cycler decider
 
 ## Website
 

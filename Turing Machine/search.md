@@ -33,7 +33,10 @@ The TM must not "skip" a state or a symbol during execution.
 
 A **decider** proves a program **does not halt**.
 
-Not implemented yet.
+### Spin Out
+
+- When a TM visits a tape cell that was never visited before, it always read a zero.
+- If the next instruction make the TM move in the same direction while staying in the same state, decide as **nonhalting**.
 
 ## Accelerated Simulation
 

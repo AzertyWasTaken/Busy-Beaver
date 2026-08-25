@@ -1,7 +1,7 @@
 "use strict";
 export function newMachine(code, maxSteps) {
-    let rTape = [];
     let lTape = [];
+    let rTape = [];
 
     let state = 0;
     let head = 0;
@@ -46,7 +46,7 @@ export function newMachine(code, maxSteps) {
     }
 
     function getData() {
-        return {rTape, lTape, state, head, steps};
+        return {lTape, rTape, state, head, steps};
     }
 
     return {readCell, step, run, getData};
