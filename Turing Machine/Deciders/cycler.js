@@ -1,5 +1,5 @@
 "use strict";
-import {newMachine} from "./runner.js";
+import {newMachine} from "../runner.js";
 
 const MAX_PERIOD = 10;
 const MAX_STEPS = 1_000;
@@ -13,7 +13,7 @@ function compare(a, b) {
     return true;
 }
 
-export function decideCycler(code) {
+export function isCycler(code) {
     const machine = newMachine(code, MAX_STEPS);
     let history = [];
 

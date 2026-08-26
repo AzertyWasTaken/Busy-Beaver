@@ -1,12 +1,15 @@
 "use strict";
-import fs from "node:fs/promises";
 import path from "path";
 import url from "url";
 import {enumerate} from "./treeNormalForm.js";
 import {newMachine} from "./runner.js";
 import {unparse, parse} from "./parser.js";
-import {decideSpinOut} from "./spinOutDecider.js";
-import {decideCycler} from "./cyclerDecider.js";
+import {createFile, readFile} from "../writer.js";
+
+// Deciders
+import {isCycler} from "./Deciders/cycler.js";
+import {isSpinOut} from "./Deciders/spinOut.js";
+import {isClosedStateSet} from "./Deciders/closedStateSet.js";
 
 const scriptPath = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -17,27 +20,8 @@ function getPath(states, symbols, dir = "") {
     return path.resolve(path.join(scriptPath, dir + fileName));
 }
 
-async function createFile(filePath, content) {
-    try {
-        await fs.writeFile(filePath, content, 'utf8');
-        console.log(`Successfully created: ${filePath}`);
-    } catch (error) {
-        console.error('Failed to create file:', error.message);
-    }
-}
-
-async function readFile(filePath) {
-    try {
-        const content = await fs.readFile(filePath, 'utf8');
-        console.log(`Successfully read: ${filePath}`);
-        return content;
-    } catch (error) {
-        console.error('Failed to read file:', error.message);
-    }
-}
-
 async function enumValue() {
-    const STATES = 2;
+    const STATES = 3;
     const SYMBOLS = 2;
     const MAX_STEPS = 1_000;
     const MAX_PROGRAMS = 100_000;
@@ -46,11 +30,11 @@ async function enumValue() {
     let record = 0;
 
     for (const code of enumerate(STATES, SYMBOLS, MAX_STEPS)) {
-        // Execute the machine
-        const machine = newMachine(code, MAX_STEPS);
-        const steps = machine.run();
+        // Execute the program
+        const program = newMachine(code, MAX_STEPS);
+        const steps = program.run();
 
-        // Check if the machine timed out
+        // Check if the program timed out
         if (steps < 0) {
             programs.push(unparse(code));
             if (programs.length >= MAX_PROGRAMS) {
@@ -60,7 +44,7 @@ async function enumValue() {
             continue;
         }
 
-        // Check if the machine is a champion
+        // Check if the program is a champion
         if (steps > record) {
             console.log("Champion:", unparse(code), `(${steps})`);
             record = steps;
@@ -72,8 +56,8 @@ async function enumValue() {
 }
 
 async function siftValue() {
-    const STATES = 2;
-    const SYMBOLS = 4;
+    const STATES = 4;
+    const SYMBOLS = 2;
 
     const filePath = getPath(STATES, SYMBOLS, "Holdouts/");    
     const content = await readFile(filePath);
@@ -83,7 +67,7 @@ async function siftValue() {
     let counter = 0;
 
     for (const code of holdouts) {
-        if (!decideCycler(parse(code))) {
+        if (!isSpinOut(parse(code))) {
             programs.push(code);
         } else {
             console.log(code);

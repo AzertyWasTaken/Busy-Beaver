@@ -38,6 +38,12 @@ A **decider** proves a program **does not halt**.
 - When a TM visits a tape cell that was never visited before, it always read a zero.
 - If the next instruction make the TM move in the same direction while staying in the same state, decide as **nonhalting**.
 
+### Cycler
+
+For uni-period cyclers, decide as nonhalting if two steps do not change the tape, head position and state.
+
+For multi-period cyclers, create an history of previous configurations and decide as nonhalting if the same configuration appears at least twice.
+
 ## Accelerated Simulation
 
 Rules used to **speed up** halting (or not) programs execution.

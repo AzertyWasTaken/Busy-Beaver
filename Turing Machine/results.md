@@ -27,27 +27,29 @@
 
 | Domain | Holdouts |
 | - | - |
-| BB(2) | 15 |
-| BB(3) | 1,837 |
-| BB(4) | 323,858 |
-| BB(2,3) | 1,550 |
-| BB(2,4) | 192,101 |
+| BB(2) | 12 |
+| BB(3) | 1,375 |
+| BB(4) | 247,510 |
+| BB(2,3) | 1,536 |
+| BB(2,4) | 192,067 |
 
 ## BB(2)
 
-### Cycler — `1RB1RB_0LA---`
-
-- Cycles every 2 steps.
-
-### Translated Cycler — `1RB0LA_0LA---`
-
-- Cycles 1 cell rightward then 2 cells leftward.
-- The total period is 3 steps and 1 cell leftward.
+Proving this domain requires cycler and translated cycler deciders.
 
 ### Champion — `1RB1LB_1LA---`
 
 - Runs for 6 steps before halting.
 - Transitions `B0` and `A0` are used twice.
+
+### Cycler — `1RB1RB_0LA---`
+
+- Has a **period** of 2 steps.
+
+### Translated Cycler — `1RB0LA_0LA---`
+
+- Has a **period** is 3 steps.
+- Has an **offset** of 2 cells leftward.
 
 ## BB(3)
 
@@ -60,7 +62,7 @@
 start → F(0) → F(1) → F(3) → halt
 
 // Definition
-F(n) := _<A 1^n_
+F(n) := 0 <A 1^n
 ```
 
 ## BB(4)
@@ -75,7 +77,7 @@ F(n) := _<A 1^n_
 start → F(0) → F(3) → F(5) → F(4) → F(2) → halt
 
 // Definition
-F(n) := _1^n 01 B>_
+F(n) := 1^n 01 B> 0
 ```
 
 ## BB(2,3)
@@ -92,7 +94,7 @@ F(n+1) → F(n)
 F(0) → halt
 
 // Definition
-F(n) := _<B 1^k 2^n_
+F(n) := 0 <B 1^k 2^n
 ```
 
 ## See Also

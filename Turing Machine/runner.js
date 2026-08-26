@@ -11,6 +11,11 @@ export function newMachine(code, maxSteps) {
         return (head < 0 ? lTape[-head - 1] : rTape[head]) ?? 0;
     }
 
+    function readInstruction() {
+        const symbol = readCell();
+        return code?.[state]?.[symbol];
+    }
+
     function setCell(symbol) {
         if (head < 0) {
             lTape[-head - 1] = symbol;
@@ -25,8 +30,7 @@ export function newMachine(code, maxSteps) {
         if (steps > maxSteps) return "timed out";
 
         // Get current instruction
-        const symbol = readCell();
-        const instruction = code?.[state]?.[symbol];
+        const instruction = readInstruction();
         if (!instruction || instruction.length < 3) return "halted";
 
         // Update the Turing machine
@@ -49,5 +53,5 @@ export function newMachine(code, maxSteps) {
         return {lTape, rTape, state, head, steps};
     }
 
-    return {readCell, step, run, getData};
+    return {readCell, readInstruction, step, run, getData};
 }

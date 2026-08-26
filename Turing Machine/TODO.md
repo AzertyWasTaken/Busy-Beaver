@@ -17,13 +17,14 @@
 - Run from starting holdouts list
 - Spin out decider
 - Cycler decider
+- Closed state set decider
+- Cyclic state spin out decider
 
 ## Enumeration
 
-- [ ] Cyclic state spin out decider
-- [ ] Closed transitions graph decider
 - [ ] Translated cycler decider
 - [ ] Optimize TNF enumeration (save and clone tm & return steps count)
+- [ ] Remove smaller TMs from enumeration
 
 ## Documentation
 
