@@ -4,7 +4,7 @@ export function parse(ruleset) {
     const statesRules = ruleset.split("_");
 
     for (let i = 0; i < statesRules.length; i++) {
-        parsed.push(Array.from(statesRules[i]));
+        parsed.push(Array.from(statesRules[i], Number));
     }
     return parsed;
 }

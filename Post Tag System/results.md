@@ -7,7 +7,7 @@
 | BBPT(1) | = 1 | `0` |
 | BBPT(2) | = 2 | `10` |
 | BBPT(3) | = 4 | `011` |
-| BBPT(4) | ≥ 5 | `011_1` |
+| BBPT(4) | = 5 | `011_1` |
 | BBPT(5) | ≥ 19 | `111_20` |
 | BBPT(6) | ≥ 49 | `11_021_2` |
 | BBPT(7) | ≥ 779 | `112_1_002` |
@@ -18,12 +18,14 @@
 | Domain | Holdouts |
 | - | - |
 | BBPT(4) | 3 |
-| BBPT(5) | 37 |
-| BBPT(6) | 556 |
-| BBPT(7) | 6,882 |
-| BBPT(8) | 81,715 |
+| BBPT(5) | 11 |
+| BBPT(6) | 263 |
+| BBPT(7) | 2,999 |
+| BBPT(8) | 43,578 |
 
 ## BBPT(1)
+
+The only program of this size is a busy beaver.
 
 ### Champion — `0`
 
@@ -31,41 +33,51 @@
 
 ## BBPT(2)
 
-### Cycler — `00`
-
-- The string never changes, causing the program to never halt.
+The only nonhalting program of this size is a cycler.
 
 ### Champion — `10`
 
 - Runs for 2 steps before halting.
-- Sets the first symbol to one then erases the whole string.
+
+### Cycler — `00`
+
+- The string never changes, causing the program to never halt.
 
 ## BBPT(3)
 
-### Multi-Period Cycler — `010`
-
-- Cycles every 3 steps.
+Proving this domain requires cycler deciders.
 
 ### Champion — `011`
 
 - Runs for 4 steps before halting.
-- Sets even (0-indexed) symbols to one then erases the whole string.
+
+### Translated Cycler — `000`
+
+- The string grows infinitely by a symbol per step.
+
+### Multi-Period Cycler — `010`
+
+- Has a **period** of 3 steps.
 
 ## BBPT(4)
 
-### Translated Cycler — `0101`
-
-- Grows by 2 symbols at each step.
-
-### Chaotic — `010_0`
-
-- Is currently undecided.
-- Have growth phases followed by stable phases.
+Proving this domain requires multi-period cycler and consecutive symbols deciders.
 
 ### Champion — `011_1`
 
 - Runs for 5 steps before halting.
-- Sets even 0-indexed symbols to one then erases the whole string.
+
+### Chaotic — `010_0`
+
+- Follows a chaotic pattern with growth phases followed by stable phases.
+
+```txt
+// Nonhalting proof
+The ones are separated by at least 2 zeros, by repeatedly appending the first produciton rule.
+So every one append is followed by a zero append.
+Rule one decreases the string length by 1 while rule zero increases the string length by 1.
+Hence every decrease is cancelled by the next increase.
+```
 
 ## BBPT(5)
 
@@ -86,6 +98,24 @@ start → F(3) → F(5) → F(8) → halt
 // Definition
 F(n) := 1^n
 ```
+
+### Multi-Period Translated Cycler — `01010`
+
+- Has a **period** of 5 steps.
+- Has an **offset** of 5 steps.
+
+### Cubic Bell — `010_21`
+
+- Each growth burst takes 2 more steps than the previous one.
+
+### Chaotic 2 — `010_2_0`
+
+- It is currently undecided.
+- It is similar to the first one but seems to be much harder to decide.
+
+### Bouncer — `0111_0`
+
+- Follows a sawtooth-like pattern.
 
 ## See Also
 
