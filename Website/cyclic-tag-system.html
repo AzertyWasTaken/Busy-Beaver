@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclic Tag System Simulator</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+</head>
+
+<body>
+    <h1>Cyclic Tag System Simulator</h1>
+
+    <div class="header">
+        <a href="../index.html">Project Home Page</a>
+        <a href="https://github.com/AzertyWasTaken/Busy-Beaver">Project Repository</a>
+        <a href="https://github.com/AzertyWasTaken/Busy-Beaver/blob/main/Cyclic%20Tag%20System/spec.md">Cyclic Tag System Spec</a>
+    </div>
+
+    <div>
+        <label>Import (standard format):</label>
+        <input type="text" id="input" value=""/>
+        <button id="import">Import</button>
+    </div>
+
+    <div>
+        <label>Offset</label>
+        <button id="offset">Off</button>
+    </div>
+
+    <canvas id="canvas" width="960" height="960">Canvas are not accepted by your browser.</canvas>
+
+    <script type="module" src="cts-script.js"></script>
+</body>
+</html>

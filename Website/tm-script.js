@@ -4,22 +4,19 @@ import {createCanvas} from "./canvas.js";
 import {parse} from "../Turing Machine/parser.js";
 import {newMachine} from "../Turing Machine/runner.js";
 
+// ==== Canvas ====
+
 const canvas = createCanvas(document.getElementById("canvas"));
+let code;
 
 function explore() {
     canvas.reset();
+    if (!code) return;
 
-    const maxSteps = canvas.getSize().y;
-    const code = parse(document.getElementById("input").value);
-    const machine = newMachine(code, maxSteps);
+    const canvasDim = canvas.getSize();
+    const machine = newMachine(code, canvasDim.y);
 
-    let y = 0;
-    while (true) {
-        // Increment rows counter
-        y++;
-        if (y > maxSteps) break;
-
-        // Create row color map
+    function newRow() {
         const data = machine.getData();
         const offsetX = -data.lTape.length;
 
@@ -31,12 +28,18 @@ function explore() {
         colorTape[data.head - offsetX + 1] = STATE_COLORS[data.state];
 
         canvas.newRow(colorTape, offsetX);
+    }
 
-        // Perform a step
+    while (true) {
+        newRow();
         const status = machine.step();
         if (status === "halted") break;
         if (status === "timed out") break;
     }
 }
 
-document.getElementById("import").addEventListener("click", explore);
+document.getElementById("import").addEventListener("click", () => {
+    const input = document.getElementById("input").value;
+    code = input.length === 0 ? undefined : parse(input);
+    explore();
+});

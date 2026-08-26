@@ -1,8 +1,8 @@
 "use strict";
 import {SYMBOL_COLORS} from "./colors.js";
 import {createCanvas} from "./canvas.js";
-import {parse} from "../Post Tag System/parser.js";
-import {newTag} from "../Post Tag System/runner.js";
+import {parse} from "../Cyclic Tag System/parser.js";
+import {newTag} from "../Cyclic Tag System/runner.js";
 
 // ==== Offset ====
 
@@ -36,7 +36,7 @@ function explore() {
         .map((symbol) => SYMBOL_COLORS[symbol]);
 
         canvas.newRow(colorTape, -canvasDim.x / 2 + offset);
-        if (doOffset) offset += 2;
+        if (doOffset) offset++;
     }
 
     while (true) {
@@ -45,7 +45,6 @@ function explore() {
         if (status === "halted") break;
         if (status === "timed out") break;
     }
-    newRow();
 }
 
 document.getElementById("import").addEventListener("click", () => {
