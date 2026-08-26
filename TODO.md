@@ -9,17 +9,21 @@
 - Define BB-index
 - Post tag
 - Home page website
+- README conventions
+- Create global module for writer scripts
+- Cyclic tag system
 
 ## Project
 
-- Pebble automaton
-- Counter machine
-- Brainfuck
-- CounterScript
-- Debruijn
+- [ ] Pebble automaton
+- [ ] Celullar automaton
+- [ ] Counter machine
+- [ ] Brainfuck
+- [ ] CounterScript
+- [ ] Debruijn
+- [ ] String rewriting system
 
 ## Global
 
-- Complete README conventions
-- Fix canvas not displaying last halting step
-- Create global module for writer scripts
+- [ ] Fix canvas not displaying last halting step
+- [ ] Merge decider and enumerator launcher functions to writer.js
