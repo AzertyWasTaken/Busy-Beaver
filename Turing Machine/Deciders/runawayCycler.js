@@ -3,19 +3,18 @@ import {newMachine} from "../runner.js";
 
 const MAX_STEPS = 1_000;
 
-function isMovingOut(machine) {
+function isRecord(machine) {
     const {lTape, rTape, head} = machine.getData();
-    const move = machine.readInstruction()[1];
 
     if (head < 0) {
-        if (-head - 1 >= lTape.length) return move === -1;
+        if (-head - 1 >= lTape.length) return true;
     } else {
-        if (head >= rTape.length) return move === 1;
+        if (head >= rTape.length) return true;
     }
     return false;
 }
 
-export function isSpinOut(code) {
+export function decRunawayCycler(code) {
     const machine = newMachine(code, MAX_STEPS);
     const visitedStates = new Set();
 
@@ -25,7 +24,7 @@ export function isSpinOut(code) {
         if (status === "timed out") return false;
 
         const {state} = machine.getData();
-        if (isMovingOut(machine)) {
+        if (isRecord(machine)) {
             if (visitedStates.has(state)) return true;
             visitedStates.add(state);
         } else {

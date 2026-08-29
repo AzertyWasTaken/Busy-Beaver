@@ -1,6 +1,7 @@
 "use strict";
 export function newTag(code, maxSteps) {
     let string = [1];
+    let head = 0;
     let steps = 0;
 
     function step() {
@@ -8,14 +9,20 @@ export function newTag(code, maxSteps) {
         steps++;
         if (steps > maxSteps) return "timed out";
 
-        // Update the tag system
-        const bit = string.shift();
-        if (bit === 1) {
+        // Append the next production rule
+        if (string[head] === 1) {
             const rule = code[(steps - 1) % code.length];
             string.push(...rule);
         }
 
-        if (string.length === 0) return "halted";
+        // Remove the first item
+        head++;
+        if (head >= 1_000) {
+            string.splice(0, head);
+            head = 0;
+        }
+
+        if (string.length - head < 1) return "halted";
         return "running";
     }
 
@@ -28,7 +35,7 @@ export function newTag(code, maxSteps) {
     }
 
     function getData() {
-        return {string, steps};
+        return {string, head, steps};
     }
 
     return {step, run, getData};

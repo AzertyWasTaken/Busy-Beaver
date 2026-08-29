@@ -10,11 +10,13 @@ Not implemented yet.
 
 A **decider** proves a program **does not halt**.
 
+### Nondecreasing
+
+A program is nonhating if every production rule length has a 1.
+
 ### Cycler
 
-For uni-period cyclers, decide as nonhalting if a step do not change the string.
-
-For multi-period cyclers, create an history of previous strings and decide as nonhalting if the same string appears at least twice.
+Check if the same string is visited twice.
 
 ## Accelerated Simulation
 

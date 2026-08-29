@@ -1,7 +1,6 @@
 "use strict";
 import {newTag} from "../runner.js";
 
-const MAX_PERIOD = 10;
 const MAX_STEPS = 1_000;
 
 function compare(a, b) {
@@ -13,9 +12,10 @@ function compare(a, b) {
     return true;
 }
 
-export function isCycler(code) {
+export function decCycler(code) {
     const tag = newTag(code, MAX_STEPS);
-    let history = [];
+    let prevString;
+    let phase = 2;
 
     while (true) {
         for (let i = 0; i < code.length; i++) {
@@ -24,11 +24,15 @@ export function isCycler(code) {
             if (status === "timed out") return false;
         }
 
-        const currString = tag.getData().string;
-        if (history.some((str) => compare(str, currString)))
+        const {string, head, steps} = tag.getData();
+        const slice = string.slice(head);
+
+        if (prevString && compare(prevString, slice))
             return true;
 
-        history.push([...currString]);
-        if (history.length > MAX_PERIOD) history.shift();
+        if (steps >= 2**phase) {
+            prevString = slice;
+            phase++;
+        }
     }
 }

@@ -12,6 +12,7 @@
 - README conventions
 - Create global module for writer scripts
 - Cyclic tag system
+- Merge decider and enumerator launcher functions to `writer.js`
 
 ## Project
 
@@ -25,5 +26,7 @@
 
 ## Global
 
-- [ ] Fix canvas not displaying last halting step
-- [ ] Merge decider and enumerator launcher functions to writer.js
+- [ ] Add a terminology file for each system
+- [ ] Explain programs size and what count as a step in specs
+- [ ] Test deciders function to detect false positives
+- [ ] Refractor `README.md`

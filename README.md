@@ -26,9 +26,9 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 
 | System | BB-index | Active Code Size |
 | - | - | - |
-| Post Tag System | 150 | 150 |
-| Turing Machine | 70 | 210 |
-| Cyclic Tag System | 40 | 60 |
+| Turing Machine | 350 | 290 |
+| Post Tag System | 180 | 160 |
+| Cyclic Tag System | 100 | 110 |
 
 ### BB-index
 
@@ -74,3 +74,9 @@ It is an approximation of the total lines count of scripts used for enumeration 
   - Analysis of other notable programs.
 
 - A `See Also` section with links to relevant Busy Beaver Wiki pages.
+
+### Search
+
+Must be a list of deciders used to decide programs, speed up enumeration or speed up simulation.
+
+Do not include deciders that are stricly weaker than another one.

@@ -1,6 +1,7 @@
 "use strict";
 export function newTag(code, maxSteps) {
     let string = [0,0];
+    let head = 0;
     let steps = 0;
 
     function step() {
@@ -9,14 +10,18 @@ export function newTag(code, maxSteps) {
         if (steps > maxSteps) return "timed out";
 
         // Get current rule
-        const symbol = string[0];
+        const symbol = string[head];
         const rule = code[symbol] ?? [];
 
         // Update the tag system
-        string.splice(0, 2);
         string.push(...rule);
-        if (string.length < 2) return "halted";
+        head += 2;
+        if (head >= 1_000) {
+            string.splice(0, head);
+            head = 0;
+        }
 
+        if (string.length - head < 2) return "halted";
         return "running";
     }
 
@@ -29,7 +34,7 @@ export function newTag(code, maxSteps) {
     }
 
     function getData() {
-        return {string, steps};
+        return {string, head, steps};
     }
 
     return {step, run, getData};

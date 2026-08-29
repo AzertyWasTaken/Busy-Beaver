@@ -1,4 +1,4 @@
 "use strict";
-export function isNondecreasing(code) {
+export function decNondecreasing(code) {
     return code.every((rule) => rule.includes(1));
 }

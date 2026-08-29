@@ -8,7 +8,7 @@ function compare(a, b) {
     return true;
 }
 
-export function isIdenticalRules(code) {
+export function decIdenticalRule(code) {
     for (let min = 0; min < code.length; min++) {
         if (code[min].includes(code.length + 1)) return true;
 

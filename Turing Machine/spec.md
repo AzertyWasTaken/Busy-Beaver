@@ -20,6 +20,12 @@
 
 - The machine halts when an undefined transition is reached.
 
+## Function
+
+The maximum step function BB(n,m) is the largest number of steps that any n-state m-symbol Turing machine takes before halting.
+
+The halting/undefined transition counts as a step, so the TM with rule `A0 → ---` halts in 1 step.
+
 ## See Also
 
 - [Turing Machine](https://wiki.bbchallenge.org/wiki/Turing_machine)

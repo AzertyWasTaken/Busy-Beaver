@@ -6,7 +6,7 @@
 - Create results file
 - Enumerate BBPT(5)
 - Create spec file
-- Maximum symbol
+- Maximum symbol decider
 - Cycler decider
 - Avoid empty production rules
 - BBPT(5) champion analysis
@@ -17,12 +17,15 @@
 - Consecutive symbols decider
 - `010_0` nonhalting proof
 - Identical production rules decider
+- Optimize runner
 
 ## Enumeration
 
-- [ ] Even (0-indexed) symbols decider
+- [ ] Must not begin with `11`
 - [ ] Unused production rule TNF enumeration
 - [ ] Unused symbol in string TNF enumeration
+- [ ] Even (0-indexed) symbols decider
+  - [ ] Combine with simulation
 
 ## Documentation
 

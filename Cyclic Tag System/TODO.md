@@ -8,10 +8,13 @@
 - Create spec file
 - Create nondecreasing decider
 - Create search file
+- Optimize runner
 
 ## Enumeration
 
-- [ ] Optimize runner
+- [ ] Remove consecutive zeros
+- [ ] First rule must not be 1
+- [ ] Consecutive ones decider
 
 ## Documentation
 

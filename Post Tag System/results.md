@@ -21,7 +21,7 @@
 | BBPT(5) | 11 |
 | BBPT(6) | 263 |
 | BBPT(7) | 2,999 |
-| BBPT(8) | 43,578 |
+| BBPT(8) | 37,081 |
 
 ## BBPT(1)
 
@@ -45,7 +45,7 @@ The only nonhalting program of this size is a cycler.
 
 ## BBPT(3)
 
-Proving this domain requires cycler deciders.
+Proving this domain requires cycler decider.
 
 ### Champion — `011`
 
@@ -53,7 +53,7 @@ Proving this domain requires cycler deciders.
 
 ### Translated Cycler — `000`
 
-- The string grows infinitely by a symbol per step.
+- The string grows indefinitely by a symbol per step.
 
 ### Multi-Period Cycler — `010`
 
@@ -116,6 +116,13 @@ F(n) := 1^n
 ### Bouncer — `0111_0`
 
 - Follows a sawtooth-like pattern.
+
+## BBPT(6)
+
+### Champion — `11_021_2`
+
+- Runs for 49 steps before halting.
+- Has a chaotic behavior.
 
 ## See Also
 

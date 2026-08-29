@@ -2,33 +2,25 @@
 
 ## Update log
 
-- Create base scripts
-- Create results file
-- Create spec file
-- Create search file
-- Refractor `runner.js`
 - TNF enumeration
-- Explain TNF enumeration
 - Enumerate BB(4)
 - Enumerate BB(2,4)
 - Maximum state and symbol
 - Create BB(4) analysis
 - Create simulator website
-- Run from starting holdouts list
-- Spin out decider
 - Cycler decider
-- Closed state set decider
-- Cyclic state spin out decider
+- Halting path decider
+- Unused symbol decider
+- Translated cycler decider
 
 ## Enumeration
 
-- [ ] Translated cycler decider
+- [ ] Auto enumerate undefined transitions after halting
+- [ ] Write bouncers decider
 - [ ] Optimize TNF enumeration (save and clone tm & return steps count)
-- [ ] Remove smaller TMs from enumeration
+- [ ] Prefix TNF enumeration (takes an unparsed program)
 
 ## Documentation
-
-- [ ] Cycler decider
 
 ## Website
 

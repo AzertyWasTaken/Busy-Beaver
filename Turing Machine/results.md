@@ -27,11 +27,10 @@
 
 | Domain | Holdouts |
 | - | - |
-| BB(2) | 12 |
-| BB(3) | 1,375 |
-| BB(4) | 247,510 |
-| BB(2,3) | 1,536 |
-| BB(2,4) | 192,067 |
+| BB(3) | 40 |
+| BB(4) | 10,466 |
+| BB(2,3) | 133 |
+| BB(2,4) | 25,417 |
 
 ## BB(2)
 
@@ -53,6 +52,8 @@ Proving this domain requires cycler and translated cycler deciders.
 
 ## BB(3)
 
+Proving this domain requires solving bouncers and counters.
+
 ### Champion — `1RB---_1LB0RC_1LC1LA`
 
 - Runs for 21 steps before halting.
@@ -64,6 +65,14 @@ start → F(0) → F(1) → F(3) → halt
 // Definition
 F(n) := 0 <A 1^n
 ```
+
+### Bouncer — `1RB1LA_1LA1RC_---1RB`
+
+- Bounces indefinitely back and forth on a growing string of ones.
+
+### Counter — `1RB1LC_0LA0RB_1LA---`
+
+- Counts in binary, where `0 → 00` and `1 → 10`.
 
 ## BB(4)
 
@@ -97,9 +106,21 @@ F(0) → halt
 F(n) := 0 <B 1^k 2^n
 ```
 
+### Bouncer — `1RB2LA1RA_0LA---1RA`
+
+- Bounces indefinitely back and forth on a growing string of ones and twos.
+
+### Counter — `1RB1LA1RB_0LA2RB---`
+
+- Counts in binary, where `0 → 1` and `1 → 2` with a one at the left end of the string.
+
 ## See Also
 
 - [Champions List](https://wiki.bbchallenge.org/wiki/Champions)
+- [Cycler](https://wiki.bbchallenge.org/wiki/Cycler)
+- [Translated Cycler](https://wiki.bbchallenge.org/wiki/Translated_cycler)
+- [Bouncer](https://wiki.bbchallenge.org/wiki/Bouncer)
+- [Counter](https://wiki.bbchallenge.org/wiki/Counter)
 
 ### Domains
 

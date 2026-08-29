@@ -14,8 +14,9 @@
 | BBCT(8) | ≥ 28 | `101_10_` |
 | BBCT(9) | ≥ 717 | `1011_00_` |
 | BBCT(10) | ≥ 209 | `11_0_0100` |
-| BBCT(11) | ≥ 626 | `0101__11_0` |
-| BBCT(12) | ≥ 716 | `1001_110__0` |
+| BBCT(11) | ≥ 2,269 | `1011_1_00_` |
+| BBCT(12) | ≥ 6,328 | `0111__010_0` |
+| BBCT(13) | ≥ 50,906 | `0011_010_1_0` |
 
 ## Holdouts
 
@@ -25,10 +26,11 @@
 | BBCT(6) | 5 |
 | BBCT(7) | 26 |
 | BBCT(8) | 88 |
-| BBCT(9) | 386 |
-| BBCT(10) | 1,252 |
-| BBCT(11) | 4,325 |
-| BBCT(12) | 14,092 |
+| BBCT(9) | 359 |
+| BBCT(10) | 1,216 |
+| BBCT(11) | 4,154 |
+| BBCT(12) | 13,589 |
+| BBCT(13) | 45,940 |
 
 ## BBCT(1)
 
@@ -52,6 +54,8 @@ The only nonhalting program of this size is a cycler.
 
 ## BBCT(3)
 
+Proving this domain requires nondecreasing decider.
+
 ### Champion — `00`
 
 - Runs for 3 steps before halting.
@@ -62,7 +66,7 @@ The only nonhalting program of this size is a cycler.
 
 ### Translated Cycler — `11`
 
-- The string grows infinitely by a symbol per step.
+- The string grows indefinitely by a symbol per step.
 
 ## BBCT(4)
 
@@ -81,8 +85,19 @@ The only nonhalting program of this size is a cycler.
 
 - Runs for 7 steps before halting.
 
+### Translated Cycler 2 — `111_`
+
+- Has a **period** of 2 steps.
+- Has an **offset** of 2 steps.
+- Cannot be decided by nondecreasing decider.
+
 ## BBCT(6)
 
 ### Champion — `010_0`
 
 - Runs for 8 steps before halting.
+
+### Chaotic — `111_0`
+
+- Follows a chaotic pattern with waves.
+- Is nonhalting.

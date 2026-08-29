@@ -1,7 +1,7 @@
 "use strict";
 import {newMachine} from "./runner.js";
 
-export function enumerate(maxStates, maxSymbols, maxSteps) {
+export function enumerateTNF(maxStates, maxSymbols, maxSteps) {
     function* nextTransition(code, instructions, recState, recSymbol) {
         // Run the machine until an undefined transition
         const machine = newMachine(code, maxSteps);
@@ -32,7 +32,7 @@ export function enumerate(maxStates, maxSymbols, maxSteps) {
             for (let nextState = 0; nextState <= maxNextState; nextState++) {
                 for (let move = -1; move <= 1; move += 2) {
                     for (let write = 0; write <= maxWrite; write++) {
-                        code[state][symbol] = [write, move, nextState];                        
+                        code[state][symbol] = [write, move, nextState];
                         yield* nextTransition(
                             code,
                             instructions,

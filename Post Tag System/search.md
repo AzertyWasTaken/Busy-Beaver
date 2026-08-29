@@ -4,25 +4,35 @@
 
 Rules that identify **structurally different programs** that behave the same.
 
-### Maximum State and Symbol
+### Maximum Symbol
 
 The tag system must not "skip" a symbol during execution, for continuing a production rule or creating a new rule.
+
+### Identical Rule
+
+Each production rule must be different, including the empty rule.
+
+### Reachable Rule
+
+Do not create a new production rule if its index symbol does not appear in the previous rules.
 
 ## Deciders
 
 A **decider** proves a program **does not halt**.
 
-### Consecutive Symbols
+### Nondecreasing
 
-Each production rule $n$ must not have the symbol $n$ twice in a row.
+A program is nonhating if every production rule length is at least 2.
+
+### Consecutive Symbol
+
+Each production rule *n* must not have the symbol *n* twice in a row.
 
 - Otherwise, it is guaranteed that the rule will occur again, causing the system to never halt.
 
 ### Cycler
 
-For uni-period cyclers, decide as nonhalting if a step do not change the string.
-
-For multi-period cyclers, create an history of previous strings and decide as nonhalting if the same string appears at least twice.
+Check if the same string is visited twice.
 
 ## Accelerated Simulation
 

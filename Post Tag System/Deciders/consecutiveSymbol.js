@@ -12,7 +12,7 @@ function isRow(symbolCode, state, code) {
     return false;
 }
 
-export function isConsecutiveSymbols(code) {
+export function decConsecutiveSymbol(code) {
     return code.some((symbolCode, symbol) =>
         isRow(symbolCode, new Set([symbol]), code)
     );

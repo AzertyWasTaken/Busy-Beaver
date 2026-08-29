@@ -1,7 +1,6 @@
 "use strict";
 import {newMachine} from "../runner.js";
 
-const MAX_PERIOD = 10;
 const MAX_STEPS = 1_000;
 
 function compare(a, b) {
@@ -13,9 +12,10 @@ function compare(a, b) {
     return true;
 }
 
-export function isCycler(code) {
+export function decCycler(code) {
     const machine = newMachine(code, MAX_STEPS);
-    let history = [];
+    let prev;
+    let phase = 2;
 
     while (true) {
         for (let i = 0; i < 2; i++) {
@@ -24,15 +24,25 @@ export function isCycler(code) {
             if (status === "timed out") return false;
         }
 
-        const {lTape, rTape, state, head} = machine.getData();
-        if (history.some((str) =>
-            compare(str.lTape, lTape)
-            && compare(str.rTape, rTape)
-            && str.state === state
-            && str.head === head
-        )) return true;
+        const {lTape, rTape, state, head, steps}
+        = machine.getData();
 
-        history.push({lTape: [...lTape], rTape: [...rTape], state, head});
-        if (history.length > MAX_PERIOD) history.shift();
+        if (
+            prev
+            && compare(prev.lTape, lTape)
+            && compare(prev.rTape, rTape)
+            && prev.state === state
+            && prev.head === head
+        ) return true;
+
+        if (steps >= 2**phase) {
+            prev = {
+                lTape: [...lTape],
+                rTape: [...rTape],
+                state,
+                head
+            };
+            phase++;
+        }
     }
 }

@@ -31,8 +31,8 @@ function explore() {
     let offset = 0;
 
     function newRow() {
-        const data = tag.getData();
-        const colorTape = data.string
+        const {string, head} = tag.getData();
+        const colorTape = string.slice(head)
         .map((symbol) => SYMBOL_COLORS[symbol]);
 
         canvas.newRow(colorTape, -canvasDim.x / 2 + offset);
