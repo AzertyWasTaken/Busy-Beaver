@@ -18,22 +18,20 @@
 - `010_0` nonhalting proof
 - Identical production rules decider
 - Optimize runner
+- Add trailing `_` for empty rule
+- Fix empty rule absence bug
+- The first rule must not be `11`
 
 ## Enumeration
 
-- [ ] Must not begin with `11`
-- [ ] Unused production rule TNF enumeration
-- [ ] Unused symbol in string TNF enumeration
-- [ ] Even (0-indexed) symbols decider
+- [ ] TNF enumeration
+- [x] Even (0-indexed) symbols decider
   - [ ] Combine with simulation
 
 ## Documentation
 
-- [ ] Complete search file
-
 ## Website
 
-- [ ] Scroll simulator
 - [ ] Move simulator
 - [ ] Zoom simulator
 - [ ] Starting parameters

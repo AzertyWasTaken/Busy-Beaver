@@ -5,23 +5,23 @@
 | Domain | Runtime | Champion |
 | - | - | - |
 | BBPT(1) | = 1 | `0` |
-| BBPT(2) | = 2 | `10` |
-| BBPT(3) | = 4 | `011` |
+| BBPT(2) | = 2 | `10_` |
+| BBPT(3) | = 4 | `011_` |
 | BBPT(4) | = 5 | `011_1` |
-| BBPT(5) | ≥ 19 | `111_20` |
+| BBPT(5) | ≥ 19 | `111_20_` |
 | BBPT(6) | ≥ 49 | `11_021_2` |
 | BBPT(7) | ≥ 779 | `112_1_002` |
-| BBPT(8) | ≥ 196,841 | `11220_1_10` |
+| BBPT(8) | ≥ 196,841 | `120221_0_2` |
 
 ## Holdouts
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(4) | 3 |
-| BBPT(5) | 11 |
-| BBPT(6) | 263 |
-| BBPT(7) | 2,999 |
-| BBPT(8) | 37,081 |
+| BBPT(4) | 1 |
+| BBPT(5) | 6 |
+| BBPT(6) | 150 |
+| BBPT(7) | 2,364 |
+| BBPT(8) | 34,670 |
 
 ## BBPT(1)
 
@@ -35,7 +35,7 @@ The only program of this size is a busy beaver.
 
 The only nonhalting program of this size is a cycler.
 
-### Champion — `10`
+### Champion — `10_`
 
 - Runs for 2 steps before halting.
 
@@ -47,7 +47,7 @@ The only nonhalting program of this size is a cycler.
 
 Proving this domain requires cycler decider.
 
-### Champion — `011`
+### Champion — `011_`
 
 - Runs for 4 steps before halting.
 
@@ -55,7 +55,7 @@ Proving this domain requires cycler decider.
 
 - The string grows indefinitely by a symbol per step.
 
-### Multi-Period Cycler — `010`
+### Multi-Period Cycler — `010_`
 
 - Has a **period** of 3 steps.
 
@@ -81,7 +81,7 @@ Hence every decrease is cancelled by the next increase.
 
 ## BBPT(5)
 
-### Champion — `111_20`
+### Champion — `111_20_`
 
 - Runs for 19 steps before halting.
 - Computes a collatz-like function.
@@ -104,7 +104,7 @@ F(n) := 1^n
 - Has a **period** of 5 steps.
 - Has an **offset** of 5 steps.
 
-### Cubic Bell — `010_21`
+### Cubic Bell — `010_21_`
 
 - Each growth burst takes 2 more steps than the previous one.
 
