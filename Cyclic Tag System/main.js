@@ -9,6 +9,7 @@ import {fileWriter} from "../writer.js";
 // Deciders
 import {decCycler} from "./Deciders/cycler.js";
 import {decNondecreasing} from "./Deciders/nondecreasing.js";
+import {decFirstRule} from "./Deciders/firstRule.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),

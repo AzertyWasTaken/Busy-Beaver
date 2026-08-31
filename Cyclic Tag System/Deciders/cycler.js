@@ -19,7 +19,8 @@ export function decCycler(code) {
 
     while (true) {
         for (let i = 0; i < code.length; i++) {
-            const status = tag.step();
+            tag.step();
+            const status = tag.getData().status;
             if (status === "halted") return true;
             if (status === "timed out") return false;
         }

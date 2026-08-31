@@ -1,7 +1,8 @@
 "use strict";
-export function parse(ruleset) {
+export function parse(code) {
+    code = code.replace(/\s/g, "");
     const parsed = [];
-    const statesRules = ruleset.split("_");
+    const statesRules = code.split("_");
 
     for (let i = 0; i < statesRules.length; i++) {
         parsed.push(Array.from(statesRules[i], Number));

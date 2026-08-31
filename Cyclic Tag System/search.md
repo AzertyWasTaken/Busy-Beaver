@@ -4,7 +4,11 @@
 
 Rules that identify **structurally different programs** that behave the same.
 
-Not implemented yet.
+### First Rule
+
+The initial production rule must not be `1`.
+
+- For any CTS starting with `0 → 1`, the string stays the same after the first step, so the CTS is equivalent to the version where the rules cycle is shifter 1 step backward.
 
 ## Deciders
 

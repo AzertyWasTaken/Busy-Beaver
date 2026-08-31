@@ -2,12 +2,19 @@
 export function newTag(code, maxSteps) {
     let string = [1];
     let head = 0;
+
     let steps = 0;
+    let status = "running";
 
     function step() {
+        if (status !== "running") return;
+
         // Increment steps count
         steps++;
-        if (steps > maxSteps) return "timed out";
+        if (steps > maxSteps) {
+            status = "timed out";
+            return;
+        }
 
         // Append the next production rule
         if (string[head] === 1) {
@@ -22,20 +29,21 @@ export function newTag(code, maxSteps) {
             head = 0;
         }
 
-        if (string.length - head < 1) return "halted";
-        return "running";
+        // Check if the system halted
+        if (string.length - head < 1) status = "halted";
+        return;
     }
 
     function run() {
         while (true) {
-            const status = step();
+            step();
             if (status === "halted") return steps;
             if (status === "timed out") return -1;
         }
     }
 
     function getData() {
-        return {string, head, steps};
+        return {string, head, steps, status};
     }
 
     return {step, run, getData};

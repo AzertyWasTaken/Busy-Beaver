@@ -9,11 +9,13 @@
 - Create nondecreasing decider
 - Create search file
 - Optimize runner
+- Create simulator
+- Scroll simulator
+- First rule equivalence decider
 
 ## Enumeration
 
-- [ ] Remove consecutive zeros
-- [ ] First rule must not be 1
+- [ ] Consecutive zeros decider
 - [ ] Consecutive ones decider
 
 ## Documentation
@@ -22,8 +24,6 @@
 
 ## Website
 
-- [ ] Create simulator
-- [ ] Scroll simulator
 - [ ] Move simulator
 - [ ] Zoom simulator
 - [ ] Starting parameters
