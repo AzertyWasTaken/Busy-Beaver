@@ -1,8 +1,8 @@
 "use strict";
 function isRow(symbolCode, state, code) {
-    for (let i = 1 ; i < symbolCode.length; i++) {
+    for (let i = 1; i < symbolCode.length; i++) {
         const symbol = symbolCode[i];
-        if (symbol !== symbolCode[i - 1]) continue;
+        if (symbol !== symbolCode[i - 1] || typeof symbol !== "number") continue;
         if (state.has(symbol)) return true;
 
         state.add(symbol);

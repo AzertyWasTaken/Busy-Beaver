@@ -4,7 +4,12 @@ export function enumerate(maxSize) {
         // Check if the code is full
         if (currSize >= maxSize) {
             code.push(symbolCode);
+
+            const missingRules = recSymbol + 1 - code.length;
+            for (let i = 0; i < missingRules; i++) code.push([]);
             yield code;
+            for (let i = 0; i < missingRules; i++) code.pop();
+
             code.pop();
             return;
         }
@@ -17,7 +22,7 @@ export function enumerate(maxSize) {
         }
 
         // Start a new production rule
-        if (code.length + 1 <= recSymbol && symbolCode.length > 0) {
+        if (code.length + 1 <= recSymbol) {
             code.push(symbolCode);
             yield* nextRule(currSize, code, [], recSymbol);
             code.pop();

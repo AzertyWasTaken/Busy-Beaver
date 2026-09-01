@@ -13,12 +13,16 @@
 - Create global module for writer scripts
 - Cyclic tag system
 - Merge decider and enumerator launcher functions to `writer.js`
+- Scrollable canvas
+- Remove invisible characters from unparser
+- Refractor `README.md`
+- Pebble automaton
 
 ## Project
 
-- [ ] Pebble automaton
 - [ ] Celullar automaton
 - [ ] Counter machine
+- [ ] Fractran
 - [ ] Brainfuck
 - [ ] CounterScript
 - [ ] Debruijn
@@ -26,7 +30,7 @@
 
 ## Global
 
+- [ ] Add buttons for mobile navigation
 - [ ] Add a terminology file for each system
 - [ ] Explain programs size and what count as a step in specs
 - [ ] Test deciders function to detect false positives
-- [ ] Refractor `README.md`

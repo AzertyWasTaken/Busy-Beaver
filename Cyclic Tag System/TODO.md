@@ -4,23 +4,24 @@
 
 - Create base scripts
 - Create results file
-- Enumerate BBCT(12)
 - Create spec file
 - Create nondecreasing decider
 - Create search file
 - Optimize runner
 - Create simulator
-- Scroll simulator
 - First rule equivalence decider
+- Values analysis
+- Consecutive zeros decider
+- Consecutive ones decider
+- Enumerate BBCT(14)
 
 ## Enumeration
 
-- [ ] Consecutive zeros decider
-- [ ] Consecutive ones decider
+- [ ] Modular Ones decider
 
 ## Documentation
 
-- [ ] Values analysis
+- [ ] Complete values analysis
 
 ## Website
 

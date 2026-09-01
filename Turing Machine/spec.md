@@ -22,7 +22,7 @@
 
 ## Function
 
-The maximum step function BB(n,m) is the largest number of steps that any n-state m-symbol Turing machine takes before halting.
+The maximum step function *BB(n,m)* is the largest number of steps that any *n*-state *m*-symbol Turing machine takes before halting.
 
 The halting/undefined transition counts as a step, so the TM with rule `A0 → ---` halts in 1 step.
 

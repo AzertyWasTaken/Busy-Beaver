@@ -19,7 +19,8 @@ export function decRunawayCycler(code) {
     const visitedStates = new Set();
 
     while (true) {
-        const status = machine.step();
+        machine.step();
+        const status = machine.getData().status;
         if (status === "halted") return true;
         if (status === "timed out") return false;
 

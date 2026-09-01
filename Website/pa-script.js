@@ -1,8 +1,8 @@
 "use strict";
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas} from "./canvas.js";
-import {parse} from "../Turing Machine/parser.js";
-import {newMachine} from "../Turing Machine/runner.js";
+import {parse} from "../Pebble Automaton/parser.js";
+import {newAutomaton} from "../Pebble Automaton/runner.js";
 
 // ==== Initialize ====
 
@@ -51,7 +51,7 @@ function drawFrame() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newMachine(code, 1_000_000);
+    program = newAutomaton(code, 1_000_000);
     history = [];
     scrollY = 0;
     drawFrame();

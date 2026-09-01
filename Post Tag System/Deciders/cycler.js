@@ -21,7 +21,7 @@ export function decCycler(code) {
         tag.step();
         const status = tag.getData().status;
         if (status === "halted") return true;
-        if (status === "timed out") return false;
+        if (status === "timed out" || status === "paused") return false;
 
         const {string, head, steps} = tag.getData();
         const slice = string.slice(head);

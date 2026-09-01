@@ -25,4 +25,4 @@ const value = fileWriter(
 
 // await value.newList(100_000, 1_000, [], 2, 2);
 
-await value.decideList(1_000, [], 4, 2);
+await value.decideList(1_000, [], 2, 2);

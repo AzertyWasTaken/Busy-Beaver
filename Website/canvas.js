@@ -4,13 +4,13 @@ export function createCanvas(canvas) {
     const ctx = canvas.getContext("2d");
     let rows = 0;
 
-    function drawPixel(x, y) {
-        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    }
-
     function reset() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         rows = 0;
+    }
+
+    function drawPixel(x, y) {
+        ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
 
     function getSize() {
@@ -20,7 +20,7 @@ export function createCanvas(canvas) {
         };
     }
 
-    function newRow(rowArray, offsetX) {
+    function drawRow(rowArray, offsetX) {
         const cells = getSize().x;
         const half = cells / 2;
 
@@ -32,5 +32,5 @@ export function createCanvas(canvas) {
         rows++;
     }
 
-    return {reset, newRow, getSize};
+    return {reset, drawRow, getSize, CELL_SIZE};
 }

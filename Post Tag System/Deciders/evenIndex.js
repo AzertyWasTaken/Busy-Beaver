@@ -7,6 +7,8 @@ export function decEvenIndex(code) {
 
         for (let i = 0; i < rule.length; i += 2) {
             const sym = rule[i];
+            if (typeof sym !== "number") return false;
+
             if (!symbols.has(sym)) {
                 symbols.add(sym);
                 if (!checkRule(code[sym])) return false;

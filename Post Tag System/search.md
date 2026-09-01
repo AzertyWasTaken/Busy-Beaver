@@ -22,6 +22,20 @@ Each production rule must be different, including the empty rule.
 
 Do not create a new production rule if its input symbol does not appear in the previous rules.
 
+### Tree Normal Form
+
+Enumerate all PTSs by recursively expanding a "family tree" of machines:
+
+- Start with a completely undefined PTS of the desired size, this is the root node.
+- For each unexplored node, run that PTS on a blank tape until it reaches an undefined symbol, reaches an undefined rule, halts or times out.
+- If you reach an undefined rule, then enumerate every allowed length of production rule, with every symbol set to undefined (you may have to point from which rule and symbol the undefined symbol is from).
+- If you reach an undefined symbol, then find from which rule it belongs and at which position, then enumerate every allowed symbols.
+- Repeat this on every leaf node until the maximum size is reached.
+
+If a node attent to execute an undefined symbol, we must generate the next symbols.
+
+So TNF enumeration eliminates PTSs with unused transitions.
+
 ## Deciders
 
 A **decider** proves a program **does not halt**.
@@ -36,13 +50,20 @@ Each production rule *n* must not have the symbol *n* twice in a row.
 
 - Otherwise, it is guaranteed that the rule will occur again, causing the system to never halt.
 
+### Even Index
+
+If the first rule length is even, at least one of its even-indexed symbols must be nonzero.
+
+We can generalize it by including the next rules and looking for loops.
+
 ### Cycler
 
 Check if the same string is visited twice.
 
-### Even Index
+### Untitled TODO
 
-If the first rule length is even, at least one of its even-indexed symbols must be nonzero.
+- Check if every rules starts and ends with a zero.
+- The first rule length must be greater or equal to 2.
 
 ## Accelerated Simulation
 

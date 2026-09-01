@@ -2,16 +2,32 @@
 export function newTag(code, maxSteps) {
     let string = [0,0];
     let head = 0;
+
     let steps = 0;
+    let status = "running";
 
     function step() {
+        if (status !== "running") return;
+
         // Increment steps count
         steps++;
-        if (steps > maxSteps) return "timed out";
+        if (steps > maxSteps) {
+            status = "timed out";
+            return;
+        }
 
         // Get current rule
         const symbol = string[head];
-        const rule = code[symbol] ?? [];
+        if (typeof symbol !== "number") {
+            status = "paused";
+            return;
+        }
+
+        const rule = code[symbol];
+        if (!rule) {
+            status = "paused";
+            return;
+        }
 
         // Update the tag system
         string.push(...rule);
@@ -21,20 +37,21 @@ export function newTag(code, maxSteps) {
             head = 0;
         }
 
-        if (string.length - head < 2) return "halted";
-        return "running";
+        // Check if the system halted
+        if (string.length - head < 2) status = "halted";
+        return;
     }
 
     function run() {
         while (true) {
-            const status = step();
+            step();
             if (status === "halted") return steps;
-            if (status === "timed out") return -1;
+            if (status === "timed out" || status === "paused") return -1;
         }
     }
 
     function getData() {
-        return {string, head, steps};
+        return {string, head, steps, status};
     }
 
     return {step, run, getData};

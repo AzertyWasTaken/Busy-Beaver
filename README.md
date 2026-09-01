@@ -3,9 +3,9 @@
 ![Status](https://img.shields.io/badge/Status-Active-informational)
 ![Language](https://img.shields.io/badge/Language-JavaScript-purple)
 
-This project studies the Busy Beaver function for various computational models
+This project studies the Busy Beaver function for various computational models.
 
-If you find any interesting information here, you can add it to the [Busy Beaver wiki](https://wiki.bbchallenge.org/wiki/Main_Page):
+If you find any interesting information here, you can add it to the [Busy Beaver wiki](https://wiki.bbchallenge.org/wiki/Main_Page).
 
 ## Goals
 
@@ -16,67 +16,31 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 - **Find cryptids** (mathematically hard to decide).
 - **Document** results and findings.
 
-## How to run?
+## Systems
 
-- Open `writer.js`
-- Configure `STATES`, `SYMBOLS` and `MAX_STEPS`
-- Run the script
+- [Turing Machine](./Turing%20Machine/)
+- [Post Tag System](./Post%20Tag%20System/)
+- [Cyclic Tag System](./Cyclic%20Tag%20System/)
 
-## Stats
+Each system folder contains:
 
-| System | BB-index | Active Code Size |
-| - | - | - |
-| Turing Machine | 350 | 290 |
-| Post Tag System | 180 | 160 |
-| Cyclic Tag System | 100 | 110 |
+- `spec.md` — the system definition: composition, execution and step counting.
+- `search.md` — the equivalence rules, deciders and accelerated simulations used for the search.
+- `results.md` — the champions, holdouts and analysis for each domain.
+- `TODO.md` — the remaining work for this system.
+- `main.js` — the entry point for enumeration and deciding holdouts.
 
-### BB-index
+## Getting Started
 
-BB-index is an estimation of how advanced research is for a computational model.
-A machine is studied if it is decided or analyzed.
-The BB-index is defined as the average of complexity of:
+- Install [Node.js](https://nodejs.org/) (v22 or later).
+- Open the system of your choice.
+- Open the `main.js` script.
+- Configure the `newList` or `decideList` function.
+- Run the script with `node main.js`.
 
-- most complex studied programs.
-- least complex unstudied programs.
+## Documentation
 
-BBCS is used as a reference to rate programs complexity.
-For example, a simple bouncer is about 9 since it is the length of smallest possible bouncers in CounterScript.
-Fibonacci function is applied for better scaling, so 9 becomes F(9) = 34.
-
-### Active Code Size
-
-Active Code Size is a metric to determine how many code is used for research.
-It is an approximation of the total lines count of scripts used for enumeration or simulation, excluding writer and website scripts.
-
-## Conventions
-
-### Size Metrics
-
-- Do not count unecessary stuff. If anything can be ignored without created infinitely many nonequivalent programs, do not count it.
-- The ratio between size and the actual length of the program must remain finite.
-
-### Systems
-
-- Every system must be Turing-complete.
-- No unecessary complexity. If a complex mechanic can be removed without affecting its Turing-completeness, remove it.
-- The Busy Beaver function must count steps, not the final output.
-
-### Results
-
-- A `Champions` section with a table of champions and their running time.
-
-- A `Holdouts` section with a table of current holdouts count.
-
-- An `analysis` section separated by domains.
-
-  - A list of what deciders are required to solve the value.
-  - An analysis of the champion.
-  - Analysis of other notable programs.
-
-- A `See Also` section with links to relevant Busy Beaver Wiki pages.
-
-### Search
-
-Must be a list of deciders used to decide programs, speed up enumeration or speed up simulation.
-
-Do not include deciders that are stricly weaker than another one.
+- [Conventions](./conventions.md) — size metrics, systems, results and search conventions.
+- [Stats](./stats.md) — BB-index and active code size per system.
+- [TODO](./TODO.md) — planned systems and global tasks.
+- [Contributing](./CONTRIBUTING.md) — how to contribute.

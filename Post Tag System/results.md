@@ -19,9 +19,9 @@
 | - | - |
 | BBPT(4) | 1 |
 | BBPT(5) | 6 |
-| BBPT(6) | 150 |
-| BBPT(7) | 2,364 |
-| BBPT(8) | 34,670 |
+| BBPT(6) | 139 |
+| BBPT(7) | 2,088 |
+| BBPT(8) | 29,201 |
 
 ## BBPT(1)
 
@@ -33,19 +33,19 @@ The only program of this size is a busy beaver.
 
 ## BBPT(2)
 
-The only nonhalting program of this size is a cycler.
+Proving this domain requires uni-period cycler decider.
 
 ### Champion — `10_`
 
 - Runs for 2 steps before halting.
 
-### Cycler — `00`
+### Cycler — `01`
 
 - The string never changes, causing the program to never halt.
 
 ## BBPT(3)
 
-Proving this domain requires cycler decider.
+Proving this domain requires multi-period cycler decider and solving `000`.
 
 ### Champion — `011_`
 
@@ -61,7 +61,7 @@ Proving this domain requires cycler decider.
 
 ## BBPT(4)
 
-Proving this domain requires multi-period cycler and consecutive symbols deciders.
+Proving this domain requires multi-period cycler, even index deciders and solving `000` and `010_0`.
 
 ### Champion — `011_1`
 
@@ -80,6 +80,8 @@ Hence every decrease is cancelled by the next increase.
 ```
 
 ## BBPT(5)
+
+Proving this domain requires multi-period cycler, even index deciders and solving `000` and `010_0`.
 
 ### Champion — `111_20_`
 

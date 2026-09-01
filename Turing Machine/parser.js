@@ -18,6 +18,7 @@ function parseState(stateCode) {
 }
 
 export function parse(code) {
+    code = code.replace(/\s/g, "");
     const parsed = [];
     const statesRules = code.split("_");
 
