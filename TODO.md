@@ -4,33 +4,29 @@
 
 ## Update log
 
-- Turing machine
-- Create `README.md`
-- Define BB-index
-- Post tag
-- Home page website
 - README conventions
-- Create global module for writer scripts
 - Cyclic tag system
-- Merge decider and enumerator launcher functions to `writer.js`
-- Scrollable canvas
-- Remove invisible characters from unparser
-- Refractor `README.md`
 - Pebble automaton
+- Website documentation
+- Review writer system
+- Celullar automaton
+- Create terminology
 
 ## Project
 
-- [ ] Celullar automaton
 - [ ] Counter machine
 - [ ] Fractran
 - [ ] Brainfuck
 - [ ] CounterScript
+- [ ] Mobile automaton
+- [ ] Substitution automaton
+- [ ] SK calculus
+- [ ] Sequential substitution automaton
 - [ ] Debruijn
-- [ ] String rewriting system
+- [ ] BCKW calculus
+- [ ] Symbolic system
 
 ## Global
 
-- [ ] Add buttons for mobile navigation
-- [ ] Add a terminology file for each system
-- [ ] Explain programs size and what count as a step in specs
+- [ ] Clean up `results.md` programs
 - [ ] Test deciders function to detect false positives

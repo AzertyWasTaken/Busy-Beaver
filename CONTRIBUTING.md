@@ -39,6 +39,7 @@ Open a pull request with:
 
 - [ ] Performance is not catastrophically worse (and ideally improves).
 - [ ] If you touch search/decider logic: correctness is justified and/or verified by tests/logs.
+- [ ] If you touch the website: affected pages are verified in a browser (served from the repository root).
 - [ ] If you add a new decider: check if it does not creates false positives.
 - [ ] Quick manual verification is done (e.g. run the provided runner / sanity checks).
 

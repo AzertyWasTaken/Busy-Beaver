@@ -21,6 +21,7 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 - [Turing Machine](./Turing%20Machine/)
 - [Post Tag System](./Post%20Tag%20System/)
 - [Cyclic Tag System](./Cyclic%20Tag%20System/)
+- [Pebble Automaton](./Pebble%20Automaton/)
 
 Each system folder contains:
 
@@ -30,6 +31,10 @@ Each system folder contains:
 - `TODO.md` — the remaining work for this system.
 - `main.js` — the entry point for enumeration and deciding holdouts.
 
+## Website
+
+The repository includes a website with browser simulators for each system. See [Website](./Website/README.md).
+
 ## Getting Started
 
 - Install [Node.js](https://nodejs.org/) (v22 or later).
@@ -37,6 +42,7 @@ Each system folder contains:
 - Open the `main.js` script.
 - Configure the `newList` or `decideList` function.
 - Run the script with `node main.js`.
+- To try the website, serve the repository root and open `index.html`.
 
 ## Documentation
 
@@ -44,3 +50,4 @@ Each system folder contains:
 - [Stats](./stats.md) — BB-index and active code size per system.
 - [TODO](./TODO.md) — planned systems and global tasks.
 - [Contributing](./CONTRIBUTING.md) — how to contribute.
+- [Website](./Website/README.md) — the browser simulators and how to run them.

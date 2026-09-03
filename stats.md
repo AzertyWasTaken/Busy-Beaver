@@ -6,6 +6,7 @@
 | Post Tag System | 250 | 240 |
 | Cyclic Tag System | 120 | 170 |
 | Pebble Automaton | 20 | 210 |
+| Cellular Automaton | 10 | 110 |
 
 ## BB-index
 
