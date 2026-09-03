@@ -9,18 +9,18 @@
 
 ## Execution
 
-- The machine starts out with the **tape** consisting of a **sequence of all zeros** with the **middle cell** set to **the number of rules**.
+- The automaton starts out with the **tape** consisting of a **sequence of all zeros** with the **middle cell** set to **the number of rules**.
 
 - At each step of the computation, based on its current **value**, each cell chooses the parameters for the following actions:
 
   - **Move** a part of the value to the left.
   - **Move** a part of the value to the right.
 
-- The machine halts when every cells stop moving.
+- The automaton halts when every cells stop moving.
 
 ## Function
 
-The function *peBBle(n,m)* is the largest number of steps that any *n*-rule pebble automaton takes before halting.
+The function *peBBle(n)* is the largest number of steps that any *n*-rule pebble automaton takes before halting.
 
 The halting/undefined transition counts as a step, so the PA with rule `1 → 00` halts in 1 step.
 

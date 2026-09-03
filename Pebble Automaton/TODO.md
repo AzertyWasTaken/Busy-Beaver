@@ -2,19 +2,12 @@
 
 ## Update log
 
-- Create base scripts
-- Create results file
-- Enumerate peBBle(5)
-- Create spec file
-- Create search file
-- Create results file
 - Halting rule decider
 - Remove symmetry in initial value
-- Shifting initial value decider
-- Remove trailing zeros
-- Values analysis
 - Cycler decider
+- Create simulator webpage
 - Trailing Glider decider
+- Enumerate peBBle(6)
 
 ## Enumeration
 
@@ -24,8 +17,3 @@
 ## Documentation
 
 ## Website
-
-- [ ] Create simulator webpage
-- [ ] Move simulator
-- [ ] Zoom simulator
-- [ ] Starting parameters

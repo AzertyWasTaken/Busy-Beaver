@@ -2,13 +2,8 @@
 
 ## Update log
 
-- Create base scripts
-- Create results file
-- Create spec file
 - Create nondecreasing decider
-- Create search file
-- Optimize runner
-- Create simulator
+- Create simulator webpage
 - First rule equivalence decider
 - Values analysis
 - Consecutive zeros decider
@@ -18,13 +13,10 @@
 ## Enumeration
 
 - [ ] Modular Ones decider
+- [ ] Ones and empty rules decider
 
 ## Documentation
 
 - [ ] Complete values analysis
 
 ## Website
-
-- [ ] Move simulator
-- [ ] Zoom simulator
-- [ ] Starting parameters
