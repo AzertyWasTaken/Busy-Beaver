@@ -100,5 +100,31 @@ Proving this domain requires nondecreasing decider.
 
 ### Chaotic — `111_0`
 
-- Follows a chaotic pattern with waves.
-- Is nonhalting.
+- Follows a chaotic pattern.
+- Can be decided as nonhalting with consecutive ones decider.
+
+## BBCT(7)
+
+### Champion — `0110__`
+
+- Runs for 13 steps before halting.
+- Repeat the first rule thrice. Shift the ones at each iteration so at the 3rd iteration, both ones are skipped.
+
+## BBCT(8)
+
+### Champion — `101_10_`
+
+- Runs for 28 steps before halting.
+- Follows a chaotic pattern.
+
+### Chaotic 2 — `011__11`
+
+- Follows a chaotic pattern.
+- Cannot be decided with consecutive ones decider.
+
+## BBCT(9)
+
+### Champion — `1011_00_`
+
+- Runs for 717 steps before halting.
+- Follows a chaotic pattern.
