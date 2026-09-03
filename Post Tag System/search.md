@@ -60,10 +60,9 @@ We can generalize it by including the next rules and looking for loops.
 
 Check if the same string is visited twice.
 
-### Untitled TODO
+### Zero Edge
 
 - Check if every rules starts and ends with a zero.
-- The first rule length must be greater or equal to 2.
 
 ## Accelerated Simulation
 

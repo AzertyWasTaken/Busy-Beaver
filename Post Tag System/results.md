@@ -17,11 +17,10 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(4) | 1 |
-| BBPT(5) | 6 |
-| BBPT(6) | 139 |
-| BBPT(7) | 2,088 |
-| BBPT(8) | 29,201 |
+| BBPT(5) | 5 |
+| BBPT(6) | 137 |
+| BBPT(7) | 2,085 |
+| BBPT(8) | 29,182 |
 
 ## BBPT(1)
 
@@ -114,6 +113,7 @@ F(n) := 1^n
 
 - It is currently undecided.
 - It is similar to the first one but seems to be much harder to decide.
+- Ones are separated by at least 2 zeros. Hence twos are separated by at least 1 zero.
 
 ### Bouncer — `0111_0`
 

@@ -13,6 +13,7 @@ import {decFirstRule} from "./Deciders/firstRule.js";
 import {decIdenticalRule} from "./Deciders/identicalRule.js";
 import {decNondecreasing} from "./Deciders/nondecreasing.js";
 import {decEvenIndex} from "./Deciders/evenIndex.js";
+import {decZeroEdge} from "./Deciders/zeroEdge.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -25,4 +26,4 @@ const value = fileWriter(
 
 // await value.newList(100_000, 1_000, [], 8);
 
-await value.decideList(1_000, [decEvenIndex], 5);
+await value.decideList(0, [decZeroEdge], 8);
