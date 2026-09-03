@@ -11,13 +11,14 @@ export function decUnusedSymbol(code) {
 
             if (instr.length === 0) {
                 acc++;
-                undefinedSymbols.add(sym);
             } else {
-                usedSymbols.add(instr[2]);
+                usedSymbols.add(instr[0]);
             }
         }
 
         if (acc > 0 && acc < code.length) return false;
+
+        if (acc === code.length) undefinedSymbols.add(sym);
     }
 
     return usedSymbols.isDisjointFrom(undefinedSymbols);
