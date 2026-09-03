@@ -34,27 +34,62 @@
 
 ## BB(2)
 
-Proving this domain requires cycler and translated cycler deciders.
+Deciding this domain would require:
 
-### Champion — `1RB1LB_1LA---`
+- Cycler decider.
+- Translated cycler decider.
+- Simulating TMs for a few steps.
 
-- Runs for 6 steps before halting.
-- Transitions `B0` and `A0` are used twice.
+### Busy Beaver — `1RB1LB_1LA---`
+
+Runs for 6 steps before halting.
+
+```txt
+// Simulation
+start → 00A0 → 001B → 00A1 → 0B11 → A111 → 1B11 → halt
+```
+
+Other busy beavers:
+
+- `1RB0LB_1LA---`
+- `1RB---_1LB1LA`
+- `1RB---_0LB1LA`
+- `0RB---_1LA1RB`
 
 ### Cycler — `1RB1RB_0LA---`
 
-- Has a **period** of 2 steps.
+Completes a cycles every 2 steps.
 
-### Translated Cycler — `1RB0LA_0LA---`
+```txt
+// Simulation
+1B → A0 → 1B
+```
 
-- Has a **period** is 3 steps.
-- Has an **offset** of 2 cells leftward.
+Other cyclers:
+
+- `1RB---_0LB1RB`
+- `1RB0RB_0LA---` (4 steps period)
+
+### Translated Cycler — `1RB---_0LB0LB`
+
+Runs for 3 steps then cycles leftward.
+
+```txt
+// Simulation
+00A0 → 001B → 00B0 → 0B00 → B000
+```
+
+Other translated cyclers:
+
+- `1RB---_1LB0RB` (5 steps preperiod)
+- `1RB0RA_1LA---` (4 steps period)
+- `1RB1RA_1LA---` (slighty harder to decide)
 
 ## BB(3)
 
-Proving this domain requires solving bouncers and counters.
+Proving this domain requires deciding bouncers and counters.
 
-### Champion — `1RB---_1LB0RC_1LC1LA`
+### Busy Beaver — `1RB---_1LB0RC_1LC1LA`
 
 - Runs for 21 steps before halting.
 
@@ -63,7 +98,7 @@ Proving this domain requires solving bouncers and counters.
 start → F(0) → F(1) → F(3) → halt
 
 // Definition
-F(n) := 0 <A 1^n
+F(n) := A0 1^n
 ```
 
 ### Bouncer — `1RB1LA_1LA1RC_---1RB`
@@ -76,7 +111,7 @@ F(n) := 0 <A 1^n
 
 ## BB(4)
 
-### Champion — `1RB1LB_1LA0LC_---1LD_1RD0RA`
+### Busy Beaver — `1RB1LB_1LA0LC_---1LD_1RD0RA`
 
 - Runs for 107 steps before halting.
 - Follows a permutation-like trajectory.
@@ -86,12 +121,12 @@ F(n) := 0 <A 1^n
 start → F(0) → F(3) → F(5) → F(4) → F(2) → halt
 
 // Definition
-F(n) := 1^n 01 B> 0
+F(n) := 1^n 01 B0
 ```
 
 ## BB(2,3)
 
-### Champion — `1RB2LB---_2LA2RB1LB`
+### Busy Beaver — `1RB2LB---_2LA2RB1LB`
 
 - Runs for 38 steps before halting.
 - Bounces back and forth until there is no twos at right end of the string.
@@ -103,7 +138,7 @@ F(n+1) → F(n)
 F(0) → halt
 
 // Definition
-F(n) := 0 <B 1^k 2^n
+F(n) := B0 1^k 2^n
 ```
 
 ### Bouncer — `1RB2LA1RA_0LA---1RA`
@@ -113,6 +148,34 @@ F(n) := 0 <B 1^k 2^n
 ### Counter — `1RB1LA1RB_0LA2RB---`
 
 - Counts in binary, where `0 → 1` and `1 → 2` with a one at the left end of the string.
+
+## BB(2,4)
+
+### Busy Beaver — `1RB2LA1RA1RA_1LB1LA3RB`
+
+- Runs for 3,932,964 steps before halting.
+- Computes a Collatz-like function.
+
+```txt
+// Function
+start → G(0)
+F(3k) → F(5k+1)   | G(3k) → G(5k+1)
+F(3k+1) → halt    | G(3k+1) → F(5k+3)
+F(3k+2) → G(5k+4) | G(3k+2) → halt
+
+// Trajectory
+start → G(0) → G(1) → F(3) → F(6) → F(11) →
+G(19) → F(33) → F(56) → G(94) → F(158) → G(264) →
+G(441) → G(736) → F(1228) → halt
+
+// Definition
+F(n) := A0 2^n 1
+G(n) := A0 2^n 11
+```
+
+### Untitled — `1RB1LB2RB---_2LA2LB3RA0LB`
+
+- It seems to be a bouncer at left and a counter at right.
 
 ## See Also
 

@@ -6,11 +6,8 @@
 - Enumerate BB(4)
 - Enumerate BB(2,4)
 - Maximum state and symbol
-- Create BB(4) analysis
 - Create simulator webpage
 - Cycler decider
-- Halting path decider
-- Unused symbol decider
 - Translated cycler decider
 
 ## Enumeration
@@ -23,7 +20,3 @@
 ## Documentation
 
 ## Website
-
-- [ ] Move simulator
-- [ ] Zoom simulator
-- [ ] Starting parameters
