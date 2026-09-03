@@ -57,13 +57,25 @@ document.getElementById("import").addEventListener("click", () => {
     drawFrame();
 });
 
+// ==== Zoom ====
+
+document.getElementById("zoom-in").addEventListener("click", () => {
+    canvas.zoomIn();
+    drawFrame();
+});
+
+document.getElementById("zoom-out").addEventListener("click", () => {
+    canvas.zoomOut();
+    drawFrame();
+});
+
 // ==== Scroll ====
 
-const SCROLL_SPEED = 8;
+const SCROLL_PIXELS = 64;
 
 canvasEl.addEventListener("wheel", (el) => {
     el.preventDefault();
-    scrollY += Math.sign(el.deltaY) * SCROLL_SPEED;
+    scrollY += Math.sign(el.deltaY) * (SCROLL_PIXELS / canvas.CELL_SIZE);
     scrollY = Math.max(0, scrollY);
     drawFrame();
 })

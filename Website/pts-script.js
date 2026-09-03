@@ -25,12 +25,12 @@ offsetButton.addEventListener("click", toggleOffset);
 
 // ==== Canvas ====
 
-function appendRow(canvasDim) {
+function appendRow() {
     const {string, head} = program.getData();
     const colorTape = string.slice(head)
     .map((symbol) => SYMBOL_COLORS[symbol]);
 
-    history.push([colorTape, -canvasDim.x / 2]);
+    history.push(colorTape);
 }
 
 function drawFrame() {
@@ -43,18 +43,17 @@ function drawFrame() {
     for (let i = history.length; i < scrollY + canvasDim.y; i++) {
         const data = program.getData();
         if (data.status !== "running") break;
-        appendRow(canvasDim);
+        appendRow();
         program.step();
         if (program.getData().status !== "running")
-            appendRow(canvasDim);
+            appendRow();
     }
 
     // Draw rows
     let offset = 0;
     for (let i = scrollY; i < scrollY + canvasDim.y; i++) {
         if (!history[i]) break;
-        const [colors, center] = history[i];
-        canvas.drawRow(colors, center + offset);
+        canvas.drawRow(history[i], -canvasDim.x / 2 + offset);
         if (doOffset) offset += 2;
     }
 }
@@ -70,13 +69,25 @@ document.getElementById("import").addEventListener("click", () => {
     drawFrame();
 });
 
+// ==== Zoom ====
+
+document.getElementById("zoom-in").addEventListener("click", () => {
+    canvas.zoomIn();
+    drawFrame();
+});
+
+document.getElementById("zoom-out").addEventListener("click", () => {
+    canvas.zoomOut();
+    drawFrame();
+});
+
 // ==== Scroll ====
 
-const SCROLL_SPEED = 8;
+const SCROLL_PIXELS = 64;
 
 canvasEl.addEventListener("wheel", (el) => {
     el.preventDefault();
-    scrollY += Math.sign(el.deltaY) * SCROLL_SPEED;
+    scrollY += Math.sign(el.deltaY) * (SCROLL_PIXELS / canvas.CELL_SIZE);
     scrollY = Math.max(0, scrollY);
     drawFrame();
 })

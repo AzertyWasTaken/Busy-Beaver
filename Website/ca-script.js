@@ -1,8 +1,8 @@
 "use strict";
 import {SYMBOL_COLORS} from "./colors.js";
 import {createCanvas} from "./canvas.js";
-import {parse} from "../Cyclic Tag System/parser.js";
-import {newTag} from "../Cyclic Tag System/runner.js";
+import {parse} from "../Cellular Automaton/parser.js";
+import {newAutomaton} from "../Cellular Automaton/runner.js";
 
 // ==== Initialize ====
 
@@ -10,26 +10,11 @@ const canvasEl = document.getElementById("canvas");
 const canvas = createCanvas(canvasEl);
 let code, program, history, scrollY;
 
-// ==== Offset ====
-
-const offsetButton = document.getElementById("offset");
-let doOffset = false;
-
-function toggleOffset() {
-    doOffset = !doOffset;
-    offsetButton.textContent = doOffset ? "On" : "Off";
-    if (code) drawFrame();
-}
-
-offsetButton.addEventListener("click", toggleOffset);
-
 // ==== Canvas ====
 
 function appendRow() {
-    const {string, head} = program.getData();
-    const colorTape = string.slice(head)
-    .map((symbol) => SYMBOL_COLORS[symbol]);
-
+    const {tape} = program.getData();
+    const colorTape = tape.map((symbol) => SYMBOL_COLORS[symbol - 1]);
     history.push(colorTape);
 }
 
@@ -48,11 +33,9 @@ function drawFrame() {
     }
 
     // Draw rows
-    let offset = 0;
     for (let i = scrollY; i < scrollY + canvasDim.y; i++) {
         if (!history[i]) break;
-        canvas.drawRow(history[i], -canvasDim.x / 2 + offset);
-        if (doOffset) offset++;
+        canvas.drawRow(history[i], -canvasDim.x / 2);
     }
 }
 
@@ -61,7 +44,7 @@ function drawFrame() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newTag(code, 1_000_000);
+    program = newAutomaton(code, 1_000_000);
     history = [];
     scrollY = 0;
     drawFrame();
