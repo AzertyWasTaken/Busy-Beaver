@@ -41,7 +41,7 @@ export function enumerateTNF(maxSize, maxSteps) {
         if (status === "timed out") {
             if (size === maxSize) yield code;
             return;
-        }    
+        }
 
         const symbol = string[head];
 

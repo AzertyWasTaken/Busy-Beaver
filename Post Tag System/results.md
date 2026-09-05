@@ -17,66 +17,116 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(5) | 5 |
-| BBPT(6) | 137 |
-| BBPT(7) | 2,085 |
-| BBPT(8) | 29,182 |
+| BBPT(5) | 3 |
+| BBPT(6) | 89 |
+| BBPT(7) | 1,002 |
+| BBPT(8) | 14,225 |
 
 ## BBPT(1)
 
-The only program of this size is a busy beaver.
+The only programs of this size halt in a single step.
 
-### Champion — `0`
+### Busy Beaver — `0`
 
-- Runs a single step before halting.
+Runs for 1 step before halting.
+
+```txt
+// Simulation
+start → 00 → 0 → halt
+```
 
 ## BBPT(2)
 
-Proving this domain requires uni-period cycler decider.
+Programs of size 2 cannot grow: they either halt or cycle every step.
 
-### Champion — `10_`
+### Busy Beaver — `10_`
 
-- Runs for 2 steps before halting.
+Runs for 2 steps before halting.
 
-### Cycler — `01`
+```txt
+// Simulation
+start → 00 → 10 → eps → halt
+```
 
-- The string never changes, causing the program to never halt.
+### Cycler — `00`
+
+The queue stays exactly the same, causing the program to never halt.
+
+```txt
+// Simulation
+start → 00 → 00 → 00
+```
 
 ## BBPT(3)
 
-Proving this domain requires multi-period cycler decider and solving `000`.
+Deciding this domain would require:
 
-### Champion — `011_`
+- Cycler decider.
+- Deciding: `000` `001_` `010_`
+- Simulating PTs for a few steps.
 
-- Runs for 4 steps before halting.
+### Busy Beaver — `011_`
+
+Runs for 4 steps before halting.
+
+```txt
+// Simulation
+start → 00 → 011 → 1011 → 11 → eps → halt
+```
 
 ### Translated Cycler — `000`
 
-- The string grows indefinitely by a symbol per step.
+The string grows indefinitely by a zero per step.
 
-### Multi-Period Cycler — `010_`
+```txt
+// Simulation
+start → 0 → 00 → 000 → 0000
+```
 
-- Has a **period** of 3 steps.
+### Multi-Period Cycler — `001_`
+
+Completes a cycle every 3 steps.
+
+```txt
+// Simulation
+start → 00 → 001 → 1001 → 01 → 001
+```
+
+Another multi-period cycler: `010_`
 
 ## BBPT(4)
 
+Deciding this domain would require:
+
+- Cycler decider.
+- Even index decider.
+- Non decreasing decider.
+- Deciding: `001_0` `010_0`
+- Simulating PTs for a few steps.
+
 Proving this domain requires multi-period cycler, even index deciders and solving `000` and `010_0`.
 
-### Champion — `011_1`
+### Busy Beaver — `011_1`
 
-- Runs for 5 steps before halting.
-
-### Chaotic — `010_0`
-
-- Follows a chaotic pattern with growth phases followed by stable phases.
+Runs for 5 steps before halting.
 
 ```txt
-// Nonhalting proof
-The ones are separated by at least 2 zeros, by repeatedly appending the first produciton rule.
-So every one append is followed by a zero append.
-Rule one decreases the string length by 1 while rule zero increases the string length by 1.
-Hence every decrease is cancelled by the next increase.
+// Simulation
+start → 00 → 011 → 1011 → 111 → 11 → 1 → halt
 ```
+
+### Chaotic — `001_0`
+
+Follows a chaotic pattern. It is nonhalting because its production rule `0 → 001` has two consecutive zeros.
+
+```txt
+// Simulation
+start → 00 → 001 → 1001 → 010 → 0001 →
+01001 → 001001 → 1001001 → 010010 →
+0010001 → 10001001 → 0010010 → 10010001
+```
+
+Another chaotic program: `010_0` (is nonhalting for a similar reason)
 
 ## BBPT(5)
 
@@ -84,8 +134,7 @@ Proving this domain requires multi-period cycler, even index deciders and solvin
 
 ### Champion — `111_20_`
 
-- Runs for 19 steps before halting.
-- Computes a collatz-like function.
+Computes a collatz-like function then halts after 19 steps.
 
 ```txt
 // Function
@@ -100,10 +149,9 @@ start → F(3) → F(5) → F(8) → halt
 F(n) := 1^n
 ```
 
-### Multi-Period Translated Cycler — `01010`
+### Multi-Period Translated Cycler — `01010_`
 
-- Has a **period** of 5 steps.
-- Has an **offset** of 5 steps.
+Complete a cycle every 5 steps, with an offset of 5 steps.
 
 ### Cubic Bell — `010_21_`
 
@@ -114,6 +162,8 @@ F(n) := 1^n
 - It is currently undecided.
 - It is similar to the first one but seems to be much harder to decide.
 - Ones are separated by at least 2 zeros. Hence twos are separated by at least 1 zero.
+
+See also: `0210_0_`
 
 ### Bouncer — `0111_0`
 
@@ -129,3 +179,8 @@ F(n) := 1^n
 ## See Also
 
 - [Champions List](https://wiki.bbchallenge.org/wiki/Post_Tag_System)
+- [Cycler](https://wiki.bbchallenge.org/wiki/Cycler)
+- [Translated Cycler](https://wiki.bbchallenge.org/wiki/Translated_cycler)
+- [Bouncer](https://wiki.bbchallenge.org/wiki/Bouncer)
+- [Cubic Bell](https://wiki.bbchallenge.org/wiki/Bell)
+- [Collatz-Like](https://wiki.bbchallenge.org/wiki/Collatz-like)

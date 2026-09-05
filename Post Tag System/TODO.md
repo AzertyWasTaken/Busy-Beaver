@@ -12,10 +12,18 @@
 - TNF enumeration
 - Even (0-indexed) symbols decider
 - Decider for `010_0`-like programs
+- Translated cycler decider
+- Improve rule loop decider
+- Improve first rule decider
 
 ## Enumeration
 
-- [ ] Translated cycler decider
+- [ ] Improve cyclic closed rule decider XX
+  - [ ] check whole producted string
+  - [ ] check possible previous symbols
+  - [ ] deprecate `zeroEdge.js`
+- [ ] Advanced nonhalting prediction decider
+- [ ] TNF symbols prediction
 
 ## Documentation
 
