@@ -1,6 +1,6 @@
 "use strict";
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
-import {createCanvas} from "./canvas.js";
+import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
 import {parse} from "../Turing Machine/parser.js";
 import {newMachine} from "../Turing Machine/runner.js";
 
@@ -8,7 +8,8 @@ import {newMachine} from "../Turing Machine/runner.js";
 
 const canvasEl = document.getElementById("canvas");
 const canvas = createCanvas(canvasEl);
-let code, program, history, scrollY;
+let code, program, history;
+const scroll = {x: 0, y: 0};
 
 // ==== Canvas ====
 
@@ -32,7 +33,7 @@ function drawFrame() {
     const canvasDim = canvas.getSize();
 
     // Complete the history
-    for (let i = history.length; i < scrollY + canvasDim.y; i++) {
+    for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
         const data = program.getData();
         if (data.status !== "running") break;
         appendRow(data);
@@ -40,9 +41,9 @@ function drawFrame() {
     }
 
     // Draw rows
-    for (let i = scrollY; i < scrollY + canvasDim.y; i++) {
+    for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
         if (!history[i]) break;
-        canvas.drawRow(...history[i]);
+        canvas.drawRow(history[i][0], history[i][1] - scroll.x);
     }
 }
 
@@ -53,29 +54,15 @@ document.getElementById("import").addEventListener("click", () => {
     code = input.length === 0 ? undefined : parse(input);
     program = newMachine(code, 1_000_000);
     history = [];
-    scrollY = 0;
+    scroll.x = 0;
+    scroll.y = 0;
     drawFrame();
 });
 
 // ==== Zoom ====
 
-document.getElementById("zoom-in").addEventListener("click", () => {
-    canvas.zoomIn();
-    drawFrame();
-});
-
-document.getElementById("zoom-out").addEventListener("click", () => {
-    canvas.zoomOut();
-    drawFrame();
-});
+setupZoom(canvas, drawFrame);
 
 // ==== Scroll ====
 
-const SCROLL_PIXELS = 64;
-
-canvasEl.addEventListener("wheel", (el) => {
-    el.preventDefault();
-    scrollY += Math.sign(el.deltaY) * (SCROLL_PIXELS / canvas.CELL_SIZE);
-    scrollY = Math.max(0, scrollY);
-    drawFrame();
-})
+setupScroll(canvasEl, canvas, drawFrame, scroll, false);

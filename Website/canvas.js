@@ -108,5 +108,84 @@ export function createCanvas(canvas) {
         ctx.drawImage(offscreen, 0, 0, canvas.width, canvas.height);
     }
 
-    return {reset, drawRow, getSize, zoomIn, zoomOut, get CELL_SIZE() {return cellSize();}};
+    return {
+        reset, drawRow, getSize, zoomIn, zoomOut,
+        get CELL_SIZE() {return cellSize();},
+        get canZoomIn() {return sizeIndex < CELL_SIZES.length - 1;},
+        get canZoomOut() {return sizeIndex > 0;}
+    };
+}
+
+export function setupZoom(canvas, drawFrame) {
+    const zoomInButton = document.getElementById("zoom-in");
+    const zoomOutButton = document.getElementById("zoom-out");
+
+    function updateButtons() {
+        zoomInButton.disabled = !canvas.canZoomIn;
+        zoomOutButton.disabled = !canvas.canZoomOut;
+    }
+
+    zoomInButton.addEventListener("click", () => {
+        canvas.zoomIn();
+        updateButtons();
+        drawFrame();
+    });
+
+    zoomOutButton.addEventListener("click", () => {
+        canvas.zoomOut();
+        updateButtons();
+        drawFrame();
+    });
+
+    updateButtons();
+}
+
+const SCROLL_PIXELS = 64;
+
+export function setupScroll(canvasEl, canvas, drawFrame, scroll, clampX) {
+    canvasEl.addEventListener("wheel", (el) => {
+        el.preventDefault();
+        if (el.shiftKey || Math.abs(el.deltaX) > Math.abs(el.deltaY)) {
+            scroll.x += Math.sign(el.deltaX || el.deltaY) * (SCROLL_PIXELS / canvas.CELL_SIZE);
+            if (clampX) scroll.x = Math.max(0, scroll.x);
+        } else {
+            scroll.y += Math.sign(el.deltaY) * (SCROLL_PIXELS / canvas.CELL_SIZE);
+            scroll.y = Math.max(0, scroll.y);
+        }
+        drawFrame();
+    });
+
+    // Drag the canvas with the mouse or touch to pan the view.
+    let activePointerId = null;
+    let startClientX = 0;
+    let startClientY = 0;
+    let startScrollX = 0;
+    let startScrollY = 0;
+
+    canvasEl.addEventListener("pointerdown", (el) => {
+        if (el.button !== 0 || activePointerId !== null) return;
+        activePointerId = el.pointerId;
+        startClientX = el.clientX;
+        startClientY = el.clientY;
+        startScrollX = scroll.x;
+        startScrollY = scroll.y;
+        canvasEl.setPointerCapture(el.pointerId);
+    });
+
+    canvasEl.addEventListener("pointermove", (el) => {
+        if (el.pointerId !== activePointerId) return;
+        scroll.x = Math.round(startScrollX - (el.clientX - startClientX) / canvas.CELL_SIZE);
+        scroll.y = Math.round(startScrollY - (el.clientY - startClientY) / canvas.CELL_SIZE);
+        if (clampX) scroll.x = Math.max(0, scroll.x);
+        scroll.y = Math.max(0, scroll.y);
+        drawFrame();
+    });
+
+    canvasEl.addEventListener("pointerup", (el) => {
+        if (el.pointerId === activePointerId) activePointerId = null;
+    });
+
+    canvasEl.addEventListener("pointercancel", (el) => {
+        if (el.pointerId === activePointerId) activePointerId = null;
+    });
 }

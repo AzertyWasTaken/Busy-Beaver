@@ -13,7 +13,7 @@ Each simulator page imports the parser and runner of its system folder, so the s
 
 Shared modules:
 
-- `canvas.js` — draws the space-time diagram row by row.
+- `canvas.js` — draws the space-time diagram row by row, and handles zoom, scroll and drag.
 - `colors.js` — the colors used for symbols and states.
 
 ## Running
@@ -27,5 +27,7 @@ Shared modules:
 - Whitespace in the input is ignored, and importing an empty input resets the canvas.
 - The canvas shows the space-time diagram: each row is one step, and colors encode the symbols and the current state.
 - Scroll with the mouse wheel: rows are simulated lazily as you scroll, up to 1,000,000 steps.
-- Zoom with the **-** and **+** buttons: they change the cell size of the diagram, and the scroll speed adapts so one wheel tick always scrolls the same distance.
+- Scroll horizontally with Shift + mouse wheel or a horizontal trackpad swipe: the view moves in both directions over the bi-infinite tape (Turing Machine and Pebble Automaton pages), and is clamped at the left of the simulation (Post Tag System, Cyclic Tag System and Cellular Automaton pages).
+- Drag the canvas with the mouse or touch: the view follows the pointer in both directions, with the same clamping as the wheel scroll.
+- Zoom with the **-** and **+** buttons: they change the cell size of the diagram, and the scroll speed adapts so one wheel tick always scrolls the same distance. A button is disabled when its zoom limit is reached.
 - The **Offset** toggle (Post Tag System and Cyclic Tag System pages) shifts each row horizontally at each step.
