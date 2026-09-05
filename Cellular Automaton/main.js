@@ -7,6 +7,8 @@ import {newAutomaton} from "./runner.js";
 import {unparse, parse} from "./parser.js";
 
 // Deciders
+import {decCycler} from "./Deciders/cycler.js";
+import {decSymmetry} from "./Deciders/symmetry.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -19,6 +21,6 @@ const value = fileWriter(
     unparse
 );
 
-// await value.newList(100_000, 100, [], 4, 2);
+// await value.newList(100_000, 100, [decSymmetry], 3, 2);
 
-await value.decideList(0, [], 2, 4);
+// await value.decideList(0, [decSymmetry], 3, 2);

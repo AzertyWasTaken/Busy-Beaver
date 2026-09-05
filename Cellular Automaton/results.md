@@ -14,57 +14,115 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBCA(2) | 3 |
-| BBCA(3) | 292 |
-| BBCA(2,3) | 15 |
-| BBCA(2,4) | 1,814 |
+| BBCA(3) | 156 |
+| BBCA(2,3) | 5 |
+| BBCA(2,4) | 1,189 |
 
 ## BBCA(2)
 
 ### Champion — `111-`
 
-Get 2 cells in a row then halt.
+Runs for 2 steps.
 
-### Cycler — `101-`
+```txt
+// Simulation
+start → 10 → 11 → halt
+```
 
-- Has a **period** of 1 step.
+### Cycler — `110-`
+
+The initial configuration stays the same forever.
+
+```txt
+// Simulation
+start → 1 → 1 → 1
+```
 
 ## BBCA(3)
 
 ### Champion — `2022-1120`
 
-A fractal-like pattern that halts if there are 2 consecutive ones.
+A fractal-like pattern that halts if there are 2 consecutive ones, which happen after 21 steps.
 
-### Multiperiod Cycler — `2012022-1`
+### Multi-Period Cycler — `2210--0--`
 
-- Has a **period** of 2 steps.
+Completes a cycle every 2 steps.
 
-### Fractal — `2022-1102`
+```txt
+// Simulation
+start → 1 → 2 → 1
+```
 
-- The pattern is similar to a Sierpinski triangle.
+### Translated Cycler — `21112010-`
+
+Cycles every 3 steps and grows 3 cells.
+
+Other translated cyclers:
+
+- `21-120110` (double)
+
+### Fractal — `21-121-10`
+
+Follows a Sierpinski triangle pattern.
+
+```txt
+// Simulation
+start → 10000000 → 11000000 → 12100000 → 10010000
+11011000 → 12112100 → 10020010 → 11000011
+```
+
+Other fractals:
+
+- `21-120010` (similar)
+- `210121-00` (similar)
+- `21212000-`
+
+### Chaotic — `21-120011`
+
+Seems to leave cyclers parts while the chaotic part moves forward while growing.
+
+Other chaotic:
+
+- `210121-01`
 
 ## BBCA(2,3)
 
-### Champion — `1011110-`
+### Champion — `1110011-`
 
-- Runs for 2 steps then halts.
+- Runs for 4 steps then halts.
 
-### Translated Cycler — `10111-11`
+```txt
+// Simulation
+start → 1000 → 1100 → 1010 → 1111 → halt
+```
 
-- Has a **period** of 1 step.
-- Grows by one cell per period while moving.
+### Multi-Period Cycler — `11100-0-`
+
+- Has a **period** of 2 steps.
+
+```txt
+// Simulation
+start → 10 → 11 → 10
+```
+
+### Translated Cycler — `11110-11`
+
+Grows by 1 one every step.
+
+```txt
+// Simulation
+start → 1000 → 1100 → 1110 → 1111
+```
+
+Other translated cyclers:
+
+- `11111-11`
+- `110-11--` (stripes)
+- `1110001-` (checkboard)
 
 ### Fractal — `110-10--`
 
 - The pattern is a Sierpinski triangle with an horizontal gap per cell.
-
-### Multiperiod Cycler — `11100-0-`
-
-- Has a **period** of 2 steps.
-
-### Chessboard — `1110001-`
-
-- Has a chessboard-like pattern.
 
 ## BBCA(2,4)
 
@@ -72,3 +130,10 @@ A fractal-like pattern that halts if there are 2 consecutive ones.
 
 - Runs for 94 steps then halts.
 - Follows a chaotic pattern.
+
+## See Also
+
+- [Champions List](https://wiki.bbchallenge.org/wiki/Cellular_automaton)
+- [Cycler](https://wiki.bbchallenge.org/wiki/Cycler)
+- [Translated Cycler](https://wiki.bbchallenge.org/wiki/Translated_cycler)
+- [Fractal](https://wiki.bbchallenge.org/wiki/Fractal)

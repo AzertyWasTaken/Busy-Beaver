@@ -19,4 +19,4 @@ The halting/undefined rule counts as a step, so the CA with rule `010 → 0` hal
 
 ## See Also
 
-- [Pebble Automaton](https://wiki.bbchallenge.org/wiki/Pebble_Automaton)
+- [Cellular Automaton](https://wiki.bbchallenge.org/wiki/Cellular_automaton)
