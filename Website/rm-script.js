@@ -8,13 +8,14 @@ import {newMachine} from "../Register Machine/runner.js";
 
 const canvasEl = document.getElementById("canvas");
 const canvas = createCanvas(canvasEl);
+const stepsEl = document.getElementById("steps");
 let code, program, history;
 const scroll = {x: 0, y: 0};
 
 // ==== Canvas ====
 
 function appendRow(data) {
-    const colorTape = [];
+    const colorTape = [STATE_COLORS[data.state]];
     data.register.forEach((e, i) => {
         for (let a = 0; a < e; a++)
             colorTape.push(SYMBOL_COLORS[i]);
@@ -25,7 +26,10 @@ function appendRow(data) {
 
 function drawFrame() {
     canvas.reset();
-    if (!code || !program) return;
+    if (!code || !program) {
+        stepsEl.textContent = "Steps: 0";
+        return;
+    }
 
     const canvasDim = canvas.getSize();
 
@@ -36,6 +40,8 @@ function drawFrame() {
         appendRow(data);
         program.step();
     }
+
+    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
 
     // Draw rows
     for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
@@ -62,4 +68,4 @@ setupZoom(canvas, drawFrame);
 
 // ==== Scroll ====
 
-setupScroll(canvasEl, canvas, drawFrame, scroll, false);
+setupScroll(canvasEl, canvas, drawFrame, scroll, true);

@@ -8,6 +8,7 @@ import {newTag} from "../Cyclic Tag System/runner.js";
 
 const canvasEl = document.getElementById("canvas");
 const canvas = createCanvas(canvasEl);
+const stepsEl = document.getElementById("steps");
 let code, program, history;
 const scroll = {x: 0, y: 0};
 
@@ -36,7 +37,10 @@ function appendRow() {
 
 function drawFrame() {
     canvas.reset();
-    if (!code || !program) return;
+    if (!code || !program) {
+        stepsEl.textContent = "Steps: 0";
+        return;
+    }
 
     const canvasDim = canvas.getSize();
 
@@ -47,6 +51,8 @@ function drawFrame() {
         appendRow();
         program.step();
     }
+
+    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
 
     // Draw rows
     let offset = 0;

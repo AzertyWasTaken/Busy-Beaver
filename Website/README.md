@@ -31,3 +31,4 @@ Shared modules:
 - Drag the canvas with the mouse or touch: the view follows the pointer in both directions, with the same clamping as the wheel scroll.
 - Zoom with the **-** and **+** buttons: they change the cell size of the diagram, and the scroll speed adapts so one wheel tick always scrolls the same distance. A button is disabled when its zoom limit is reached.
 - The **Offset** toggle (Post Tag System and Cyclic Tag System pages) shifts each row horizontally at each step.
+- The **Steps** label shows how many steps the program has executed so far: it updates as rows are simulated while scrolling, and matches the runtimes reported in each system's `results.md`.

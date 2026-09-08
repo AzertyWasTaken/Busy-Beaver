@@ -1,8 +1,8 @@
 "use strict";
-import {SYMBOL_COLORS} from "./colors.js";
+import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
-import {parse} from "../Cellular Automaton/parser.js";
-import {newAutomaton} from "../Cellular Automaton/runner.js";
+import {parse} from "../Fractran/parser.js";
+import {newMachine} from "../Fractran/runner.js";
 
 // ==== Initialize ====
 
@@ -14,9 +14,13 @@ const scroll = {x: 0, y: 0};
 
 // ==== Canvas ====
 
-function appendRow() {
-    const {tape} = program.getData();
-    const colorTape = tape.map((symbol) => SYMBOL_COLORS[symbol - 1]);
+function appendRow(data) {
+    const colorTape = [];
+    data.register.forEach((e, i) => {
+        for (let a = 0; a < e; a++)
+            colorTape.push(SYMBOL_COLORS[i]);
+    })
+    
     history.push(colorTape);
 }
 
@@ -33,7 +37,7 @@ function drawFrame() {
     for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
         const data = program.getData();
         if (data.status !== "running") break;
-        appendRow();
+        appendRow(data);
         program.step();
     }
 
@@ -51,7 +55,8 @@ function drawFrame() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newAutomaton(code, 1_000_000);
+    
+    program = newMachine(code, 1_000_000);
     history = [];
     scroll.x = 0;
     scroll.y = 0;
