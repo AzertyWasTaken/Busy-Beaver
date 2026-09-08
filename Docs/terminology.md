@@ -17,6 +17,8 @@
 - **Head**: the pointer to the cell or rule being accessed.
 - **Queue**: a string where symbols are appended at one end and removed at the opposite end.
 - **Pebble**: a unit of value that can be moved between cells without gains or losses.
+- **Register**: a finite array containing integers.
+- **Counter**: a value that stores a nonnegative integer.
 
 ## Execution
 
