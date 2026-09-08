@@ -23,31 +23,39 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBCT(6) | 1 |
-| BBCT(7) | 3 |
-| BBCT(8) | 11 |
-| BBCT(9) | 87 |
-| BBCT(10) | 387 |
-| BBCT(11) | 1,506 |
-| BBCT(12) | 5,899 |
-| BBCT(13) | 21,081 |
-| BBCT(13) | 75,533 |
+| BBCT(8) | 1 |
+| BBCT(9) | 17 |
+| BBCT(10) | 133 |
+| BBCT(11) | 751 |
+| BBCT(12) | 3,453 |
+| BBCT(13) | 14,539 |
+| BBCT(14) | 52,873 |
 
 ## BBCT(1)
 
 The only program of this size is a busy beaver.
 
-### Champion — `empty`
+### Busy Beaver — `empty`
 
 - Runs a single step before halting.
+
+```txt
+// Simulation
+start → 1 → halt
+```
 
 ## BBCT(2)
 
 The only nonhalting program of this size is a cycler.
 
-### Champion — `0`
+### Busy Beaver — `0`
 
 - Runs for 2 steps before halting.
+
+```txt
+// Simulation
+start → 1 → 0 → halt
+```
 
 ### Cycler — `1`
 
@@ -57,9 +65,14 @@ The only nonhalting program of this size is a cycler.
 
 Proving this domain requires nondecreasing decider.
 
-### Champion — `00`
+### Busy Beaver — `00`
 
 - Runs for 3 steps before halting.
+
+```txt
+// Simulation
+start → 1 → 00 → 0 → halt
+```
 
 ### Multi-Period Cycler — `01`
 
@@ -71,9 +84,14 @@ Proving this domain requires nondecreasing decider.
 
 ## BBCT(4)
 
-### Champion — `000`
+### Busy Beaver — `000`
 
 - Runs for 4 steps before halting.
+
+```txt
+// Simulation
+start → 1 → 000 → 00 → 0 → halt
+```
 
 ### Multi-Period Translated Cycler — `011`
 
@@ -82,9 +100,14 @@ Proving this domain requires nondecreasing decider.
 
 ## BBCT(5)
 
-### Champion — `010_`
+### Busy Beaver — `010_`
 
 - Runs for 7 steps before halting.
+
+```txt
+// Simulation
+start → 1 → 010 → 10 → 0010 → 010 → 10 → 0 → halt
+```
 
 ### Translated Cycler 2 — `111_`
 
@@ -94,9 +117,14 @@ Proving this domain requires nondecreasing decider.
 
 ## BBCT(6)
 
-### Champion — `010_0`
+### Busy Beaver — `010_0`
 
 - Runs for 8 steps before halting.
+
+```txt
+// Simulation
+start → 1 → 010 → 10 → 0010 → 010 → 10 → 00 → 0 → halt
+```
 
 ### Chaotic — `111_0`
 
@@ -105,7 +133,7 @@ Proving this domain requires nondecreasing decider.
 
 ## BBCT(7)
 
-### Champion — `0110__`
+### Busy Beaver — `0110__`
 
 - Runs for 13 steps before halting.
 - Repeat the first rule thrice. Shift the ones at each iteration so at the 3rd iteration, both ones are skipped.
@@ -122,9 +150,33 @@ Proving this domain requires nondecreasing decider.
 - Follows a chaotic pattern.
 - Cannot be decided with consecutive ones decider.
 
+Other: `1011_1_` `101_11_`
+
+### Cubic Bell — `11_11_0`
+
+TODO
+
 ## BBCT(9)
 
 ### Champion — `1011_00_`
 
 - Runs for 717 steps before halting.
 - Follows a chaotic pattern.
+
+### Long-Period Translated Cycler — `0101010_`
+
+TODO
+
+### Long-Period Cycler — `00110__1`
+
+TODO
+
+### Irregular Translated Cycler — `010__011`
+
+TODO
+
+## See Also
+
+- [Champions List](https://wiki.bbchallenge.org/wiki/Cyclic_Tag)
+- [Cycler](https://wiki.bbchallenge.org/wiki/Cycler)
+- [Translated Cycler](https://wiki.bbchallenge.org/wiki/Translated_cycler)

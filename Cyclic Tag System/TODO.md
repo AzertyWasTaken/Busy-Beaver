@@ -9,11 +9,11 @@
 - Consecutive zeros decider
 - Consecutive ones decider
 - Enumerate BBCT(14)
+- Stronger consecutive ones decider
+- Closed rule decider
+- Translated cycler decider
 
 ## Enumeration
-
-- [ ] Modular Ones decider
-- [ ] Ones and empty rules decider
 
 ## Documentation
 

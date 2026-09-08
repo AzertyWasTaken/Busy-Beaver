@@ -39,3 +39,8 @@ Check if every symbol, modulo the production rules count, in the first rule are 
 Rules used to **speed up** halting (or not) programs execution.
 
 Not implemented yet.
+
+## See Also
+
+- [Cycler](https://wiki.bbchallenge.org/wiki/Cycler)
+- [Translated Cycler](https://wiki.bbchallenge.org/wiki/Translated_cycler)
