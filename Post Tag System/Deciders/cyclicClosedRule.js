@@ -1,6 +1,6 @@
 "use strict";
 function isClosed(rule, symbolSet, code) {
-    function checkPart(modulo) {
+    function checkMod(modulo) {
         for (let i = modulo; i < rule.length; i += 2) {
             const symbol = rule[i];
             if (typeof symbol !== "number") continue;
@@ -16,7 +16,7 @@ function isClosed(rule, symbolSet, code) {
         return false;
     }
 
-    return checkPart(0) && checkPart(1);
+    return checkMod(0) && checkMod(1);
 }
 
 export function decCyclicClosedRule(code) {

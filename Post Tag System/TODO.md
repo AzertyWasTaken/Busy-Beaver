@@ -15,15 +15,16 @@
 - Translated cycler decider
 - Improve rule loop decider
 - Improve first rule decider
+- CRR check whole producted string
 
 ## Enumeration
 
-- [ ] Improve cyclic closed rule decider XX
-  - [ ] check whole producted string
+- [ ] Improve cyclic closed rule decider
+  - [x] check whole producted string
   - [ ] check possible previous symbols
   - [ ] deprecate `zeroEdge.js`
 - [ ] Advanced nonhalting prediction decider
-- [ ] TNF symbols prediction
+- [ ] TNF symbols prediction (avoid using arrays in the queue)
 
 ## Documentation
 

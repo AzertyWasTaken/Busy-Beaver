@@ -5,7 +5,9 @@ export function parse(code) {
     const statesRules = code.split("_");
 
     for (let i = 0; i < statesRules.length; i++) {
-        parsed.push(Array.from(statesRules[i], Number));
+        parsed.push(Array.from(statesRules[i], (c) =>
+            c === "x" ? null : Number(c)
+        ));
     }
     return parsed;
 }

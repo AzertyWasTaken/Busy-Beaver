@@ -7,13 +7,15 @@ import {unparse, parse} from "./parser.js";
 import {fileWriter} from "../writer.js";
 
 // Deciders
+import {decImmortalSubstring} from "./Deciders/immortalSubstring.js";
 import {decCyclicClosedRule} from "./Deciders/cyclicClosedRule.js";
 import {decCycler} from "./Deciders/cycler.js";
 import {decFirstRule} from "./Deciders/firstRule.js";
 import {decIdenticalRule} from "./Deciders/identicalRule.js";
 import {decEvenIndex} from "./Deciders/evenIndex.js";
-import {decZeroEdge} from "./Deciders/zeroEdge.js";
+import {decClosedEdge} from "./Deciders/closedEdge.js";
 import {decTranslatedCycler} from "./Deciders/translatedCycler.js";
+import {decZeroOneZero} from "./Deciders/zeroOneZero.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -24,6 +26,6 @@ const value = fileWriter(
     unparse
 );
 
-// await value.newList(100_000, 1_000, [decFirstRule], 5);
+// await value.newList(100_000, 1_000, [], 8);
 
-await value.decideList(0, [decFirstRule], 8);
+await value.decideList(0, [decZeroOneZero], 6);

@@ -8,7 +8,7 @@
 | BBPT(2) | = 2 | `10_` |
 | BBPT(3) | = 4 | `011_` |
 | BBPT(4) | = 5 | `011_1` |
-| BBPT(5) | ≥ 19 | `111_20_` |
+| BBPT(5) | = 19 | `111_20_` |
 | BBPT(6) | ≥ 49 | `11_021_2` |
 | BBPT(7) | ≥ 779 | `112_1_002` |
 | BBPT(8) | ≥ 196,841 | `120221_0_2` |
@@ -17,10 +17,9 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(5) | 3 |
-| BBPT(6) | 89 |
-| BBPT(7) | 1,002 |
-| BBPT(8) | 14,225 |
+| BBPT(6) | 51 |
+| BBPT(7) | 664 |
+| BBPT(8) | 9,158 |
 
 ## BBPT(1)
 
@@ -175,6 +174,14 @@ See also: `0210_0_`
 
 - Runs for 49 steps before halting.
 - Has a chaotic behavior.
+
+### Irregular Counter — `121_000_`
+
+Computes a Collatz-like function that never halt.
+
+### Cycler — `110_20_2`
+
+Has a very long period.
 
 ## See Also
 
