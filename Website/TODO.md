@@ -12,10 +12,11 @@
 - Simulators canvas dragging
 - Show running time in steps
 - Display state on RM
+- Code visualization on CA
 
 ## Global
 
-- [ ] Code visualization
+- [ ] Code visualization on the other systems
 - [ ] Add simulator presets
 - [ ] Horizontal compression
 - [ ] States and symbols colors modes

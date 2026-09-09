@@ -46,6 +46,64 @@ function drawFrame() {
     }
 }
 
+// ==== Code ====
+
+const codeSection = document.getElementById("code-section");
+const codeCanvasEl = document.getElementById("code-canvas");
+const codeCtx = codeCanvasEl.getContext("2d");
+
+const CODE_CELL = 24;
+const CODE_GAP = 8;
+const ARROW_WIDTH = 12;
+const HALT_COLOR = "#FF0000";
+
+function drawCodeCell(x, y, color) {
+    codeCtx.fillStyle = color ?? "#000000";
+    codeCtx.fillRect(x, y, CODE_CELL, CODE_CELL);
+    codeCtx.strokeStyle = "#404040";
+    codeCtx.strokeRect(x + 0.5, y + 0.5, CODE_CELL - 1, CODE_CELL - 1);
+}
+
+function drawCodeArrow(x, y) {
+    codeCtx.fillStyle = "#FFFFFF";
+    codeCtx.beginPath();
+    codeCtx.moveTo(x, y - ARROW_WIDTH / 2);
+    codeCtx.lineTo(x + ARROW_WIDTH, y);
+    codeCtx.lineTo(x, y + ARROW_WIDTH / 2);
+    codeCtx.fill();
+}
+
+// Draws the rule table: each rule is its neighborhood, an arrow and its result symbol.
+function renderCode() {
+    codeSection.hidden = !code;
+    if (!code) return;
+
+    codeCtx.clearRect(0, 0, codeCanvasEl.width, codeCanvasEl.height);
+    // Same decoding as the runner
+    const symbols = code[0] + 1;
+    const ruleSpan = Math.round(Math.log(code.length) / Math.log(symbols));
+    const ruleWidth = (ruleSpan + 1) * CODE_CELL + ARROW_WIDTH + CODE_GAP;
+    const perRow = Math.max(1, Math.floor((codeCanvasEl.width - CODE_GAP) / (ruleWidth + CODE_GAP)));
+    const rowCount = Math.ceil((code.length - 1) / perRow);
+
+    const height = rowCount * (CODE_CELL + CODE_GAP) + CODE_GAP;
+    if (codeCanvasEl.height !== height) codeCanvasEl.height = height;
+
+    for (let idx = 1; idx < code.length; idx++) {
+        const x = CODE_GAP + ((idx - 1) % perRow) * (ruleWidth + CODE_GAP);
+        const y = CODE_GAP + Math.floor((idx - 1) / perRow) * (CODE_CELL + CODE_GAP);
+
+        // Neighborhood digits, from the leftmost neighbor cell to the cell itself
+        for (let j = ruleSpan - 1; j >= 0; j--)
+            drawCodeCell(x + (ruleSpan - 1 - j) * CODE_CELL, y, SYMBOL_COLORS[Math.floor(idx / symbols ** j) % symbols - 1]);
+
+        drawCodeArrow(x + ruleSpan * CODE_CELL + CODE_GAP / 2, y + CODE_CELL / 2);
+
+        const result = code[idx];
+        drawCodeCell(x + ruleSpan * CODE_CELL + CODE_GAP + ARROW_WIDTH, y, result === null ? HALT_COLOR : SYMBOL_COLORS[result - 1]);
+    }
+}
+
 // ==== Import ====
 
 document.getElementById("import").addEventListener("click", () => {
@@ -55,6 +113,7 @@ document.getElementById("import").addEventListener("click", () => {
     history = [];
     scroll.x = 0;
     scroll.y = 0;
+    renderCode();
     drawFrame();
 });
 
