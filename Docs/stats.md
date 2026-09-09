@@ -2,11 +2,16 @@
 
 | System | BB-index | Active Code Size |
 | - | - | - |
+| Post Tag System | 400 | 340 |
 | Turing Machine | 350 | 340 |
-| Post Tag System | 250 | 240 |
-| Cyclic Tag System | 120 | 170 |
-| Pebble Automaton | 20 | 210 |
-| Cellular Automaton | 10 | 110 |
+| Cyclic Tag System | 300 | 240 |
+| Cellular Automaton | 100 | 160 |
+| Register Machine | 50 | 180 |
+| Boolfuck | 40 | 310 |
+| CounterScript | 35 | 240 |
+| Pebble Automaton | 30 | 300 |
+| Fractran | 15 | 170 |
+| Lambda Calculus | 0 | 0 |
 
 ## BB-index
 
