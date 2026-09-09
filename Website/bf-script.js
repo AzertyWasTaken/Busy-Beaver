@@ -1,8 +1,8 @@
 "use strict";
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
-import {parse} from "../Turing Machine/parser.js";
-import {newMachine} from "../Turing Machine/runner.js";
+import {parse} from "../Boolfuck/parser.js";
+import {newMachine} from "../Boolfuck/runner.js";
 
 // ==== Initialize ====
 
@@ -15,14 +15,20 @@ const scroll = {x: 0, y: 0};
 // ==== Canvas ====
 
 function appendRow(data) {
-    const offsetX = -data.lTape.length;
+    let offsetX = -data.lTape.length;
 
     const colorTape = [0]
     .concat(data.lTape.toReversed())
     .concat(data.rTape)
     .map((symbol) => SYMBOL_COLORS[symbol - 1]);
 
-    colorTape[data.head - offsetX + 1] = STATE_COLORS[data.state];
+    let headPos = data.head - offsetX + 1;
+    while (headPos < 0) {
+        headPos++;
+        offsetX--;
+        colorTape.unshift("#000000");
+    }
+    colorTape[headPos] = STATE_COLORS[0];
 
     history.push([colorTape, offsetX - 1]);
 }
@@ -36,11 +42,17 @@ function drawFrame() {
 
     const canvasDim = canvas.getSize();
 
-    // Complete the history
-    for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
+    // Complete the history: brackets do not count as steps, so row i is the config after i steps
+    let prevSteps = history.length - 1;
+    while (history.length < scroll.y + canvasDim.y) {
         const data = program.getData();
-        if (data.status !== "running") break;
-        appendRow(data);
+        // Unbalanced brackets leave the state NaN
+        if (data.status !== "running" || Number.isNaN(data.state)) break;
+
+        if (data.steps > prevSteps) {
+            appendRow(data);
+        }
+        prevSteps = data.steps;
         program.step();
     }
 

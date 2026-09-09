@@ -1,8 +1,8 @@
 "use strict";
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
-import {parse} from "../Turing Machine/parser.js";
-import {newMachine} from "../Turing Machine/runner.js";
+import {parse} from "../Counterscript/parser.js";
+import {newMachine} from "../Counterscript/runner.js";
 
 // ==== Initialize ====
 
@@ -15,16 +15,14 @@ const scroll = {x: 0, y: 0};
 // ==== Canvas ====
 
 function appendRow(data) {
-    const offsetX = -data.lTape.length;
+    const colorTape = [];
+    data.register.forEach((e, i) => {
+        for (let a = 0; a < e; a++)
+            colorTape.push(SYMBOL_COLORS[i]);
+    })
+                console.log(colorTape);
 
-    const colorTape = [0]
-    .concat(data.lTape.toReversed())
-    .concat(data.rTape)
-    .map((symbol) => SYMBOL_COLORS[symbol - 1]);
-
-    colorTape[data.head - offsetX + 1] = STATE_COLORS[data.state];
-
-    history.push([colorTape, offsetX - 1]);
+    history.push(colorTape);
 }
 
 function drawFrame() {
@@ -36,11 +34,17 @@ function drawFrame() {
 
     const canvasDim = canvas.getSize();
 
-    // Complete the history
-    for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
+    // Complete the history: brackets do not count as steps, so row i is the config after i steps
+    let prevSteps = history.length - 1;
+    while (history.length < scroll.y + canvasDim.y) {
         const data = program.getData();
-        if (data.status !== "running") break;
-        appendRow(data);
+        // Unbalanced brackets leave the state NaN
+        if (data.status !== "running" || Number.isNaN(data.state)) break;
+
+        if (data.steps > prevSteps) {
+            appendRow(data);
+        }
+        prevSteps = data.steps;
         program.step();
     }
 
@@ -49,7 +53,7 @@ function drawFrame() {
     // Draw rows
     for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
         if (!history[i]) break;
-        canvas.drawRow(history[i][0], history[i][1] - scroll.x);
+        canvas.drawRow(history[i], -canvasDim.x / 2 - scroll.x);
     }
 }
 
@@ -71,4 +75,4 @@ setupZoom(canvas, drawFrame);
 
 // ==== Scroll ====
 
-setupScroll(canvasEl, canvas, drawFrame, scroll, false);
+setupScroll(canvasEl, canvas, drawFrame, scroll, true);

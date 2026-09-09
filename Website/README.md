@@ -26,6 +26,7 @@ Shared modules:
 - Paste a program in the standard format and press **Import**. It is the same format as the holdout files, defined by each system's `parser.js` and documented in its `spec.md`.
 - Whitespace in the input is ignored, and importing an empty input resets the canvas.
 - The canvas shows the space-time diagram: each row is one step, and colors encode the symbols and the current state.
+- The **Code** canvas (Cellular Automaton page) shows the rule table: each rule is drawn as its neighborhood, an arrow, and its result symbol, with the same colors as the diagram, and halting (undefined) rules are drawn in red. It is hidden until a program is imported.
 - Scroll with the mouse wheel: rows are simulated lazily as you scroll, up to 1,000,000 steps.
 - Scroll horizontally with Shift + mouse wheel or a horizontal trackpad swipe: the view moves in both directions over the bi-infinite tape (Turing Machine and Pebble Automaton pages), and is clamped at the left of the simulation (Post Tag System, Cyclic Tag System and Cellular Automaton pages).
 - Drag the canvas with the mouse or touch: the view follows the pointer in both directions, with the same clamping as the wheel scroll.
