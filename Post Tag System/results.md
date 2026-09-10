@@ -17,9 +17,9 @@
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(6) | 51 |
-| BBPT(7) | 664 |
-| BBPT(8) | 9,158 |
+| BBPT(6) | 48 |
+| BBPT(7) | 591 |
+| BBPT(8) | 8,223 |
 
 ## BBPT(1)
 
@@ -166,7 +166,7 @@ See also: `0210_0_`
 
 ### Bouncer — `0111_0`
 
-- Follows a sawtooth-like pattern.
+Follows a sawtooth-like pattern.
 
 ## BBPT(6)
 
@@ -182,6 +182,10 @@ Computes a Collatz-like function that never halt.
 ### Cycler — `110_20_2`
 
 Has a very long period.
+
+### Bouncer 2 — `0112_0_x`
+
+Cannot be decided by immortal substring decider.
 
 ## See Also
 

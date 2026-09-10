@@ -8,7 +8,8 @@ export function decClosedEdge(code) {
         );
     }
 
-    return code.some((e, symbol) =>
-        isClosed(symbol)
-    );
+    for (let symbol = 0; symbol < code.length; symbol++) {
+        if (isClosed(symbol)) return true;
+    }
+    return false;
 }

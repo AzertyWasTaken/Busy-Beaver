@@ -36,11 +36,16 @@ export function decTranslatedCycler(code) {
             }
 
             const nextString = tag.getData().string.slice(tag.getData().head);
-            if (
-                compare(left, nextString.slice(0, len / 2))
-                && compare(left, nextString.slice(len / 2, len))
-                && compare(left, nextString.slice(len))
-            ) return true;
+            const nextLen = nextString.length;
+
+            function isCycling() {
+                for (let idx = 0; idx < nextLen; idx += len / 2) {
+                    if (!compare(left, nextString.slice(idx, idx + len / 2))) return false;
+                }
+                return true;
+            }
+
+            if (nextLen >= len && isCycling()) return true;
         }
     }
 }

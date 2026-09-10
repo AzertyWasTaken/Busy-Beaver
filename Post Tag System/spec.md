@@ -10,7 +10,7 @@
 
 ### Program Format
 
-A program is written by concatenating the production rules in symbol order, and separating the rules with `_`. Each symbol is written as its name: `0`, `1`, `2`, … An undefined symbol is written `x`. Whitespace is ignored.
+A program is written by concatenating the production rules in symbol order, and separating the rules with `_`. Each symbol is written as its name: `0`, `1`, `2`, … An undefined symbol is written `x`. Whitespaces are ignored.
 
 An empty production rule is written as nothing between two separators, so a trailing `_` marks an empty last rule.
 

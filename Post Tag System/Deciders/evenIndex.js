@@ -3,7 +3,7 @@ export function decEvenIndex(code) {
     const symbols = new Set([0]);
 
     function checkRule(rule) {
-        if (rule.length % 2 !== 0) return false;
+        if (rule.length % 2 !== 0 && rule.length > 0) return false;
 
         for (let i = 0; i < rule.length; i += 2) {
             const sym = rule[i];

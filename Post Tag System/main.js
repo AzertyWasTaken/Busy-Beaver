@@ -8,14 +8,13 @@ import {fileWriter} from "../writer.js";
 
 // Deciders
 import {decImmortalSubstring} from "./Deciders/immortalSubstring.js";
-import {decCyclicClosedRule} from "./Deciders/cyclicClosedRule.js";
 import {decCycler} from "./Deciders/cycler.js";
 import {decFirstRule} from "./Deciders/firstRule.js";
 import {decIdenticalRule} from "./Deciders/identicalRule.js";
-import {decEvenIndex} from "./Deciders/evenIndex.js";
 import {decClosedEdge} from "./Deciders/closedEdge.js";
 import {decTranslatedCycler} from "./Deciders/translatedCycler.js";
 import {decZeroOneZero} from "./Deciders/zeroOneZero.js";
+import {decEvenIndex} from "./Deciders/evenIndex.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -26,6 +25,8 @@ const value = fileWriter(
     unparse
 );
 
-// await value.newList(100_000, 1_000, [], 8);
+// await value.newList(100_000, 1_000, [decFirstRule, decIdenticalRule, decEvenIndex, decClosedEdge, decZeroOneZero, decImmortalSubstring, decTranslatedCycler, decCycler], 6);
 
-await value.decideList(0, [decZeroOneZero], 6);
+await value.decideList(0, [decTranslatedCycler], 8);
+
+// console.log(decImmortalSubstring(parse("120221_0_2")));
