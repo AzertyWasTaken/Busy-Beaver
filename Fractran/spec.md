@@ -2,37 +2,57 @@
 
 ## Composition
 
-- A **register** that has a finite number of counters. Each counter holds a nonnegative integer.
-- A **code** consisting of a sequence of **instructions**. There are two types of instructions: **increments** and **decrements**.
+- A **register** that has a finite number of counters. Each counter holds a nonnegative integer. Counters are named `0`, `1`, `2`, …, and a program has one counter per position used by its instructions.
+- A **code** consisting of a sequence of **instructions**.
+
+  - Each instruction is a sequence of integers, one per counter.
 
 ### Instruction Notation
 
-An instruction is written `X → CTD`, where:
+The value at position `i` of an instruction acts on counter `i`:
 
-- `X` is the current state.
-- `C` is the selected counter, `T` is the type of instruction (`+` increment or `-` decrement) and `D` is the next state.
+- A **positive value** adds that amount to the counter.
+- A **negative value** subtracts that amount from the counter.
+- A **zero** leaves the counter unchanged.
 
-For example, `A → 1+` means: in state `A`, increment `1` then go to next instruction.
+An instruction **applies** when every counter it subtracts from holds at least the subtracted amount, so no counter can ever become negative.
 
-An undefined transition is skipped.
+For example, the instruction `A1` means: subtract 1 from counter `0`, then add 1 to counter `1`.
 
 ### Program Format
 
-A program is written by concatenating the transitions of each state in symbol order, and separating the states with `_`. Whitespace is ignored.
+A program is written by concatenating its instructions in code order, and separating the instructions with `_`. Whitespace is ignored.
 
-For example, `1RB1LB_1LA---` defines `A0 → 1RB`, `A1 → 1LB`, `B0 → 1LA` and `B1 → ---`.
+Each value is written as a single character: a digit `0`-`9` writes a nonnegative value, and a letter writes a negative value: `A` = -1, `B` = -2, …, `Z` = -26.
+
+For example, `A1_0A` defines the instruction `A1` (subtract 1 from `0`, add 1 to `1`) followed by the instruction `0A` (subtract 1 from `1`).
 
 ## Execution
 
-- The program starts out with the first counter set to 1 and the others to 0.
-- At each step of the computation, the program looks up the correct **instruction** (the first intruction that does not make any counter negative) in the **code** and change each counter according to the rules:
-- The program halts when no transition can be applied.
+- The machine starts out with **counter `0` equal to 1** and **every other counter equal to 0**.
+
+- At each step of the computation, the machine scans the code from the first instruction and applies the **first instruction that applies**: each value of the instruction is added to its counter (negative values subtract). The remaining instructions are skipped for this step and examined again at the next step.
+
+- The machine halts when no instruction applies.
+
+For example, the program `A1_0A` goes through the following values of the register:
+
+```txt
+start → [1,0] → [0,1] → [0,0] → halt
+```
+
+- Step 1: `A1` applies (counter `0` holds 1), so the register becomes `[0,1]`.
+- Step 2: `A1` no longer applies, but `0A` does, so the register becomes `[0,0]`.
+- Step 3: no instruction applies, so the machine halts after 2 steps.
 
 ## Function
 
-The maximum step function *BBf(n)* is the largest number of steps that any *n*-instructions fractran program takes before halting.
+The maximum step function *BBf(n)* is the largest number of steps that any Fractran program of size *n* takes before halting.
 
-- programs that never reach an undefined transition run forever and are not counted.
+- The size of a program is the sum of the absolute values of all the integers in its code. For example, `A1_0A` has size 3.
+- Each applied instruction counts as one step.
+- The halting step does not count as a step, so `A` halts in 1 step.
+- Programs in which some instruction always applies run forever and are not counted.
 
 ## See Also
 

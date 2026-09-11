@@ -1,11 +1,11 @@
 "use strict";
 import {newMachine} from "./runner.js";
 
-// Check if a is at least "easier" to reach than b
+// (11A, 1AA) => true // (11B, 1AA) => false
 function isSuperset(a, b) {
     const maxLength = Math.max(a.length, b.length);
     for (let i = 0; i < maxLength; i++) {
-        if ((b[i] ?? 0) <= 0 && (a[i] ?? 0) < (b[i] ?? 0)) return false;
+        if ((a[i] ?? 0) < 0 && (b[i] ?? 0) > (a[i] ?? 0)) return false;
     }
     return true;
 }
@@ -15,66 +15,59 @@ export function enumerateTNF(maxSize, maxSteps) {
         function isRowCodeValid() {
             return rowCode.length > 0
             && rowCode.at(-1) !== 0
-            && rowCode.some((e) => e < 0)
-            && code.every((e) => !isSuperset(e, rowCode));
+            && rowCode.some((v) => v < 0)
+            && !code.some((r) => isSuperset(r, rowCode));
         }
 
         // Check if the code is full
         if (currSize >= maxSize) {
-            if (isRowCodeValid()) {
-                code.push(rowCode);
-                yield code;
-                code.pop();
-            }
+            if (!isRowCodeValid()) return;
+            code.push(rowCode);
+            yield code;
+            code.pop();
             return;
         }
 
+        const prevValue = rowCode.at(-1);
+        const areValuesEqual =
+        rowCode.length > 1
+        && code.every((r) =>
+            (r[rowCode.length - 1] ?? 0) === (r[rowCode.length] ?? 0)
+        );
+
         // Extend the current row
-        for (let value = 1; value <= maxSize - currSize; value++) {
-            // Positive
+        const maxValue = maxSize - currSize;
+        const minValue = areValuesEqual ? prevValue : -maxValue;
+        for (let value = minValue; value <= maxValue; value++) {
+            if (value === 0 && rowCode.length >= recColumn) continue;
+
             rowCode.push(value);
             yield* nextRule(
-                currSize + value,
+                currSize + Math.abs(value),
                 code,
                 rowCode,
                 Math.max(recColumn, rowCode.length)
             );
-            rowCode.pop();
-
-            // Negative
-            rowCode.push(-value);
-            yield* nextRule(
-                currSize + value,
-                code,
-                rowCode,
-                Math.max(recColumn, rowCode.length)
-            );
-            rowCode.pop();
-        }
-
-        if (rowCode.length < recColumn) {
-            rowCode.push(0);
-            yield* nextRule(currSize, code, rowCode, recColumn);
             rowCode.pop();
         }
 
         // Start a new row
-        if (isRowCodeValid()) {
-            code.push(rowCode);
+        if (!isRowCodeValid()) return;
 
-            // Run the program until an undefined rule
-            const machine = newMachine(code, maxSteps);
-            const steps = machine.run();
+        code.push(rowCode);
 
-            // Check if the tag system timed out
-            if (steps < 0) {
-                yield code;
-            } else {
-                yield* nextRule(currSize, code, [], recColumn);
-            }
+        // Run the program until an undefined rule
+        const machine = newMachine(code, maxSteps);
+        const steps = machine.run();
 
-            code.pop();
+        // Check if the tag system timed out
+        if (steps < 0) {
+            yield code;
+        } else {
+            yield* nextRule(currSize, code, [], recColumn);
         }
+
+        code.pop();
     }
 
     return nextRule(0, [], [], 1);

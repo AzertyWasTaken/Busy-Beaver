@@ -20,6 +20,6 @@ const value = fileWriter(
     unparse
 );
 
-await value.newList(100_000, 100, [decTranslatedCycler], 11);
+await value.newList(100_000, 100, [decTranslatedCycler], 10);
 
 // await value.decideList(1_000, [decTranslatedCycler], 8);

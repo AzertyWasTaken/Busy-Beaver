@@ -17,6 +17,11 @@ Note: a 0 may be placed in the beginning of the first row because it has a diffe
 ### Ordered First Row
 
 The first row values starting with the 2nd must be ordered from the least to the most.
+`1AA_A21` is equivalent to `1AA_A12`
+
+### Row Subset
+
+`11A_1AA` is invalid because the 2nd row is never used due to having a stricter requirement than the first row.
 
 ## Deciders
 
