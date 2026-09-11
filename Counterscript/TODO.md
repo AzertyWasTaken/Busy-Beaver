@@ -2,21 +2,24 @@
 
 ## Update log
 
-- Base template
-- Programs start with `+A`
-- No empty brackets
 - Translated cycler decider
-- Eunmerate BBCS(8)
-- Ordered counters
-- Fix steps counting
 - No self-canceling increments
 - Create simulator webpage
-- TNF enumeration
+- Decrementing loops decider
+- No trailing instructions
+- Ordered increments outside of loops
+- Eunmerate BBCS(9)
+- Complete `spec.md`
+- Loops ending decider
 
 ## Enumeration
 
-- [ ] Decrementing loops decider
-- [ ] Decrementing loops ending decider
+- [ ] Slice enumeration
+- [ ] Merge loop body length TNF enumeration
+- [ ] Do not run machine after adding increments or decrements
+- [ ] No nested while A
+- [ ] No two while A in a row
+- [ ] Counters and loops order equivalence decider
 
 ## Documentation
 

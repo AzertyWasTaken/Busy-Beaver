@@ -1,12 +1,6 @@
 +A_wA{+A_wA{-A_+B}_wB{+A_-B}}
 +A_wA{+B_wA{-A_+B}_wB{+A_-B}}
-+A_wA{+B_wB{-B_+C}_wC{+B_-C}}
-+A_wA{+B_wC{+B_-C}_wB{-B_+C}}
 +A_wA{wA{-A_+B}_+B_wB{+A_-B}}
 +A_wA{wA{-A_+B}_wB{+A_-B}_+B}
 +A_wA{wA{-A_+B}_wB{+A_+A_-B}}
 +A_wA{wA{-A_+B_+B}_wB{+A_-B}}
-+A_wA{wB{-B_+C}_+B_wC{+B_-C}}
-+A_wA{wB{-B_+C}_+C_wC{+B_-C}}
-+A_wA{wB{-B_+C}_wC{+B_-C}_+B}
-+A_wA{wB{-B_+C}_wC{+B_-C}_+C}

@@ -8,6 +8,7 @@ import {fileWriter} from "../writer.js";
 
 // Deciders
 import {decTranslatedCycler} from "./Deciders/translatedCycler.js";
+import {decLoopEnding} from "./Deciders/loopEnding.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -18,6 +19,8 @@ const value = fileWriter(
     unparse
 );
 
-await value.newList(100_000, 1_000, [decTranslatedCycler], 9);
+await value.newList(100_000, 1_000, [decLoopEnding, decTranslatedCycler], 10);
 
-// await value.decideList(1_000, [decTranslatedCycler], 6);
+// await value.decideList(1_000, [decLoopEnding], 9);
+
+// console.log(decLoopDecrementOrder(parse("+A_wA{+A_wA{-A_+B}_wB{+A_-B}}")));

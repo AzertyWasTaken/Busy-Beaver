@@ -13,12 +13,13 @@
 | BBCS(7) | = 12 | `+A_+A_+A_+A_wA{-A_+B}` |
 | BBCS(8) | = 18 | `+A_wA{+A_wB{-A_-B}_+B_+B}` |
 | BBCS(9) | = 26 | `+A_+A_wA{+A_wB{-A_-B}_+B_+B}` |
+| BBCS(10) | ≥ 34 | `+A_+A_+A_wA{+A_wB{-A_-B}_+B_+B}` |
 
 ## Holdouts
 
 | Domain | Holdouts |
 | - | - |
-| BBCS(9) | 12 |
+| BBCS(9) | 6 |
 
 ## BBCS(3)
 

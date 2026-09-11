@@ -16,10 +16,10 @@ function findOpeningBracket(code, state) {
 export function parse(code) {
     code = code.replace(/\s/g, "");
     const parsed = [];
-    const statesRules = code.match(/[^_{}]+{|}|[^_{}]+/g);
+    const instructions = code.match(/[^_{}]+{|}|[^_{}]+/g);
 
-    for (let i = 0; i < statesRules.length; i++) {
-        const [type, counter] = statesRules[i];
+    for (let i = 0; i < instructions.length; i++) {
+        const [type, counter] = instructions[i];
 
         function getStr() {
             switch (type) {
@@ -30,8 +30,9 @@ export function parse(code) {
                 case "w":
                     return [2, counter.charCodeAt(0) - 65];
                 case "}":
-                    return [3, statesRules[findOpeningBracket(statesRules, i)]
-                    .charCodeAt(1) - 65];
+                    const openIdx = findOpeningBracket(instructions, i);
+                    parsed[openIdx][2] = i;
+                    return [3, instructions[openIdx].charCodeAt(1) - 65, openIdx];
                 case "#":
                     return null;
             }

@@ -7,38 +7,6 @@ export function newMachine(code, maxSteps) {
     let iterations = 0;
     let status = "running";
 
-    function findClosingBracket() {
-        let stack = 0;
-        for (let index = state + 1; index < code.length; index++) {
-            const element = code[index];
-            if (element === null) continue;
-
-            if (element[0] === 2) {
-                stack++;
-            }
-            else if (element[0] === 3) {
-                if (stack === 0) return index;
-                stack--;
-            }
-        }
-    }
-
-    function findOpeningBracket() {
-        let stack = 0;
-        for (let index = state - 1; index >= 0; index--) {
-            const element = code[index];
-            if (element === null) continue;
-
-            if (element[0] === 3) {
-                stack++;
-            }
-            else if (element[0] === 2) {
-                if (stack === 0) return index;
-                stack--;
-            }
-        }
-    }
-
     function step() {
         if (status !== "running") return;
 
@@ -55,7 +23,7 @@ export function newMachine(code, maxSteps) {
             return;
         }
 
-        const [type, counter] = instruction;
+        const [type, counter, goto] = instruction;
 
         // Update the register machine
         switch (type) {
@@ -68,10 +36,10 @@ export function newMachine(code, maxSteps) {
                 steps++;
                 break;
             case 2:
-                if ((register[counter] ?? 0) === 0) state = findClosingBracket();
+                if ((register[counter] ?? 0) === 0) state = goto;
                 break;
             case 3:
-                if ((register[counter] ?? 0) > 0) state = findOpeningBracket();
+                if ((register[counter] ?? 0) > 0) state = goto;
                 iterations++;
                 break;
         }
