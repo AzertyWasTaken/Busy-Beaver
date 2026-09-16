@@ -2,7 +2,7 @@
 import {SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
 import {parse} from "../Post Tag System/parser.js";
-import {newTag} from "../Post Tag System/runner.js";
+import {newProgram} from "../Post Tag System/runner.js";
 
 // ==== Initialize ====
 
@@ -28,10 +28,8 @@ offsetButton.addEventListener("click", toggleOffset);
 // ==== Canvas ====
 
 function appendRow() {
-    const {string, head} = program.getData();
-    const colorTape = string.slice(head)
+    const colorTape = program.queue
     .map((symbol) => SYMBOL_COLORS[symbol]);
-
     history.push(colorTape);
 }
 
@@ -46,15 +44,13 @@ function drawFrame() {
 
     // Complete the history
     for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
-        const data = program.getData();
-        if (data.status !== "running") break;
+        if (program.status !== "running") break;
         appendRow();
         program.step();
-        if (program.getData().status !== "running")
-            appendRow();
+        if (program.status !== "running") appendRow();
     }
 
-    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
+    stepsEl.textContent = "Steps: " + program.steps.toLocaleString("en-US");
 
     // Draw rows
     let offset = 0;
@@ -70,7 +66,7 @@ function drawFrame() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newTag(code, 1_000_000);
+    program = newProgram(code, 1_000_000);
     history = [];
     scroll.x = 0;
     scroll.y = 0;

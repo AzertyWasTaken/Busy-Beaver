@@ -5,21 +5,23 @@
 | Domain | Runtime | Champion |
 | - | - | - |
 | BBPT(1) | = 1 | `0` |
-| BBPT(2) | = 2 | `10_` |
-| BBPT(3) | = 4 | `011_` |
+| BBPT(2) | = 1 | `10_` |
+| BBPT(3) | = 3 | `011_` |
 | BBPT(4) | = 5 | `011_1` |
-| BBPT(5) | = 19 | `111_20_` |
+| BBPT(5) | = 18 | `111_20_` |
 | BBPT(6) | ≥ 49 | `11_021_2` |
 | BBPT(7) | ≥ 779 | `112_1_002` |
 | BBPT(8) | ≥ 196,841 | `120221_0_2` |
+| BBPT(9) | ≥ 9,808 | `0213_2030__3` |
 
 ## Holdouts
 
 | Domain | Holdouts |
 | - | - |
-| BBPT(6) | 48 |
-| BBPT(7) | 591 |
-| BBPT(8) | 8,223 |
+| BBPT(6) | 2 |
+| BBPT(7) | 149 |
+| BBPT(8) | 2,109 |
+| BBPT(9) | 50,597 |
 
 ## BBPT(1)
 
@@ -40,11 +42,11 @@ Programs of size 2 cannot grow: they either halt or cycle every step.
 
 ### Busy Beaver — `10_`
 
-Runs for 2 steps before halting.
+Runs for 1 steps before halting.
 
 ```txt
 // Simulation
-start → 00 → 10 → eps → halt
+start → 00 → 10 → halt
 ```
 
 ### Cycler — `00`
@@ -66,11 +68,11 @@ Deciding this domain would require:
 
 ### Busy Beaver — `011_`
 
-Runs for 4 steps before halting.
+Runs for 3 steps before halting.
 
 ```txt
 // Simulation
-start → 00 → 011 → 1011 → 11 → eps → halt
+start → 00 → 011 → 1011 → 11 → halt
 ```
 
 ### Translated Cycler — `000`
@@ -133,7 +135,7 @@ Proving this domain requires multi-period cycler, even index deciders and solvin
 
 ### Champion — `111_20_`
 
-Computes a collatz-like function then halts after 19 steps.
+Computes a collatz-like function then halts after 18 steps.
 
 ```txt
 // Function
@@ -175,17 +177,21 @@ Follows a sawtooth-like pattern.
 - Runs for 49 steps before halting.
 - Has a chaotic behavior.
 
-### Irregular Counter — `121_000_`
+### Irregular Bell — `121_000_`
 
-Computes a Collatz-like function that never halt.
+Computes a Collatz-like function that never halts.
 
 ### Cycler — `110_20_2`
 
-Has a very long period.
+Has a very long period of about 18,000 steps.
 
-### Bouncer 2 — `0112_0_x`
+### Bouncer 2 — `0112_0_-`
 
 Cannot be decided by immortal substring decider.
+
+### Chaotic 3 — `101_20_1`
+
+Might be undecidable by immortal substring decider.
 
 ## See Also
 

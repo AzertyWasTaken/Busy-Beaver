@@ -1,58 +1,57 @@
 "use strict";
-export function newTag(code, maxSteps) {
-    let string = [0,0];
+export function newProgram(code, maxSteps) {
+    const queue = [0,0];
     let head = 0;
-
     let steps = 0;
     let status = "running";
 
     function step() {
-        if (status !== "running") return;
-
-        // Increment steps count
-        steps++;
-        if (steps > maxSteps) {
-            status = "timed out";
-            return;
-        }
+        if (status !== "running") return status;
 
         // Get current rule
-        const symbol = string[head];
-        if (typeof symbol !== "number") {
-            status = "paused";
-            return;
-        }
+        const symbol = queue[head];
+        if (symbol === null) return status = "paused";
 
         const rule = code[symbol];
-        if (!rule) {
-            status = "paused";
-            return;
-        }
+        if (rule === null) return status = "paused";
+
+        const queueLength = queue.length - head;
+        if (rule[queueLength % 2] === null) return status = "paused";
 
         // Update the tag system
-        string.push(...rule);
+        queue.push(...rule);
         head += 2;
         if (head >= 1_000) {
-            string.splice(0, head);
+            queue.splice(0, head);
             head = 0;
         }
 
         // Check if the system halted
-        if (string.length - head < 2) status = "halted";
-        return;
+        if (queue.length - head < 1) return status = "halted";
+
+        // Increment steps count
+        steps++;
+        if (steps > maxSteps) return status = "timed out";
+        return status;
     }
 
-    function run() {
-        while (true) {
-            step();
-            if (status === "halted") return steps;
-            if (status === "timed out" || status === "paused") return -1;
-        }
-    }
+    return {
+        step,
+        get head() {return head;},
+        get steps() {return steps;},
+        get status() {return status;},
+        get symbol() {return queue[head];},
+        get queue() {return queue.slice(head);},
+        get queueLength() {return queue.length - head;},
+    };
+}
 
-    function getData() {
-        return {string, head, steps, status};
-    }
+export function decide(code, maxSteps) {
+    const prog = newProgram(code, maxSteps);
+    while (prog.status === "running") prog.step();
 
-    return {step, run, getData};
+    return {
+        status: prog.status === "halted" ? "halted" : "undecided",
+        steps: prog.steps
+    };
 }

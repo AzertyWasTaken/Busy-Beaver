@@ -11,22 +11,23 @@
 - Review writer system
 - Celullar automaton
 - Create terminology
+- Register machine
+- Fractran
+- Boolfuck
+- CounterScript
+- False positive decider detector
 
 ## Project
 
-- [ ] Counter machine
-- [ ] Fractran
-- [ ] Brainfuck
-- [ ] CounterScript
+- [ ] Sequential substitution system
+- [ ] Lambda Calculus
 - [ ] Mobile automaton
 - [ ] Substitution automaton
 - [ ] SK calculus
-- [ ] Sequential substitution automaton
-- [ ] Debruijn
 - [ ] BCKW calculus
 - [ ] Symbolic system
 
 ## Global
 
 - [ ] Clean up `results.md` programs
-- [ ] Test deciders function to detect false positives
+- [ ] Do not decide paused programs

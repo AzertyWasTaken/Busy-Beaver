@@ -1,7 +1,5 @@
 "use strict";
-import {newTag} from "../runner.js";
-
-const MAX_STEPS = 1_000;
+import {newProgram} from "../runner.js";
 
 function compare(a, b) {
     if (a.length !== b.length) return false;
@@ -12,40 +10,52 @@ function compare(a, b) {
     return true;
 }
 
-export function decTranslatedCycler(code) {
-    const tag = newTag(code, MAX_STEPS);
+export function decide(code, maxSteps) {
+    const program = newProgram(code, maxSteps);
+    const output = (status) => ({status, steps: program.steps});
+
     while (true) {
-        tag.step();
-        const status = tag.getData().status;
-        if (status === "halted") return true;
-        if (status === "timed out" || status === "paused") return false;
+        program.step();
+        const status = program.status;
+        if (status === "halted") return output("halted");
+        if (status !== "running") return output("undecided");
 
-        const string = tag.getData().string.slice(tag.getData().head);
-        const len = string.length;
-        if (len % 2 !== 0) continue;
+        const queue = program.queue;
+        const length = queue.length;
+        const half = Math.floor(length / 2);
+        const remainder = length % 2;
+        if (half === 0) continue;
 
-        const left = string.slice(0, len / 2);
-        const right = string.slice(len / 2);
+        const left = queue.slice(0, half);
+        const right = queue.slice(half, half * 2);
+        if (!compare(left, right)) continue;
 
-        if (compare(left, right)) {
-            for (let i = 0 ; i < len / 2; i++) {
-                tag.step();
-                const status = tag.getData().status;
-                if (status === "halted") return true;
-                if (status === "timed out" || status === "paused") return false;
-            }
-
-            const nextString = tag.getData().string.slice(tag.getData().head);
-            const nextLen = nextString.length;
-
-            function isCycling() {
-                for (let idx = 0; idx < nextLen; idx += len / 2) {
-                    if (!compare(left, nextString.slice(idx, idx + len / 2))) return false;
-                }
-                return true;
-            }
-
-            if (nextLen >= len && isCycling()) return true;
+        for (let i = 0 ; i < half; i++) {
+            program.step();
+            const status = program.status;
+            if (status === "halted") return output("halted");
+            if (status !== "running") return output("undecided");
         }
+
+        const nextQueue = program.queue;
+        const nextLength = nextQueue.length;
+        const nextRemainder = nextLength % 2;
+
+        function isCycling() {
+            if (nextLength < length) return false;
+
+            if (!compare(
+                queue.slice(queue.length - remainder),
+                nextQueue.slice(nextQueue.length - nextRemainder)
+            )) return false;
+
+            for (let idx = 0; idx < nextLength - nextRemainder; idx += half) {
+                const chunk = nextQueue.slice(idx, idx + half);
+                if (!compare(left, chunk)) return false;
+            }
+            return true;
+        }
+
+        if (isCycling()) return output("nonhalting");
     }
 }

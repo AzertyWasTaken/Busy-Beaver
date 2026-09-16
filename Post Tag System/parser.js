@@ -2,20 +2,22 @@
 export function parse(code) {
     code = code.replace(/\s/g, "");
     const parsed = [];
-    const statesRules = code.split("_");
+    const part = code.split("_");
 
-    for (let i = 0; i < statesRules.length; i++) {
-        parsed.push(Array.from(statesRules[i], (c) =>
-            c === "x" ? null : Number(c)
-        ));
+    for (let i = 0; i < part.length; i++) {
+        parsed.push(
+            part[i] === "?" ? null : Array.from(part[i], (c) =>
+                c === "-" ? null : Number(c)
+            )
+        );
     }
     return parsed;
 }
 
 export function unparse(code) {
-    return code.map((symbolCode) =>
-        symbolCode.map((str) =>
-            typeof str === "number" ? str : "x"
+    return code.map((prod) =>
+        prod === null ? "?" : prod.map((sym) =>
+            sym === null ? "-" : sym
         ).join("")
     ).join("_");
 }

@@ -1,6 +1,8 @@
 "use strict";
 export function enumerate(maxSize) {
-    function* nextRule(currSize, code, symbolCode, recSymbol) {
+    const code = [];
+
+    function* nextRule(currSize, symbolCode, recSymbol) {
         // Check if the code is full
         if (currSize >= maxSize) {
             code.push(symbolCode);
@@ -17,17 +19,17 @@ export function enumerate(maxSize) {
         // Extend the current production rule
         for (let symbol = 0; symbol <= recSymbol + 1; symbol++) {
             symbolCode.push(symbol);
-            yield* nextRule(currSize + 1, code, symbolCode, Math.max(recSymbol, symbol));
+            yield* nextRule(currSize + 1, symbolCode, Math.max(recSymbol, symbol));
             symbolCode.pop();
         }
 
         // Start a new production rule
         if (code.length + 1 <= recSymbol) {
             code.push(symbolCode);
-            yield* nextRule(currSize, code, [], recSymbol);
+            yield* nextRule(currSize, [], recSymbol);
             code.pop();
         }
     }
 
-    return nextRule(0, [], [], 0);
+    return nextRule(0, [], 0);
 }

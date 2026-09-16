@@ -21,7 +21,12 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 - [Turing Machine](./Turing%20Machine/)
 - [Post Tag System](./Post%20Tag%20System/)
 - [Cyclic Tag System](./Cyclic%20Tag%20System/)
+- [Cellular Automaton](./Cellular%20Automaton/)
 - [Pebble Automaton](./Pebble%20Automaton/)
+- [Register Machine](./Register%20Machine/)
+- [Fractran](./Fractran/)
+- [Boolfuck](./Boolfuck/)
+- [Counterscript](./Counterscript/)
 
 Each system folder contains:
 

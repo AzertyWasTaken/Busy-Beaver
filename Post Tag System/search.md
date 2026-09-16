@@ -29,11 +29,15 @@ The first time a PTS uses a new symbol — filling in an undefined symbol of a p
 - Why: renaming the symbols to close the gaps gives a PTS with the same behavior.
 - In practice, TNF enumeration enforces this: production rules are created in the order their symbols are read, and a revealed symbol is at most one past the highest used so far.
 
-### First Rule
+### Trivial First Rule
 
-The initial production rule must not be `11`.
+The initial production rule must have a length greater than 2.
 
-- For any PTS starting with `0 → 11`, the first step only transforms the initial queue `00` into `11`: the PTS that starts with the queue `11` instead runs for exactly one step less.
+- For any PTS starting with `0 → 1x`, the first step only transforms the initial queue `00` into `1x`: the PTS that starts with the queue `1x` instead runs for exactly one step less.
+
+- Example: `10_001_` → `110_01_`
+
+- Any PTS starting with `0 → 0x` ends up cycling.
 
 ### Identical Rule
 
@@ -44,6 +48,19 @@ Each production rule must be different, including the empty rule.
 ## Deciders
 
 A **decider** proves a program **does not halt**.
+
+### Immortal Substring
+
+The decider looks for a queue substring, of length at least two, that the PTS can never destroy.
+Each step deletes two symbols and appends the production rule of the symbol it reads, so a substring keeps its index parity until the head reaches it.
+The head then reads the symbols at even indices of the substring if the substring starts at an even index, and the ones at odd indices otherwise: the rules they append end up contiguously at the end of the queue, so the substring is replaced by that expansion of itself.
+
+- Why: the substring can start at either parity, so both expansions are checked.
+- An undefined symbol, or a symbol whose production rule is undefined, ends the expansion, and every part must hold at least two symbols: otherwise the substring can vanish with the queue, and nothing is proven.
+- The decider repeats this on every expansion, until each one is already inside a checked substring (the search has closed, so no new part can appear) or no expansion is left. The substring is then immortal, the queue always holds at least two symbols, and the PTS never halts.
+
+The decider simulates the PTS and runs this check on every queue substring of length at least two, deciding nonhalting as soon as one of them is immortal.
+The number of explored substrings per check is bounded, so the decider gives up when its depth limit is exceeded.
 
 ### Nondecreasing
 
@@ -67,13 +84,15 @@ Symbols already checked stop the recursion, so loops are allowed.
 The symbols the PTS reads are therefore only the initial `0` and the even-indexed symbols of the rules of read symbols — exactly the symbols the decider checks.
 An accepted PTS halts only by reading an empty production rule while exactly two symbols remain.
 
+Some programs are halting but they can be ignored since their value are upper-bounded to `a_1 × a_2 × a_3 × …` where `n = programs size` and `2(a_1 + a_2 + a_3 + …) ≤ n`.
+
 ### Cycler
 
 A PTS is a cycler if it visits the same queue twice. The PTS is deterministic, so the second visit repeats the first visit's future forever: it is stuck in a cycle of period *p* steps and never halts.
 
 The decider compares the current queue against a saved one. To catch any period, it saves a snapshot at every power-of-two step count and compares it with the queue at every step.
 
-Example: `00` (analyzed in `results.md`).
+Examples: `00` and `010_` (analyzed in `results.md`).
 
 ### Translated Cycler
 

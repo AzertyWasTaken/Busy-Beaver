@@ -1,60 +1,95 @@
 "use strict";
-import {newTag} from "./runner.js";
+import {newProgram} from "./runner.js";
 
-export function enumerateTNF(maxSize, maxSteps) {
-    function* nextRule(code, size, recSymbol, symbol) {
-        for (let len = 0; len <= maxSize - size; len++) {
-            size += len;
+export function enumerate(maxSize, maxSteps) {
+    const code = [null];
 
-            code[symbol] = [];
-            for (let i = 0; i < len; i++) code[symbol].push([symbol, i]);
-            yield* nextStep(code, size, recSymbol);
-            delete code[symbol];
-            while (code.length > 0 && code.at(-1) === undefined) code.pop();
-
-            size -= len;
+    // Enumerates every allowed symbol, registering a new symbol for the duration of its branch
+    function* candidates(recSymbol) {
+        for (let sym = 0; sym <= recSymbol + 1; sym++) {
+            const newSymbol = sym > recSymbol;
+            if (newSymbol) code.push(null);
+            yield sym;
+            if (newSymbol) code.pop();
         }
     }
 
-    function* revealSymbol(code, size, recSymbol, [sym, idx]) {
-        // Enumerate every possible canditates
-        for (let symbol = 0; symbol <= recSymbol + 1; symbol++) {
-            const symTuple = code[sym][idx];
-            code[sym][idx] = symbol;
-            yield* nextStep(code, size, Math.max(symbol, recSymbol));
-            code[sym][idx] = symTuple;
+    function* nextRule(size, recSymbol, symbol, mod) {
+        const currLength = code[symbol].length;
+        const minLength = symbol === 0 ? 3 : 0;
+
+        if (currLength >= minLength) {
+            yield* nextStep(size, recSymbol);
+        }
+
+        if (size >= maxSize) return;
+
+        if (currLength % 2 !== mod) {
+            code[symbol].push(null);
+            yield* nextRule(size + 1, recSymbol, symbol, mod);
+            code[symbol].pop();
+            return;
+        }
+
+        for (const sym of candidates(recSymbol)) {
+            code[symbol].push(sym);
+            yield* nextRule(size + 1, Math.max(sym, recSymbol), symbol, mod);
+            code[symbol].pop();
         }
     }
 
-    function* nextStep(code, size, recSymbol) {
+    function* revealSymbol(size, recSymbol, symbol, idx) {
+        const hasSymbol = code[symbol].includes(symbol);
+
+        if (idx >= code[symbol].length) {
+            yield* nextStep(size, recSymbol);
+            return;
+        }
+
+        for (const sym of candidates(recSymbol)) {
+            if (hasSymbol && sym === symbol) continue;
+
+            code[symbol][idx] = sym;
+            yield* revealSymbol(size, Math.max(sym, recSymbol), symbol, idx + 2);
+            code[symbol][idx] = null;
+        }
+    }
+
+    function* nextStep(size, recSymbol) {
         // Run the tag system until an undefined production rule
-        const tag = newTag(code, maxSteps);
-        const steps = tag.run();
+        const prog = newProgram(code, maxSteps);
+        while (prog.status === "running") prog.step();
 
-        const {string, head, status} = tag.getData();
-        if (string.length - head < 2) {
-            yield code;
-            return;
-        }
+        switch (prog.status) {
+            case "halted": {
+                if (size === maxSize) yield code;
+                return;
+            }
 
-        // Check if the tag system timed out
-        if (status === "timed out") {
-            if (size === maxSize) yield code;
-            return;
-        }
+            case "timed out": {
+                if (
+                    size === maxSize
+                    || code.some((r) => r === null || r.includes(null))
+                ) yield code;
+                return;
+            }
 
-        const symbol = string[head];
+            case "paused": {
+                const symbol = prog.symbol;
+                const queueLength = prog.queueLength;
 
-        if (typeof symbol !== "number") {
-            yield* revealSymbol(code, size, recSymbol, symbol);
-            return;
-        }
+                if (code[symbol] === null) {
+                    code[symbol] = [];
+                    yield* nextRule(size, recSymbol, symbol, queueLength % 2);
+                    code[symbol] = null;
+                    return;
+                }
 
-        const rule = code[symbol];
-        if (!rule) {
-            yield* nextRule(code, size, recSymbol, symbol);
+                yield* revealSymbol(size, recSymbol, symbol, queueLength % 2);
+                return;
+            }
         }
     }
 
-    return nextStep([], 0, 0);
+    return nextStep(0, 0);
 }

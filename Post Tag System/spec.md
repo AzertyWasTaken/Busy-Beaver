@@ -26,7 +26,7 @@ For example, `11_021_2` defines `0 → 11`, `1 → 021` and `2 → 2`, and `10_`
   - **appends** that symbol's **production rule** to the end of the **queue**.
   - **deletes** the first two symbols of the **queue** (including the symbol it read).
 
-- The Post tag system halts when fewer than two symbols remain in the **queue**.
+- The Post tag system halts when the **queue** is empty.
 
 ## Function
 

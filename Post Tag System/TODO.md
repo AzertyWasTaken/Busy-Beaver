@@ -2,20 +2,24 @@
 
 ## Update log
 
-- Cycler decider
-- Create simulator webpage
-- Enumerate BBPT(8)
 - Identical production rules decider
-- The first rule must not be `11`
-- TNF enumeration
-- Decider for `010_0`-like programs
 - Translated cycler decider
 - Immortal string decider
+- Revamp writer system
+- Clean up TNF enumeration
+- Empty rule equivalence decider
+- Review immortal string decider
+- Enumerate BBPT(9)
+- Prune closed rule enumeration
 
 ## Enumeration
 
-- [ ] Advanced immortal string decider (use simulation) (decide `12110_0_`)
-- [ ] TNF symbols prediction (avoid using arrays in the queue)
+- [ ] Cache `immortalSubstring.js`
+- [ ] Decide bouncers
+- [ ] Decide bells
+- [ ] Decide cubic bells
+- [ ] Decide `0-1-1-_0`
+- [ ] Decide `1021_20_1`
 
 ## Documentation
 

@@ -1,26 +1,26 @@
 "use strict";
-function isClosed(rule, symbolSet, code) {
-    function checkMod(modulo) {
-        for (let i = modulo; i < rule.length; i += 2) {
-            const symbol = rule[i];
-            if (typeof symbol !== "number") continue;
-            if (symbolSet.has(symbol)) return true;
+export function decide(code) {
+    function isClosed(rule, visited) {
+        function checkMod(modulo) {
+            for (let i = modulo; i < rule.length; i += 2) {
+                const symbol = rule[i];
+                if (symbol === null) continue;
+                if (visited.has(symbol)) return true;
 
-            symbolSet.add(symbol);
-            if (isClosed(code[symbol] ?? [], symbolSet, code)) {
-                symbolSet.delete(symbol);
-                return true;
+                visited.add(symbol);
+                const result = isClosed(code[symbol], visited);
+                visited.delete(symbol);
+
+                if (result) return true;
             }
-            symbolSet.delete(symbol);
+            return false;
         }
-        return false;
+
+        return rule !== null && checkMod(0) && checkMod(1);
     }
 
-    return checkMod(0) && checkMod(1);
-}
-
-export function decCyclicClosedRule(code) {
-    return code.some((rule, symbol) =>
-        isClosed(rule, new Set([symbol]), code)
+    const status = code.some((rule, symbol) =>
+        isClosed(rule, new Set([symbol]))
     );
+    return {status: status ? "nonhalting" : "undecided"};
 }
