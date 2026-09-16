@@ -4,15 +4,15 @@
 
 | Domain | Runtime | Champion |
 | - | - | - |
-| BBPT(1) | = 1 | `0` |
-| BBPT(2) | = 1 | `10_` |
-| BBPT(3) | = 3 | `011_` |
-| BBPT(4) | = 5 | `011_1` |
-| BBPT(5) | = 18 | `111_20_` |
-| BBPT(6) | ≥ 49 | `11_021_2` |
-| BBPT(7) | ≥ 779 | `112_1_002` |
-| BBPT(8) | ≥ 196,841 | `120221_0_2` |
-| BBPT(9) | ≥ 9,808 | `0213_2030__3` |
+| BBPT(1) | = 2 | `0` |
+| BBPT(2) | = 2 | `10_` |
+| BBPT(3) | = 4 | `011_` |
+| BBPT(4) | = 6 | `011_1` |
+| BBPT(5) | = 19 | `111_20_` |
+| BBPT(6) | ≥ 50 | `11_021_2` |
+| BBPT(7) | ≥ 780 | `112_1_002` |
+| BBPT(8) | ≥ 196,842 | `120221_0_2` |
+| BBPT(9) | ≥ 9,809 | `0213_2030__3` |
 
 ## Holdouts
 
@@ -29,7 +29,7 @@ The only programs of this size halt in a single step.
 
 ### Busy Beaver — `0`
 
-Runs for 1 step before halting.
+Runs for 2 steps before halting.
 
 ```txt
 // Simulation
@@ -42,7 +42,7 @@ Programs of size 2 cannot grow: they either halt or cycle every step.
 
 ### Busy Beaver — `10_`
 
-Runs for 1 steps before halting.
+Runs for 2 steps before halting.
 
 ```txt
 // Simulation
@@ -68,7 +68,7 @@ Deciding this domain would require:
 
 ### Busy Beaver — `011_`
 
-Runs for 3 steps before halting.
+Runs for 4 steps before halting.
 
 ```txt
 // Simulation
@@ -109,7 +109,7 @@ Proving this domain requires multi-period cycler, even index deciders and solvin
 
 ### Busy Beaver — `011_1`
 
-Runs for 5 steps before halting.
+Runs for 6 steps before halting.
 
 ```txt
 // Simulation
@@ -135,7 +135,7 @@ Proving this domain requires multi-period cycler, even index deciders and solvin
 
 ### Champion — `111_20_`
 
-Computes a collatz-like function then halts after 18 steps.
+Computes a collatz-like function then halts after 19 steps.
 
 ```txt
 // Function
@@ -174,7 +174,7 @@ Follows a sawtooth-like pattern.
 
 ### Champion — `11_021_2`
 
-- Runs for 49 steps before halting.
+- Runs for 50 steps before halting.
 - Has a chaotic behavior.
 
 ### Irregular Bell — `121_000_`

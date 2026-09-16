@@ -8,6 +8,10 @@ export function newProgram(code, maxSteps) {
     function step() {
         if (status !== "running") return status;
 
+        // Increment steps count
+        steps++;
+        if (steps > maxSteps) return status = "timed out";
+
         // Get current rule
         const symbol = queue[head];
         if (symbol === null) return status = "paused";
@@ -28,10 +32,6 @@ export function newProgram(code, maxSteps) {
 
         // Check if the system halted
         if (queue.length - head < 1) return status = "halted";
-
-        // Increment steps count
-        steps++;
-        if (steps > maxSteps) return status = "timed out";
         return status;
     }
 
