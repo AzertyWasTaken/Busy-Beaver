@@ -9,8 +9,9 @@
 | Register Machine | 50 | 180 |
 | Boolfuck | 40 | 310 |
 | CounterScript | 40 | 280 |
-| Pebble Automaton | 30 | 300 |
-| Fractran | 15 | 170 |
+| Fractran | 30 | 170 |
+| Pebble Automaton | 20 | 300 |
+| Sequential Subtitution System | 7 | 230 |
 | Lambda Calculus | 0 | 0 |
 
 ## BB-index
