@@ -45,6 +45,7 @@ export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, u
             }
         }
 
+        console.log(`Total enumerated: ${programs.length}`);
         if (canCreateFile) await createFile(getPath("", ...domain), programs.join("\n"));
     }
 
@@ -87,7 +88,10 @@ export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, u
             if (status !== "nonhalting") continue;
 
             const unparsed = unparse(code);
-            console.log(`False positive: ${unparsed} (${steps})`);
+            console.log(
+                `False positive: ${unparsed}`
+                + (steps ? ` (${steps})` : "")
+            );
         }
     }
 
