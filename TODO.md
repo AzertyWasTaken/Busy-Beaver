@@ -16,10 +16,10 @@
 - Boolfuck
 - CounterScript
 - False positive decider detector
+- Sequential substitution system
 
 ## Project
 
-- [ ] Sequential substitution system
 - [ ] Lambda Calculus
 - [ ] Mobile automaton
 - [ ] Substitution automaton
