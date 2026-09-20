@@ -33,7 +33,12 @@ start → [1] → [0] → halt
 
 ### Translated Cycler — `1`
 
-TODO
+The counter increases by 1 every step.
+
+```txt
+// Simulation
+start -> [1] -> [2] -> [3] -> [4]
+```
 
 ## BBf(2)
 
@@ -73,7 +78,12 @@ start → [1,0] → [0,1] → [1,0] → [0,1]
 
 ### Translated Cycler — `1A_A2`
 
-TODO
+Counter 0 increases by 1 every 3 steps
+
+```txt
+// Simulation
+start -> [1,0] -> [0,2] -> [1,1] -> [2,0] -> [1,2] -> [2,1] -> [3,0]
+```
 
 Other: `11A_A01` `1A1_A1`
 
