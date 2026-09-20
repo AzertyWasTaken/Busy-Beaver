@@ -81,7 +81,7 @@ The string grows indefinitely by a zero per step.
 
 ```txt
 // Simulation
-start → 0 → 00 → 000 → 0000
+start → 00 → 000 → 0000
 ```
 
 ### Multi-Period Cycler — `001_`
