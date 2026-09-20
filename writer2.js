@@ -3,23 +3,27 @@ import path from "node:path";
 import fs from "node:fs/promises";
 
 export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, unparse) {
-    let record = 0;
+    let championSteps = 0;
 
     function getPath(dir, ...domain) {
-        return path.resolve(path.join(scriptPath, dir, fileName(...domain)));
+        return path.resolve(scriptPath, dir, fileName(...domain));
     }
 
     function isUndecided(code, deciders) {
-        for (const [decider, ...params] of deciders) {
-            const {status, steps} = decider(code, ...params);
-            if (status === "undecided") continue;
+        for (const decData of deciders) {
+            const [decider, ...params] = Array.isArray(decData)
+            ? decData : [decData];
 
-            if (status === "halted" && steps > record) {
+            const [status, steps] = decider(code, ...params);
+
+            if (steps && steps > championSteps) {
                 console.log("Champion:", unparse(code), `(${steps})`);
-                record = steps;
+                championSteps = steps;
             }
-            return false;
+
+            if (status !== "undecided") return false;
         }
+
         return true;
     }
 
@@ -28,58 +32,68 @@ export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, u
         console.log(`Successfully created: ${filePath}`);
     }
 
-    async function newList(maxPrograms, maxSteps, canCreateFile, deciders, ...domain) {
-        const programs = [];
-        record = 0;
+    async function readHoldouts(domain) {
+        const sourcePath = getPath("Holdouts", ...domain);
+        const content = await fs.readFile(sourcePath, "utf8");
+        console.log(`Successfully read: ${sourcePath}`);
+        return content.replaceAll("\r", "").split("\n").filter((line) => line.length > 0);
+    }
 
-        for (const code of enumerate(...domain, maxSteps)) {
+    async function writeHoldouts(canCreateFile, domain, holdouts) {
+        if (canCreateFile) await createFile(getPath("", ...domain), holdouts.join("\n"));
+    }
+
+    async function newList(maxPrograms, maxSteps, canCreateFile, deciders, ...domain) {
+        const holdouts = [];
+        championSteps = 0;
+
+        for (const [code, steps] of enumerate(...domain, maxSteps)) {
+            if (steps) {
+                if (steps > championSteps) {
+                    console.log("Champion:", unparse(code), `(${steps})`);
+                    championSteps = steps;
+                }
+                continue;
+            }
+
             if (!isUndecided(code, deciders)) continue;
 
             const unparsed = unparse(code);
             console.log("Holdout:", unparsed);
-            programs.push(unparsed);
+            holdouts.push(unparsed);
 
-            if (programs.length >= maxPrograms) {
+            if (holdouts.length >= maxPrograms) {
                 console.log("Maximum programs count reached!");
                 break;
             }
         }
 
-        console.log(`Total enumerated: ${programs.length}`);
-        if (canCreateFile) await createFile(getPath("", ...domain), programs.join("\n"));
+        console.log(`Total enumerated: ${holdouts.length}`);
+        await writeHoldouts(canCreateFile, domain, holdouts);
     }
 
     async function decideList(canCreateFile, deciders, ...domain) {
-        const sourcePath = getPath("Holdouts", ...domain);
-        const content = await fs.readFile(sourcePath, "utf8");
-        console.log(`Successfully read: ${sourcePath}`);
-        const holdouts = content
-            .replaceAll("\r", "")
-            .split("\n")
-            .filter((line) => line.length > 0);
+        const lines = await readHoldouts(domain);
+        const holdouts = [];
+        championSteps = 0;
 
-        const programs = [];
-        record = 0;
-
-        for (const unparsed of holdouts) {
-            const code = parse(unparsed);
-
-            if (isUndecided(code, deciders)) {
-                programs.push(unparsed);
+        for (const unparsed of lines) {
+            if (isUndecided(parse(unparsed), deciders)) {
+                holdouts.push(unparsed);
             } else {
                 console.log(unparsed);
             }
         }
 
-        console.log(`Total decided: ${holdouts.length - programs.length}`);
-        if (canCreateFile) await createFile(getPath("", ...domain), programs.join("\n"));
+        console.log(`Total decided: ${lines.length - holdouts.length}`);
+        await writeHoldouts(canCreateFile, domain, holdouts);
     }
 
-    // Currently does not work for equivalence deciders.
+    // Only checks direct deciders, not equivalence pruning.
     function reviewDecider(maxSteps, [decider, ...params], ...domain) {
-        for (const code of enumerate(...domain, maxSteps)) {
-            if (maxSteps === 0) continue;
+        if (maxSteps === 0) return;
 
+        for (const code of enumerate(...domain, maxSteps)) {
             const prog = newProgram(code, maxSteps);
             while (prog.status === "running") prog.step();
             if (prog.status !== "halted") continue;
@@ -87,11 +101,8 @@ export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, u
             const {status, steps} = decider(code, ...params);
             if (status !== "nonhalting") continue;
 
-            const unparsed = unparse(code);
-            console.log(
-                `False positive: ${unparsed}`
-                + (steps ? ` (${steps})` : "")
-            );
+            const stepsDisplay = steps ? ` (${steps})` : "";
+            console.log(`False positive: ${unparse(code)}` + stepsDisplay);
         }
     }
 

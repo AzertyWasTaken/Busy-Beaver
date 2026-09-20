@@ -22,5 +22,5 @@ export function decide(code) {
     }
 
     const status = checkRule(0, new Set([0]));
-    return {status: status ? "equivalent" : "undecided"};
+    return [status ? "equivalent" : "undecided"];
 }

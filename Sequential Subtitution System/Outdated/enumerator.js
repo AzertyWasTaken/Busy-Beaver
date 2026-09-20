@@ -7,7 +7,7 @@ export function enumerate(maxSize) {
 
     function* nextRule(currSize, side, recSymbol) {
         if (currSize >= maxSize) {
-            yield code;
+            yield [code];
             return;
         }
 

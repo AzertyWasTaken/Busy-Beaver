@@ -1,4 +1,4 @@
-# Search
+# Post Tag System Search
 
 ## Equivalence Rules
 

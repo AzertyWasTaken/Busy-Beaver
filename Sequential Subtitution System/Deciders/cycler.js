@@ -12,20 +12,18 @@ function compare(a, b) {
 
 export function decide(code, maxSteps) {
     const program = newProgram(code, maxSteps);
-    const output = (status) => ({status, steps: program.steps});
-
     let prevString;
     let phase = 2;
 
     while (true) {
         program.step();
         const status = program.status;
-        if (status === "halted") return output("halted");
-        if (status !== "running") return output("undecided");
+        if (status === "halted") return ["halted", program.steps];
+        if (status !== "running") return ["undecided"];
 
         const string = program.string;
         if (prevString && compare(prevString, string))
-            return output("nonhalting");
+            return ["nonhalting"];
 
         if (program.steps >= 2**phase) {
             prevString = [...string];

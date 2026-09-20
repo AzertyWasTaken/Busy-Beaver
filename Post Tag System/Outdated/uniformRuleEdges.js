@@ -8,5 +8,6 @@ export function decide(code) {
             && e.at(-1) === sym
         );
     });
-    return {status: status ? "nonhalting" : "undecided"};
+
+    return [status ? "nonhalting" : "undecided"];
 }

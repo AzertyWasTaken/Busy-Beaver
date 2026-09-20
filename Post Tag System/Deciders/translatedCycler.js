@@ -12,13 +12,12 @@ function compare(a, b) {
 
 export function decide(code, maxSteps) {
     const program = newProgram(code, maxSteps);
-    const output = (status) => ({status, steps: program.steps});
 
     while (true) {
         program.step();
         const status = program.status;
-        if (status === "halted") return output("halted");
-        if (status !== "running") return output("undecided");
+        if (status === "halted") return ["halted", program.steps];
+        if (status !== "running") return ["undecided"];
 
         const queue = program.queue;
         const length = queue.length;
@@ -33,8 +32,8 @@ export function decide(code, maxSteps) {
         for (let i = 0 ; i < half; i++) {
             program.step();
             const status = program.status;
-            if (status === "halted") return output("halted");
-            if (status !== "running") return output("undecided");
+            if (status === "halted") return ["halted", program.steps];
+            if (status !== "running") return ["undecided"];
         }
 
         const nextQueue = program.queue;
@@ -56,6 +55,6 @@ export function decide(code, maxSteps) {
             return true;
         }
 
-        if (isCycling()) return output("nonhalting");
+        if (isCycling()) return ["nonhalting"];
     }
 }

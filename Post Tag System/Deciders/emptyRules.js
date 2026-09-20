@@ -14,5 +14,6 @@ export function decide(code) {
 
         return rule !== null && checkMod(0) && checkMod(1);
     });
-    return {status: status ? "equivalent" : "undecided"};
+
+    return [status ? "equivalent" : "undecided"];
 }

@@ -1,44 +1,37 @@
 "use strict";
-import {newAutomaton} from "./runner.js";
+import {newProgram} from "./runner.js";
 
-export function enumerateTNF(maxSymbol, maxSize, maxSteps) {
-    function* nextRule(code, rules) {
+export function enumerate(maxSymbol, maxSize, maxSteps) {
+    const code = [maxSymbol - 1];
+    for (let i = 1; i < maxSymbol**maxSize; i++) {
+        code.push(null);
+    }
+
+    function* nextRule(rules) {
         // Run the automaton until an undefined transition
-        const automaton = newAutomaton(code, maxSteps);
-        const steps = automaton.run();
-        const currRule = automaton.getData().currRule;
+        const prog = newProgram(code, maxSteps);
+        while (prog.status === "running") prog.step();
 
         // Check if the automaton is nonhalting
-        if (steps < 0) {
-            yield code;
+        if (prog.status === "timed out") {
+            yield [code];
             return;
         }
 
-        const rule = code[currRule];
-        if (rule === null) {
-            // Check if the code is full
-            rules++;
-            if (rules >= maxSymbol**maxSize) {
-                yield code;
-                return;
-            }
+        yield [code, prog.steps];
 
-            // Enumerate every possible canditates
-            for (let i = 0; i < maxSymbol; i++) {
-                code[currRule] = i;
-                yield* nextRule(code, rules);
-                code[currRule] = null;
-            }
+        // Check if the code is full
+        rules++;
+        if (rules >= maxSymbol**maxSize) return;
+
+        // Enumerate every possible canditates
+        const currRule = prog.currRule;
+        for (let i = 0; i < maxSymbol; i++) {
+            code[currRule] = i;
+            yield* nextRule(rules);
+            code[currRule] = null;
         }
     }
 
-    function emptyCode() {
-        const code = [maxSymbol - 1];
-        for (let i = 1; i < maxSymbol**maxSize; i++) {
-            code.push(null);
-        }
-        return code;
-    }
-
-    return nextRule(emptyCode(), 1);
+    return nextRule(1);
 }

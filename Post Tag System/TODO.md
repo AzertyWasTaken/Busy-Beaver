@@ -14,12 +14,15 @@
 
 ## Enumeration
 
-- [ ] Cache `immortalSubstring.js`
 - [ ] Decide bouncers
 - [ ] Decide bells
 - [ ] Decide cubic bells
 - [ ] Decide `0-1-1-_0`
 - [ ] Decide `1021_20_1`
+
+### Optimize immortalSubstring
+
+- [ ] Cache visited substrings
 
 ## Documentation
 

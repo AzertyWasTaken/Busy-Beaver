@@ -22,5 +22,6 @@ export function decide(code) {
     const status = code.some((rule, symbol) =>
         isClosed(rule, new Set([symbol]))
     );
-    return {status: status ? "nonhalting" : "undecided"};
+
+    return [status ? "nonhalting" : "undecided"];
 }

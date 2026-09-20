@@ -29,7 +29,6 @@ function compare(a, b, start, end, offset) {
 export function decide(code, maxSteps) {
     const maxInputLength = Math.max(...code.map((rule) => rule[0].length));
     const program = newProgram(code, maxSteps);
-    const output = (status) => ({status, steps: program.steps});
 
     let prevString;
     let prevIndex;
@@ -38,8 +37,8 @@ export function decide(code, maxSteps) {
     while (true) {
         program.step();
         const status = program.status;
-        if (status === "halted") return output("halted");
-        if (status !== "running") return output("undecided");
+        if (status === "halted") return ["halted", program.steps];
+        if (status !== "running") return ["undecided"];
 
         const [rule, index] = program.state;
         const string = program.string;
@@ -55,7 +54,7 @@ export function decide(code, maxSteps) {
                 prevIndex + prevRule[1].length + maxInputLength - 1,
                 index - prevIndex
             )
-        ) return output("nonhalting");
+        ) return ["nonhalting"];
 
         prevString = [...string];
         prevIndex = index

@@ -19,5 +19,5 @@ function hasSequence(a, b) {
 
 export function decide(code) {
     const status = hasSequence(code[0][0], code[0][1]);
-    return {status: status ? "nonhalting" : "undecided"};
+    return [status ? "nonhalting" : "undecided"];
 }
