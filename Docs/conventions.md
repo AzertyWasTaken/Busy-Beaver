@@ -20,6 +20,7 @@ Conventions for the documentation of each system (`spec.md`, `search.md`, `resul
 Each `spec.md` contains:
 
 - A `Composition` section listing the components of the system.
+- A `Program Format` section explaining how standard format works for this system.
 - An `Execution` section describing the initial configuration, the step rules and the halting condition.
 - A `Function` section, when applicable, defining the Busy Beaver function for the system: its size parameter, what counts as a step, and whether the halting step counts.
 - A `See Also` section with links to relevant Busy Beaver Wiki pages.
@@ -50,7 +51,7 @@ Additional rules:
 - Positions are 0-indexed when describing items: the first item is at index 0.
 - Deciders that are not implemented yet must be labeled `TODO`.
 - If a decider is strictly weaker than another one (it decides a strict subset of the programs the stronger one decides), its description is moved to the beginning of the stronger decider's section, to introduce it.
-- For each section, order deciders from strongest to weakest.
+- For each section, order deciders from simplest to most complex, with TNF enumeration at the top.
 
 ## Website
 

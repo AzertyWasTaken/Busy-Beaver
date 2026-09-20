@@ -5,14 +5,14 @@
 | Post Tag System | 1,000 | 420 |
 | Turing Machine | 350 | 340 |
 | Cyclic Tag System | 300 | 240 |
-| Cellular Automaton | 100 | 160 |
+| Cellular Automaton | 120 | 260 |
 | Register Machine | 50 | 180 |
 | Boolfuck | 40 | 310 |
 | CounterScript | 40 | 280 |
 | Fractran | 30 | 170 |
 | Pebble Automaton | 20 | 300 |
 | Sequential Subtitution System | 7 | 230 |
-| Lambda Calculus | 0 | 0 |
+| Lambda Calculus | 5 | 160 |
 
 ## BB-index
 
