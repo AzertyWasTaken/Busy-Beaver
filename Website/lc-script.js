@@ -1,8 +1,8 @@
 "use strict";
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
-import {parse} from "../Pebble Automaton/parser.js";
-import {newAutomaton} from "../Pebble Automaton/runner.js";
+import {parse} from "../Lambda Calculus/parser.js";
+import {newProgram} from "../Lambda Calculus/runner.js";
 
 // ==== Initialize ====
 
@@ -14,13 +14,15 @@ const scroll = {x: 0, y: 0};
 
 // ==== Canvas ====
 
-function appendRow(data) {
-    const offsetX = -data.lTape.length;
+function appendRow() {
+    const colorTape = program.expression
+    .map((symbol) => 
+        symbol === "/" ? STATE_COLORS[0]
+        : symbol === "*" ? STATE_COLORS[1]
+        : SYMBOL_COLORS[symbol]
+    );
 
-    const colorTape = data.lTape.toReversed().concat(data.rTape)
-    .map((symbol) => SYMBOL_COLORS[symbol - 1]);
-
-    history.push([colorTape, offsetX]);
+    history.push(colorTape);
 }
 
 function drawFrame() {
@@ -34,18 +36,17 @@ function drawFrame() {
 
     // Complete the history
     for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
-        const data = program.getData();
-        if (data.status !== "running") break;
-        appendRow(data);
+        if (program.status !== "running") break;
+        appendRow();
         program.step();
     }
 
-    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
+    stepsEl.textContent = "Steps: " + program.steps.toLocaleString("en-US");
 
     // Draw rows
     for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
         if (!history[i]) break;
-        canvas.drawRow(history[i][0], history[i][1] - scroll.x);
+        canvas.drawRow(history[i], -canvasDim.x / 2 - scroll.x);
     }
 }
 
@@ -54,7 +55,7 @@ function drawFrame() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newAutomaton(code, 1_000_000);
+    program = newProgram(code, 1_000_000);
     history = [];
     scroll.x = 0;
     scroll.y = 0;
@@ -67,4 +68,4 @@ setupZoom(canvas, drawFrame);
 
 // ==== Scroll ====
 
-setupScroll(canvasEl, canvas, drawFrame, scroll, false);
+setupScroll(canvasEl, canvas, drawFrame, scroll, true);
