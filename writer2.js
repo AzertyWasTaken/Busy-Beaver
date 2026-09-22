@@ -48,7 +48,7 @@ export function fileWriter(scriptPath, fileName, enumerate, newProgram, parse, u
         championSteps = 0;
 
         for (const [code, steps] of enumerate(...domain, maxSteps)) {
-            if (steps) {
+            if (steps !== undefined) {
                 if (steps > championSteps) {
                     console.log("Champion:", unparse(code), `(${steps})`);
                     championSteps = steps;
