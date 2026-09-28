@@ -5,5 +5,6 @@ export function decide(code) {
         && rule.length >= 2
         && rule.every((symbol) => symbol !== null)
     );
-    return {status: status ? "nonhalting" : "undecided"};
+
+    return [status ? "nonhalting" : "undecided"];
 }

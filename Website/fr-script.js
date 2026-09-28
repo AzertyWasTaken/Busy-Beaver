@@ -2,7 +2,7 @@
 import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
 import {parse} from "../Fractran/parser.js";
-import {newMachine} from "../Fractran/runner.js";
+import {newProgram} from "../Fractran/runner.js";
 
 // ==== Initialize ====
 
@@ -14,9 +14,9 @@ const scroll = {x: 0, y: 0};
 
 // ==== Canvas ====
 
-function appendRow(data) {
+function appendRow() {
     const colorTape = [];
-    data.register.forEach((e, i) => {
+    program.register.forEach((e, i) => {
         for (let a = 0; a < e; a++)
             colorTape.push(SYMBOL_COLORS[i]);
     })
@@ -35,13 +35,12 @@ function drawFrame() {
 
     // Complete the history
     for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
-        const data = program.getData();
-        if (data.status !== "running") break;
-        appendRow(data);
+        if (program.status !== "running") break;
+        appendRow();
         program.step();
     }
 
-    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
+    stepsEl.textContent = "Steps: " + program.steps.toLocaleString("en-US");
 
     // Draw rows
     for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
@@ -56,7 +55,7 @@ document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
     
-    program = newMachine(code, 1_000_000);
+    program = newProgram(code, 1_000_000);
     history = [];
     scroll.x = 0;
     scroll.y = 0;

@@ -79,13 +79,12 @@ function isImmortal(pattern, code, maxDepth) {
 
 export function decide(code, maxSteps, offset, maxDepth, maxLength) {
     const program = newProgram(code, maxSteps);
-    const output = (status) => ({status, steps: program.steps});
 
     while (true) {
         program.step();
         const status = program.status;
-        if (status === "halted") return output("halted");
-        if (status !== "running") return output("undecided");
+        if (status === "halted") return ["halted", program.steps];
+        if (status !== "running") return ["undecided"];
 
         if (program.steps % offset > 0) continue;
 
@@ -93,8 +92,7 @@ export function decide(code, maxSteps, offset, maxDepth, maxLength) {
         for (let length = 2; length <= Math.min(queue.length, maxLength); length++) {
             for (let start = 0; start <= queue.length - length; start++) {
                 const pattern = queue.slice(start, start + length);
-                if (isImmortal(pattern, code, maxDepth))
-                    return output("nonhalting");
+                if (isImmortal(pattern, code, maxDepth)) return ["nonhalting"];
             }
         }
     }

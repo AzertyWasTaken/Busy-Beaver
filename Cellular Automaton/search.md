@@ -1,4 +1,4 @@
-# Search
+# Cellular Automaton Search
 
 ## Equivalence Rules
 
@@ -11,6 +11,8 @@ TODO
 ### Symmetry
 
 TODO
+
+Example: `11110-11` and `10111-11`
 
 ## Deciders
 

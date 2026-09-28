@@ -1,4 +1,7 @@
-# README
+# Cellular Automaton Results
+
+- [Spec](./spec.md)
+- [Terminology](../Docs/terminology.md)
 
 ## Champions
 
@@ -6,17 +9,23 @@
 | - | - | - |
 | BBCA(2) | = 2 | `111-` |
 | BBCA(3) | ≥ 21 | `2022-1120` |
-| BBCA(4) | ≥ 100 | `3001231130-01210` |
-| BBCA(2,3) | ≥ 4 | `1011110-` |
-| BBCA(2,4) | ≥ 93 | `10011-1011101000` |
+| BBCA(4) | ≥ 786 | `3001231130-21321` |
+| BBCA(2,3) | = 4 | `1011110-` |
+| BBCA(3,3) | ≥ 1,349 | `2000001012111112201-0220010` |
+| BBCA(2,4) | ≥ 93 | `1111011001-01000` |
 
 ## Holdouts
 
 | Domain | Holdouts |
 | - | - |
-| BBCA(3) | 156 |
-| BBCA(2,3) | 5 |
-| BBCA(2,4) | 1,189 |
+| BBCA(3) | 154 |
+| BBCA(4) | 55,883\* |
+| BBCA(2,3) | 3 |
+| BBCA(3,3) | 44,339\* |
+| BBCA(2,4) | 843 |
+| BBCA(2,5) | 31,300\* |
+
+> \* The enumeration is not finished yet.
 
 ## BBCA(2)
 

@@ -6,5 +6,6 @@ export function decide(code) {
         && rule[0] === sym
         && rule[2] === sym
     );
-    return {status: status ? "nonhalting" : "undecided"};
+
+    return [status ? "nonhalting" : "undecided"];
 }

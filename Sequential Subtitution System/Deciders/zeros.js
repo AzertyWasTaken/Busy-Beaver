@@ -8,5 +8,6 @@ export function decide(code) {
         }
         return false;
     }
-    return {status: isClosed() ? "nonhalting" : "undecided"};
+
+    return [isClosed() ? "nonhalting" : "undecided"];
 }

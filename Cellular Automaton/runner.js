@@ -1,5 +1,5 @@
 "use strict";
-export function newAutomaton(code, maxSteps) {
+export function newProgram(code, maxSteps) {
     const symbols = code[0] + 1;
     const ruleSpan = Math.round(Math.log(code.length) / Math.log(symbols));
 
@@ -7,13 +7,19 @@ export function newAutomaton(code, maxSteps) {
     let steps = 0;
     let status = "running";
     let currRule;
+    let offset = 0;
 
     function readCell(pos) {
         return tape[pos] ?? 0;
     }
 
-    function removeTrailing(tape) {
-        while (tape.length > 0 && (tape.at(-1) ?? 0) === 0) tape.pop();
+    function removeTrailing(tp) {
+        const left = tp.findIndex((sym) => sym !== 0);
+        const right = tp.findLastIndex((sym) => sym !== 0);
+        offset += left;
+        tp.splice(0, left);
+        tp.splice(right + 1);
+        return tp;
     }
 
     function step() {
@@ -21,10 +27,7 @@ export function newAutomaton(code, maxSteps) {
 
         // Increment steps count
         steps++;
-        if (steps > maxSteps) {
-            status = "timed out";
-            return;
-        }
+        if (steps > maxSteps) return status = "timed out";
 
         const nextTape = [];
         for (let i = 0; i < tape.length + ruleSpan - 1; i++) {
@@ -34,34 +37,40 @@ export function newAutomaton(code, maxSteps) {
                 idx += symbols**j * cell;
             }
 
-            if (idx === 0) continue;
-
-            const newSymbol = code[idx];
+            const newSymbol = idx === 0 ? 0 : code[idx];
             if (newSymbol === null) {
-                status = "halted";
                 currRule = idx;
-                return;
+                return status = "halted";
             }
             nextTape[i] = newSymbol;
         }
 
-        removeTrailing(tape);
-
-        tape = nextTape;
+        tape = removeTrailing(nextTape);
         return;
     }
 
-    function run() {
-        while (true) {
-            step();
-            if (status === "halted") return steps;
-            if (status === "timed out") return -1;
-        }
+    return {
+        step,
+        readCell,
+        get tape() {return tape;},
+        get status() {return status;},
+        get steps() {return steps;},
+        get readCell() {return readCell();},
+        get currRule() {return currRule;},
+        get offset() {return offset;}
+    };
+}
+
+export function decide(code, maxSteps) {
+    const prog = newProgram(code, maxSteps);
+    while (prog.status === "running") prog.step();
+
+    function isPaused() {
+        return code.filter((sym) => sym === null).length > 2
+        ? "undecided" : "halted";
     }
 
-    function getData() {
-        return {tape, steps, status, currRule};
-    }
-
-    return {readCell, step, run, getData};
+    return prog.status === "halted"
+    ? [isPaused(), prog.steps]
+    : ["undecided"];
 }

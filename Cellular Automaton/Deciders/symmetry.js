@@ -1,6 +1,9 @@
 "use strict";
-export function decSymmetry(code) {
+export function decide(code) {
     const symbols = code[0] + 1;
     const ruleSpan = Math.round(Math.log(code.length) / Math.log(symbols));
-    return code[symbols**(ruleSpan - 1)] > code[1];
+    for (let a = 0, b = ruleSpan - 1; a < b; a++, b--) {
+        if (code[symbols**a] < code[symbols**b]) return ["equivalent"];
+    }
+    return ["undecided"];
 }

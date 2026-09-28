@@ -63,5 +63,6 @@ export function decide(code) {
     const status = code.some((rule) =>
         isImmortal(rule, code)
     );
-    return {status: status ? "nonhalting" : "undecided"};
+
+    return [status ? "nonhalting" : "undecided"];
 }

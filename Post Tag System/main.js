@@ -23,9 +23,9 @@ const value = fileWriter(
     unparse
 );
 
-// await value.newList(100_000, 1_000, true, [[EI], [ER], [DR], [IS, 20, 2, 10, 20], [TC, 100], [C, 1_000]], 9);
+// await value.newList(100_000, 1_000, false, [EI, ER, DR, [IS, 20, 2, 10, 20], [TC, 100], [C, 1_000]], 8);
 
-// await value.decideList(true, [[IS, 30, 100]], 8);
+await value.decideList(true, [[C, 100_000]], 9);
 
 // value.reviewDecider(1_000, [C, 1_000], 7);
 

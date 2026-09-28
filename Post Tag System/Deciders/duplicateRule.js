@@ -15,8 +15,8 @@ export function decide(code) {
         for (let b = a + 1; b < code.length; b++) {
             if (code[b] === null) continue;
 
-            if (compare(code[a], code[b])) return {status: "equivalent"};
+            if (compare(code[a], code[b])) return ["equivalent"];
         }
     }
-    return {status: "undecided"};
+    return ["undecided"];
 }

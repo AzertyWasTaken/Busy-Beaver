@@ -9,7 +9,7 @@ export function enumerate(maxSize, maxSteps) {
 
     function* nextRule(currSize, side, recSymbol) {
         if (currSize >= maxSize) {
-            yield code;
+            yield [code];
             return;
         }
 
@@ -34,7 +34,7 @@ export function enumerate(maxSize, maxSteps) {
             while (prog.status === "running") prog.step();
 
             if (prog.status === "timed out") {
-                yield code;
+                yield [code];
                 return;
             }
 

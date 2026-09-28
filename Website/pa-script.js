@@ -17,12 +17,8 @@ const scroll = {x: 0, y: 0};
 function appendRow(data) {
     const offsetX = -data.lTape.length;
 
-    const colorTape = [0]
-    .concat(data.lTape.toReversed())
-    .concat(data.rTape)
+    const colorTape = data.lTape.toReversed().concat(data.rTape)
     .map((symbol) => SYMBOL_COLORS[symbol - 1]);
-
-    colorTape[data.head - offsetX + 1] = STATE_COLORS[data.state];
 
     history.push([colorTape, offsetX]);
 }

@@ -2,7 +2,7 @@
 import {SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
 import {parse} from "../Cellular Automaton/parser.js";
-import {newAutomaton} from "../Cellular Automaton/runner.js";
+import {newProgram} from "../Cellular Automaton/runner.js";
 
 // ==== Initialize ====
 
@@ -15,9 +15,8 @@ const scroll = {x: 0, y: 0};
 // ==== Canvas ====
 
 function appendRow() {
-    const {tape} = program.getData();
-    const colorTape = tape.map((symbol) => SYMBOL_COLORS[symbol - 1]);
-    history.push(colorTape);
+    const colorTape = program.tape.map((symbol) => SYMBOL_COLORS[symbol - 1]);
+    history.push([colorTape, program.offset]);
 }
 
 function drawFrame() {
@@ -31,18 +30,17 @@ function drawFrame() {
 
     // Complete the history
     for (let i = history.length; i < scroll.y + canvasDim.y; i++) {
-        const data = program.getData();
-        if (data.status !== "running") break;
+        if (program.status !== "running") break;
         appendRow();
         program.step();
     }
 
-    stepsEl.textContent = "Steps: " + program.getData().steps.toLocaleString("en-US");
+    stepsEl.textContent = "Steps: " + program.steps.toLocaleString("en-US");
 
     // Draw rows
     for (let i = scroll.y; i < scroll.y + canvasDim.y; i++) {
         if (!history[i]) break;
-        canvas.drawRow(history[i], -canvasDim.x / 2 - scroll.x);
+        canvas.drawRow(history[i][0], history[i][1] - canvasDim.x / 2 - scroll.x);
     }
 }
 
@@ -109,7 +107,7 @@ function renderCode() {
 document.getElementById("import").addEventListener("click", () => {
     const input = document.getElementById("input").value;
     code = input.length === 0 ? undefined : parse(input);
-    program = newAutomaton(code, 1_000_000);
+    program = newProgram(code, 1_000_000);
     history = [];
     scroll.x = 0;
     scroll.y = 0;

@@ -4,7 +4,11 @@ import {newProgram} from "./runner.js";
 export function enumerate(maxSize, maxSteps) {
     const code = [null];
 
-    // Enumerates every allowed symbol, registering a new symbol for the duration of its branch
+    function hasNullInstr() {
+        return code.some((r) => r === null || r.includes(null));
+    }
+
+    // Enumerates every allowed symbol
     function* candidates(recSymbol) {
         for (let sym = 0; sym <= recSymbol + 1; sym++) {
             const newSymbol = sym > recSymbol;
@@ -42,7 +46,7 @@ export function enumerate(maxSize, maxSteps) {
         const hasSymbol = code[symbol].includes(symbol);
 
         if (idx >= code[symbol].length) {
-            yield* nextStep(size, recSymbol);
+            if (size === maxSize || hasNullInstr()) yield* nextStep(size, recSymbol);
             return;
         }
 
@@ -60,35 +64,28 @@ export function enumerate(maxSize, maxSteps) {
         const prog = newProgram(code, maxSteps);
         while (prog.status === "running") prog.step();
 
-        switch (prog.status) {
-            case "halted": {
-                if (size === maxSize) yield code;
-                return;
-            }
-
-            case "timed out": {
-                if (
-                    size === maxSize
-                    || code.some((r) => r === null || r.includes(null))
-                ) yield code;
-                return;
-            }
-
-            case "paused": {
-                const symbol = prog.symbol;
-                const queueLength = prog.queueLength;
-
-                if (code[symbol] === null) {
-                    code[symbol] = [];
-                    yield* nextRule(size, recSymbol, symbol, queueLength % 2);
-                    code[symbol] = null;
-                    return;
-                }
-
-                yield* revealSymbol(size, recSymbol, symbol, queueLength % 2);
-                return;
-            }
+        if (prog.status === "halted") {
+            if (size === maxSize) yield [code, prog.steps];
+            return;
         }
+
+        if (prog.status === "timed out") {
+            yield [code];
+            return;
+        }
+
+        const symbol = prog.symbol;
+        const queueLength = prog.queueLength;
+
+        if (code[symbol] === null) {
+            code[symbol] = [];
+            yield* nextRule(size, recSymbol, symbol, queueLength % 2);
+            code[symbol] = null;
+            return;
+        }
+
+        yield* revealSymbol(size, recSymbol, symbol, queueLength % 2);
+        return;
     }
 
     return nextStep(0, 0);

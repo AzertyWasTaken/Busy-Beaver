@@ -9,11 +9,14 @@
 - TNF enumeration
 - Closed rule decider
 - Zeros decider
+- Documentation
 
 ## Enumeration
 
+- [ ] Subset rules equivalence decider
 - [ ] Translated cycler decider uni-period
 - [ ] Translated cycler decider
+- [ ] Optimize runner
 
 ## Documentation
 

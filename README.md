@@ -53,6 +53,7 @@ The repository includes a website with browser simulators for each system. See [
 
 - [Conventions](./conventions.md) — size metrics, systems, results and search conventions.
 - [Stats](./stats.md) — BB-index and active code size per system.
+- [Terminology](./terminology.md) — BB-index and active code size per system.
 - [TODO](./TODO.md) — planned systems and global tasks.
 - [Contributing](./CONTRIBUTING.md) — how to contribute.
 - [Website](./Website/README.md) — the browser simulators and how to run them.

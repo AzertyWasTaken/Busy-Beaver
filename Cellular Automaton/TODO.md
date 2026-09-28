@@ -4,17 +4,21 @@
 
 - Add symbol argument
 - Create simulator webpage
-- Enumerate BBCA(3)
 - TNF enumeration
-- Enumerate BBCA(2,4)
 - Cycler decider
 - Remove mirrored programs
+- Do not decide paused programs
+- Closed symbols equivalence decider
+- Modular equivalence decider
+- Symmetry decider
 
 ## Enumeration
 
+- [ ] First step equivalence decider (first step must have more than one positive cell)
 - [ ] Symbols appearance order
-- [ ] Modular decider
-- [ ] Symbols jail decider
+- [ ] Translated cycler decider uni-period uniform
+- [ ] Translated cycler decider uni-period
+- [ ] Translated cycler decider
 
 ## Documentation
 

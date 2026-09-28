@@ -9,7 +9,6 @@ import {fileWriter} from "../writer2.js";
 // Deciders
 import {decide as C} from "./Deciders/cycler.js";
 import {decide as TC} from "./Deciders/translatedCycler.js";
-import {decide as CR} from "./Deciders/closedRule.js";
 import {decide as Z} from "./Deciders/zeros.js";
 
 const value = fileWriter(
@@ -21,7 +20,7 @@ const value = fileWriter(
     unparse
 );
 
-await value.newList(100_000, 100, false, [[Z], [C, 100], [TC, 100]], 6);
+await value.newList(100_000, 100, false, [Z, [C, 100], [TC, 100]], 6);
 
 // await value.decideList(true, [[TC, 100]], 8);
 

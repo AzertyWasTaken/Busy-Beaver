@@ -1,4 +1,7 @@
-# README
+# Post Tag System Results
+
+- [Spec](./spec.md)
+- [Terminology](../Docs/terminology.md)
 
 ## Champions
 
@@ -81,7 +84,7 @@ The string grows indefinitely by a zero per step.
 
 ```txt
 // Simulation
-start → 0 → 00 → 000 → 0000
+start → 00 → 000 → 0000
 ```
 
 ### Multi-Period Cycler — `001_`

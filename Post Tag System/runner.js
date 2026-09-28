@@ -50,8 +50,7 @@ export function decide(code, maxSteps) {
     const prog = newProgram(code, maxSteps);
     while (prog.status === "running") prog.step();
 
-    return {
-        status: prog.status === "halted" ? "halted" : "undecided",
-        steps: prog.steps
-    };
+    return prog.status === "halted"
+    ? ["halted", prog.steps]
+    : ["undecided"];
 }

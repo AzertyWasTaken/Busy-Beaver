@@ -1,48 +1,38 @@
 "use strict";
-import {newAutomaton} from "../runner.js";
-
-const MAX_STEPS = 100;
+import {newProgram} from "../runner.js";
 
 function compare(a, b) {
     if (a.length !== b.length) return false;
 
     for (let i = 0; i < a.length; i++) {
-        if ((a[i] ?? 0) !== (b[i] ?? 0)) return false;
+        if (a[i] !== b[i]) return false;
     }
     return true;
 }
 
-function normalize(tape) {
-    const copy = [...tape];
-    while (copy.length > 0 && (copy[0] ?? 0) === 0) copy.shift();
-    while (copy.length > 0 && (copy.at(-1) ?? 0) === 0) copy.pop();
-    return copy;
-}
-
-export function decCycler(code) {
-    const automaton = newAutomaton(code, MAX_STEPS);
+export function decide(code, maxSteps) {
+    const program = newProgram(code, maxSteps);
     let prevTape;
     let phase = 2;
 
+    function isPaused() {
+        return code.filter((sym) => sym === null).length > 2
+        ? "undecided" : "halted";
+    }
+
     while (true) {
-        automaton.step();
-        const status = automaton.getData().status;
-        if (status === "halted") return true;
-        if (status === "timed out") return false;
+        program.step();
+        const status = program.status;
+        if (status === "halted") return [isPaused(), program.steps];
+        if (status !== "running") return ["undecided"];
 
-        const {tape, steps}
-        = automaton.getData();
+        const tape = program.tape;
 
-        if (
-            prevTape
-            && compare(
-                normalize(prevTape),
-                normalize(tape)
-            )
-        ) return true;
+        if (prevTape && compare(prevTape, tape))
+            return ["nonhalting"];
 
-        if (steps >= 2**phase) {
-            prevTape = [...tape];
+        if (program.steps >= 2**phase) {
+            prevTape = tape;
             phase++;
         }
     }
