@@ -1,7 +1,5 @@
 "use strict";
-import {newMachine} from "../runner.js";
-
-const MAX_STEPS = 1_000;
+import {newProgram} from "../runner.js";
 
 function compare(a, b) {
     if (a.length !== b.length) return false;
@@ -12,37 +10,30 @@ function compare(a, b) {
     return true;
 }
 
-export function decCycler(code) {
-    const machine = newMachine(code, MAX_STEPS);
+export function decide(code, maxSteps) {
+    const program = newProgram(code, maxSteps);
     let prev;
     let phase = 2;
 
     while (true) {
-        for (let i = 0; i < 2; i++) {
-            machine.step();
-            const status = machine.getData().status;
-            if (status === "halted") return true;
-            if (status === "timed out") return false;
-        }
+        program.step();
+        const status = program.status;
+        if (status === "halted") return ["halted", program.steps];
+        if (status !== "running") return ["undecided"];
 
-        const {lTape, rTape, state, head, steps}
-        = machine.getData();
+        const tape = program.tape;
+        const state = program.state;
+        const head = program.head;
 
         if (
             prev
-            && compare(prev.lTape, lTape)
-            && compare(prev.rTape, rTape)
+            && compare(prev.tape, tape)
             && prev.state === state
             && prev.head === head
-        ) return true;
+        ) return ["nonhalting"];
 
-        if (steps >= 2**phase) {
-            prev = {
-                lTape: [...lTape],
-                rTape: [...rTape],
-                state,
-                head
-            };
+        if (program.steps >= 2**phase) {
+            prev = {tape, state, head};
             phase++;
         }
     }

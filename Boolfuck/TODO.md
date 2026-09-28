@@ -4,20 +4,26 @@
 
 - Base template
 - No empty brackets
-- Programs start with `1`
-- Brackets must not end with a `1`
 - Cycler decider
 - No self-canceling moves
 - No self-canceling bit
 - Translated cycler decider
-- Brackets must not start with a `1`
-- Eunmerate B2F(12)
+- Eunmerate BlF(12)
+- Update format
+- First move must be `>`
+- No stacked brackets
 
 ## Enumeration
 
-- [ ] No stacked brackets
-- [ ] First move must be `>`
 - [ ] TNF enumeration
+
+### Revamp while-loops
+
+- [ ] Revamp while-loops enumeration
+  - [ ] Add with closed loop at the same time
+  - [ ] Match the closing loop to its goto
+  - [ ] Use stack to remember opening loop position
+- [ ] Use stack for simulation
 
 ## Documentation
 

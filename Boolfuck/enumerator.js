@@ -1,60 +1,73 @@
 "use strict";
+const FLIP = 0;
+const MOVE_RIGHT = 1;
+const MOVE_LEFT = 2;
+const LOOP_OPEN = 3;
+const LOOP_CLOSE = 4;
+
 export function enumerate(maxSize) {
-    function* nextInstruction(currSize, code, stack) {
+    const code = [FLIP];
+    const stack = [];
+
+    function* nextInstruction(currSize, hasMove) {
         // Check if the code is full
-        if (currSize >= maxSize && stack === 0) {
-            yield code;
+        if (currSize >= maxSize && stack.length === 0) {
+            yield [code];
             return;
         }
 
         // Enumerate every possible decrements
-        for (let counter = 0; counter < 6; counter++) {
-            if (counter === 5) {
+        const prevInstr = code.at(-1);
+        for (let instr = 0; instr < 5; instr++) {
+            if (instr === LOOP_CLOSE) {
                 // Mismatched brackets
-                if (stack === 0) continue;
+                if (stack.length <= 0) continue;
 
                 // Empty brackets
-                if (code.at(-1) === 4) continue;
+                if (prevInstr === LOOP_OPEN) continue;
 
-                // Nonhalting brackets
-                if (code.at(-1) === 0) continue;
+                // Stacking loops
+                if (
+                    prevInstr === LOOP_CLOSE
+                    && code[stack.at(-1) + 1] === LOOP_OPEN
+                ) continue;
             }
 
             // Program length limit
-            if (counter !== 5 && currSize >= maxSize) continue;
+            if (instr !== LOOP_CLOSE && currSize >= maxSize) continue;
 
-            // Self-cancelling bits
-            if (
-                (counter === 0 || counter === 1)
-                && (code.at(-1) === 0 || code.at(-1) === 1)
-            ) continue;
-
-            // Unused bit
-            if (counter === 0 && code.at(-1) === 4) continue;
+            // Self-cancelling toggles
+            if (instr === FLIP && prevInstr === FLIP) continue;
 
             // Self-cancelling moves
             if (
-                counter === 3 && code.at(-1) === 2
-                || counter === 2 && code.at(-1) === 3
+                instr === MOVE_LEFT && prevInstr === MOVE_RIGHT
+                || instr === MOVE_RIGHT && prevInstr === MOVE_LEFT
             ) continue;
 
-            if (counter === 4) {
-                // Never used brackets
-                if (code.at(-1) === 1) continue;
+            // Symmetry
+            if (!hasMove && instr === MOVE_LEFT) continue;
 
+            if (instr === LOOP_OPEN) {
                 // Prevent empty brackets
                 if (currSize >= maxSize - 1) continue;
             }
 
-            code.push(counter);
-            yield* nextInstruction(
-                currSize + (counter === 5 ? 0 : 1),
-                code,
-                stack + (counter === 4 ? 1 : counter === 5 ? -1 : 0)
-            );
+            const match = stack.at(-1);
+            const instrSize = instr === LOOP_CLOSE ? 0 : 1;
+            const nextHasMove = hasMove || instr === MOVE_RIGHT;
+
+            if (instr === LOOP_OPEN) stack.push(code.length);
+            if (instr === LOOP_CLOSE) stack.pop();
+
+            code.push(instr);
+            yield* nextInstruction(currSize + instrSize, nextHasMove);
             code.pop();
+
+            if (instr === LOOP_CLOSE) stack.push(match);
+            if (instr === LOOP_OPEN) stack.pop();
         }
     }
 
-    return nextInstruction(1, [0], 0);
+    return nextInstruction(1, false);
 }
