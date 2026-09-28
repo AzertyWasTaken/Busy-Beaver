@@ -1,9 +1,17 @@
 "use strict";
+// Check if rule b can be reached if rule a is placed before it.
 function override(a, b) {
     const maxLength = Math.max(a.length, b.length);
     for (let i = 0; i < maxLength; i++) {
-        const [up, down] = [a[i] ?? 0, b[i] ?? 0];
-        if (up < 0 && (up < down || down >= 0)) return false;
+        const upVal = a[i] ?? 0;
+        const downVal = b[i] ?? 0;
+
+        if (upVal === "positive") continue;
+        if (upVal === "negative") return false;
+
+        if (upVal >= 0) continue;
+        if (downVal === "positive" || downVal === "negative") return false;
+        if (upVal < downVal || downVal >= 0) return false;
     }
     return true;
 }

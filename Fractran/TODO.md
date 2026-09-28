@@ -12,17 +12,18 @@
 - Ordered first row (equivalence decider)
 - Review documentation
 - Enumerate BBf(11)
+- Merge unused positive and negative values
+- Merge unused zero and positive values
 
 ## Enumeration
 
-- [x] Merge unused positive counters FIX MISSING BBf(8) BB
-- [ ] Merge unused negative counters
-- [ ] Undefined values minimum size map
 - [ ] Reveal values that actually set the register to null
 - [ ] Remove first step equivalence
 - [ ] Slice enumeration
 - [ ] Fully unknown value until it appears twice
 
 ## Documentation
+
+- [ ] Change format
 
 ## Website

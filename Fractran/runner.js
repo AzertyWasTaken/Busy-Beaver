@@ -13,7 +13,11 @@ export function newProgram(code, maxSteps) {
 
     function addValue(index, addend) {
         const value = register[index];
-        register[index] = value === null || addend === null
+        const isUnknown = value === null
+        || addend === "positive"
+        || addend === "negative";
+
+        register[index] = isUnknown
         ? null : (value ?? 0) + addend;
     }
 
@@ -23,13 +27,17 @@ export function newProgram(code, maxSteps) {
         // Search current instruction
         const instruction = code.find((row) =>
             row.every((col, cIdx) => {
-                if (col === null || col >= 0) return true;
+                if (col === "positive" || col >= 0) return true;
 
                 const value = getValue(cIdx);
-                if (value === null) {
+                const isUnknown = value === null
+                || col === "negative" && value > 0
+
+                if (isUnknown) {
                     currCounter = cIdx;
                     return false;
                 }
+
                 return value >= -col;
             })
         );

@@ -6,9 +6,8 @@ export function enumerate(maxSize) {
         const row = code.at(-1);
 
         function isRowValid() {
-            return row.length > 0
-            && row.at(-1) !== 0
-            && row.some((e) => e < 0);
+            return row.at(-1) !== 0
+            && row.some((v) => v < 0);
         }
 
         // Check if the code is full

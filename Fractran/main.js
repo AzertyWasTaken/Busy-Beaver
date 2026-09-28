@@ -1,7 +1,7 @@
 "use strict";
 import path from "path";
 import url from "url";
-import {enumerate} from "./treeNormalForm.js";
+import {enumerate} from "./Outdated/treeNormalForm.js";
 import {newProgram} from "./runner.js";
 import {unparse, parse} from "./parser.js";
 import {fileWriter} from "../writer2.js";
@@ -20,8 +20,8 @@ const value = fileWriter(
     unparse
 );
 
-await value.newList(100_000, 100, false, [[TC, 100]], 7);
+await value.newList(100_000, 100, false, [], 7);
 
-// await value.decideList(false, [[TC, 100]], 4);
+// await value.decideList(false, [RS], 4);
 
 // console.log(RS(parse("A_B")));

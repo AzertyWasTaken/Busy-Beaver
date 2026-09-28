@@ -6,7 +6,8 @@ export function parse(code) {
 
     for (let i = 0; i < rows.length; i++) {
         parsed.push(Array.from(rows[i], (char) =>
-            char === "-" ? null
+            char === "+" ? "positive"
+            : char === "-" ? "negative"
             : /[a-zA-Z]/.test(char) ? -(char.charCodeAt(0) - 64)
             : Number(char)
         ));
@@ -17,7 +18,8 @@ export function parse(code) {
 export function unparse(code) {
     return code.map((row) =>
         row.map((str) =>
-            str === null ? "-"
+            str === "positive" ? "+"
+            : str === "negative" ? "-"
             : str >= 0 ? str
             : String.fromCharCode(-str + 64)
         ).join("")
