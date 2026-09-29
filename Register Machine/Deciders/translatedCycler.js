@@ -1,7 +1,5 @@
 "use strict";
-import {newMachine} from "../runner.js";
-
-const MAX_STEPS = 1_000;
+import {newProgram} from "../runner.js";
 
 function compare(a, b, zeroSet) {
     if (a.length !== b.length) return false;
@@ -16,26 +14,32 @@ function compare(a, b, zeroSet) {
     return true;
 }
 
-export function decTranslatedCycler(code) {
-    const program = newMachine(code, MAX_STEPS);
+export function decide(code, maxSteps) {
+    const program = newProgram(code, maxSteps);
     const zeroCounter = new Set();
     let prevRegister, prevState;
     let phase = 1;
 
+    function isPaused() {
+        return code.some((instr) => instr === null)
+        ? "undecided" : "halted";
+    }
+
     while (true) {
         program.step();
-        const status = program.getData().status;
-        if (status === "halted") return true;
-        if (status === "timed out" || status === "paused") return false;
+        const status = program.status;
+        if (status === "halted") return [isPaused(), program.steps];
+        if (status !== "running") return ["undecided"];
 
-        const {register, state, steps} = program.getData();
+        const register = program.register;
+        const state = program.state;
 
         if (
             prevState === state
             && compare(prevRegister, register, zeroCounter)
-        ) return true;
+        ) return ["nonhalting"];
 
-        if (steps >= 2**phase) {
+        if (program.steps >= 2**phase) {
             prevRegister = [...register];
             prevState = state;
             zeroCounter.clear();

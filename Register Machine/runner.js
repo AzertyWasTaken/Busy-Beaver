@@ -1,51 +1,70 @@
 "use strict";
-export function newMachine(code, maxSteps) {
-    let register = [];
+export function newProgram(code, maxSteps) {
+    const register = [];
     let state = 0;
-
     let steps = 0;
     let status = "running";
+    let stateIdx;
+    let prevState;
 
     function step() {
         if (status !== "running") return;
 
-        // Get current instruction
-        const instruction = code?.[state];
-
-        // Check if the machine halted
-        if (!instruction) {
-            status = "halted";
-            return;
-        }
-
-        // Update the register machine
-        const [type, counter, nextState] = instruction;
-        state++;
-        if (type === 0) {
-            register[counter] = (register[counter] ?? 0) + 1;
-        }
-        else if ((register[counter] ?? 0) > 0) {
-            register[counter] = (register[counter] ?? 0) - 1;
-            state = nextState;
-        }
-
         // Increment steps count
         steps++;
-        if (steps > maxSteps) status = "timed out";
+        if (steps > maxSteps) return status = "timed out";
+
+        // Get current instruction
+        const instruction = code[state];
+        if (instruction === null) return status = "paused";
+
+        const [type, counter, nextStateA, nextStateB] = instruction;
+        const currValue = register[counter] ?? 0;
+
+        // Update the register machine
+        prevState = state;
+
+        if (type === 0) {
+            register[counter] = currValue + 1;
+            state = nextStateA;
+            stateIdx = 2;
+        } else {
+            if (currValue > 0) {
+                register[counter] = currValue - 1;
+                state = nextStateA;
+                stateIdx = 2;
+            } else {
+                state = nextStateB;
+                stateIdx = 3;
+            }
+        }
+
+        // Check if the machine halted
+        if (state === null) return status = "halted";
         return;
     }
 
-    function run() {
-        while (true) {
-            step();
-            if (status === "halted") return steps;
-            if (status === "timed out") return -1;
-        }
+    return {
+        step,
+        register,
+        get status() {return status;},
+        get steps() {return steps;},
+        get state() {return state;},
+        get stateIdx() {return stateIdx;},
+        get prevState() {return prevState;},
+    };
+}
+
+export function decide(code, maxSteps) {
+    const prog = newProgram(code, maxSteps);
+    while (prog.status === "running") prog.step();
+
+    function isPaused() {
+        return code.some((instr) => instr === null)
+        ? "undecided" : "halted";
     }
 
-    function getData() {        
-        return {register, state, steps, status};
-    }
-
-    return {step, run, getData};
+    return prog.status === "halted"
+    ? [isPaused(), prog.steps]
+    : ["undecided"];
 }
