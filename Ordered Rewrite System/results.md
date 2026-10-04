@@ -1,4 +1,4 @@
-# Sequential Substitution System Results
+# Ordered Rewrite System Results
 
 - [Spec](./spec.md)
 - [Terminology](../Docs/terminology.md)
@@ -7,25 +7,25 @@
 
 | Domain | Runtime | Champion |
 | - | - | - |
-| BBSS(1) | = 1 | `0>` |
-| BBSS(2) | = 1 | `0>1` |
-| BBSS(3) | = 2 | `0>1_1>` |
-| BBSS(4) | = 3 | `0>11_1>` |
-| BBSS(5) | ≥ 4 | `0>111_1>` |
-| BBSS(6) | ≥ 5 | `0>1111_1>` |
-| BBSS(7) | ≥ 7 | `0>111_1>2_2>` |
-| BBSS(8) | ≥ 10 | `0>111_1>22_2>` |
+| BBOR(1) | = 1 | `0>` |
+| BBOR(2) | = 1 | `0>1` |
+| BBOR(3) | = 2 | `0>1_1>` |
+| BBOR(4) | = 3 | `0>11_1>` |
+| BBOR(5) | ≥ 4 | `0>111_1>` |
+| BBOR(6) | ≥ 5 | `0>1111_1>` |
+| BBOR(7) | ≥ 7 | `0>111_1>2_2>` |
+| BBOR(8) | ≥ 10 | `0>111_1>22_2>` |
 
 ## Holdouts
 
 | Domain | Holdouts |
 | - | - |
-| BBSS(5) | 25 |
-| BBSS(6) | 275 |
-| BBSS(7) | 3,646 |
-| BBSS(8) | 47,209 |
+| BBOR(5) | 25 |
+| BBOR(6) | 275 |
+| BBOR(7) | 3,646 |
+| BBOR(8) | 47,209 |
 
-## BBSS(1)
+## BBOR(1)
 
 Every program halts in at most one step.
 
@@ -38,7 +38,7 @@ Replaces the initial `0` with nothing, then halts on the empty string.
 start → 0 → eps → halt
 ```
 
-## BBSS(2)
+## BBOR(2)
 
 Every program halts in at most one step, or rewrites the initial `0` into itself forever.
 
@@ -60,7 +60,7 @@ Rewrites the `0` back into a `0`, causing the program to never halt.
 start → 0 → 0 → 0
 ```
 
-## BBSS(3)
+## BBOR(3)
 
 Every program is decided: it halts in at most 2 steps, or never halts as a translated cycler.
 
@@ -84,7 +84,7 @@ start → 0 → 00 → 000 → 0000
 
 Other translated cyclers: `0>01` `0>10` (both grow by one `1` per step).
 
-## BBSS(4)
+## BBOR(4)
 
 Every program is decided: it halts in at most 3 steps, or never halts.
 
@@ -106,7 +106,7 @@ Completes a cycle every 2 steps: the `0` and the `1` replace each other.
 start → 0 → 1 → 0 → 1
 ```
 
-## BBSS(5)
+## BBOR(5)
 
 The first domain with holdouts: 25 programs resist every current decider.
 
@@ -128,9 +128,9 @@ Grows by one `1` every 2 steps: the rules alternate, rewriting the leftmost symb
 start → 0 → 11 → 01 → 111 → 011 → 1111
 ```
 
-## BBSS(6)
+## BBOR(6)
 
-275 holdouts, including every BBSS(5) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
+275 holdouts, including every BBOR(5) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
 
 ### Champion — `0>1111_1>`
 
@@ -141,9 +141,9 @@ Runs for 5 steps before halting: the `0` becomes four `1`s, which are erased one
 start → 0 → 1111 → 111 → 11 → 1 → eps → halt
 ```
 
-## BBSS(7)
+## BBOR(7)
 
-3,646 holdouts, including every BBSS(6) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
+3,646 holdouts, including every BBOR(6) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
 
 ### Champion — `0>111_1>2_2>`
 
@@ -155,9 +155,9 @@ start → 0 → 111 → 211 → 221 →
 222 → 22 → 2 → eps → halt
 ```
 
-## BBSS(8)
+## BBOR(8)
 
-47,209 holdouts, including every BBSS(7) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
+47,209 holdouts, including every BBOR(7) holdout. Deciding this domain requires the translated cycler decider (see `TODO.md`).
 
 ### Champion — `0>111_1>22_2>`
 

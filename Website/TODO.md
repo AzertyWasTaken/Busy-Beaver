@@ -20,3 +20,5 @@
 - [ ] Add simulator presets
 - [ ] Horizontal compression
 - [ ] States and symbols colors modes
+- [ ] Color unknown values (PTS, Fractran, ...)
+- [ ] Custom states display

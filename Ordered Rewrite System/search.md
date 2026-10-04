@@ -1,4 +1,4 @@
-# Sequential Substitution System Search
+# Ordered Rewrite System Search
 
 ## Equivalence Rules
 
@@ -24,7 +24,7 @@ The search therefore keeps two kinds of programs:
 - programs that use exactly the size of the domain,
 - smaller programs that already time out, which every larger extension would repeat.
 
-That is why a holdout file such as `Holdouts/BBSS(8).txt` also contains holdouts of sizes 5, 6 and 7.
+That is why a holdout file may contain holdouts of smaller sizes.
 
 ### Maximum Symbol
 

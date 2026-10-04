@@ -13,7 +13,7 @@ import {decide as Z} from "./Deciders/zeros.js";
 
 const value = fileWriter(
     path.dirname(url.fileURLToPath(import.meta.url)),
-    (size) => `BBSS(${size}).txt`,
+    (size) => `BBOR(${size}).txt`,
     enumerate,
     newProgram,
     parse,

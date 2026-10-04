@@ -1,4 +1,4 @@
-# Sequential Substitution System Specification
+# Ordered Rewrite System Specification
 
 ## Composition
 
@@ -41,10 +41,10 @@ start → 0 → 111 → 211 → 221 → 222 → 22 → 2 → (empty) → halt
 
 ## Function
 
-The function *BBSS(n)* is the largest number of steps that any sequential substitution system of size *n* takes before halting.
+The function *BBOR(n)* is the largest number of steps that any ordered rewrite system of size *n* takes before halting.
 
-- The size of a sequential substitution system is the total number of symbols in its rules: every symbol of every input and every output counts. For example, `0>111_1>2_2>` has size 1 (`0`) + 3 (`111`) + 1 (`1`) + 1 (`2`) + 1 (`2`) = 7.
-- Sequential substitution systems that never halt are not counted.
+- The size of a ordered rewrite system is the total number of symbols in its rules: every symbol of every input and every output counts. For example, `0>111_1>2_2>` has size 1 (`0`) + 3 (`111`) + 1 (`1`) + 1 (`2`) + 1 (`2`) = 7.
+- Ordered rewrite systems that never halt are not counted.
 - Each step replaces one occurrence of one rule's input.
 - The halting step is not counted: the runtime is the number of replacements, so a system whose rules never match the initial `0` halts in 0 steps (for example `1>`).
 
