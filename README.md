@@ -18,15 +18,17 @@ If you find any interesting information here, you can add it to the [Busy Beaver
 
 ## Systems
 
-- [Turing Machine](./Turing%20Machine/)
-- [Post Tag System](./Post%20Tag%20System/)
-- [Cyclic Tag System](./Cyclic%20Tag%20System/)
-- [Cellular Automaton](./Cellular%20Automaton/)
-- [Pebble Automaton](./Pebble%20Automaton/)
-- [Register Machine](./Register%20Machine/)
-- [Fractran](./Fractran/)
 - [Boolfuck](./Boolfuck/)
+- [Cellular Automaton](./Cellular%20Automaton/)
 - [Counterscript](./Counterscript/)
+- [Cyclic Tag System](./Cyclic%20Tag%20System/)
+- [Fractran](./Fractran/)
+- [Lambda Calculus](./Lambda%20Calculus/)
+- [Ordered Rewrite System](./Ordered%20Rewrite%20System/)
+- [Pebble Automaton](./Pebble%20Automaton/)
+- [Post Tag System](./Post%20Tag%20System/)
+- [Register Machine](./Register%20Machine/)
+- [Turing Machine](./Turing%20Machine/)
 
 Each system folder contains:
 
