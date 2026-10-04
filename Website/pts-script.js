@@ -1,5 +1,5 @@
 "use strict";
-import {SYMBOL_COLORS} from "./colors.js";
+import {STATE_COLORS, SYMBOL_COLORS} from "./colors.js";
 import {createCanvas, setupScroll, setupZoom} from "./canvas.js";
 import {parse} from "../Post Tag System/parser.js";
 import {newProgram} from "../Post Tag System/runner.js";
@@ -29,7 +29,7 @@ offsetButton.addEventListener("click", toggleOffset);
 
 function appendRow() {
     const colorTape = program.queue
-    .map((symbol) => SYMBOL_COLORS[symbol]);
+    .map((symbol) => symbol === null ? STATE_COLORS[0] : SYMBOL_COLORS[symbol]);
     history.push(colorTape);
 }
 
