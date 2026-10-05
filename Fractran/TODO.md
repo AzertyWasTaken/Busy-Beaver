@@ -4,23 +4,21 @@
 
 - Base template
 - Every row must have a negative value
-- Fix enumerator zero values
-- Cycler decider
 - Translated cycler decider
 - TNF enumeration
 - Ordered row decrements
-- Ordered first row (equivalence decider)
-- Review documentation
+- Ordered first rows
 - Enumerate BBf(11)
 - Merge unused positive and negative values
-- Merge unused zero and positive values
+- Dynamic column limit
 
 ## Enumeration
 
-- [ ] Reveal values that actually set the register to null
-- [ ] Remove first step equivalence
+- [ ] Cache row overrides
+- [ ] First active step must have double increments (equivalence)
+- [ ] Every value must be connected (equivalence)
+- [ ] Optimize runner
 - [ ] Slice enumeration
-- [ ] Fully unknown value until it appears twice
 
 ## Documentation
 

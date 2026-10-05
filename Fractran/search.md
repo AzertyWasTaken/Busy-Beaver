@@ -15,9 +15,12 @@ After each completed instruction, the program is run for the maximum step count 
 
 No halting program is missed: removing the last instructions of a program can only make it halt earlier, so the prefixes of a halting program halt too. An instruction with no negative values is never enumerated: it always applies, so a program that contains one never halts.
 
-### Null Values
+### Max Column Count
 
-Set every new positive value to null. When a null value is added to any value, it becomes null. When a value equal to null is checked, the program pauses and the enumerate every possible values for the null value.
+Every useful column must have at least one positive and one negative value.
+When a new column is created, the current size increases by an additional one until the column is useful.
+
+TODO
 
 ### Maximum Value
 

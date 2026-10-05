@@ -1,41 +1,40 @@
 "use strict";
+function isRowValid(row) {
+    return row.at(-1) !== 0
+    && row.some((v) => v < 0);
+}
+
 export function enumerate(maxSize) {
     const code = [[]];
 
-    function* nextRow(currSize, recColumn) {
+    function* nextValue(currSize, recColumn) {
         const row = code.at(-1);
 
-        function isRowValid() {
-            return row.at(-1) !== 0
-            && row.some((v) => v < 0);
+        // Yield the code or start a new row
+        if (isRowValid(row)) {
+            if (currSize >= maxSize) {
+                yield [code];
+            } else {
+                code.push([]);
+                yield* nextValue(currSize, recColumn);
+                code.pop();
+            }
         }
 
-        // Check if the code is full
-        if (currSize >= maxSize) {
-            if (isRowValid()) yield [code];
-            return;
-        }
+        if (currSize >= maxSize) return;
 
         // Extend the current row
         const remainSize = maxSize - currSize;
+        const nextRecCol = Math.max(recColumn, row.length);
+
         for (let value = -remainSize; value <= remainSize; value++) {
-            if (value === 0 && row.length >= recColumn) continue;
+            if (value === 0 && recColumn < row.length) continue;
 
             row.push(value);
-            yield* nextRow(
-                currSize + Math.abs(value),
-                Math.max(recColumn, row.length)
-            );
+            yield* nextValue(currSize + Math.abs(value), nextRecCol);
             row.pop();
-        }
-
-        // Start a new row
-        if (isRowValid()) {
-            code.push([]);
-            yield* nextRow(currSize, recColumn);
-            code.pop();
         }
     }
 
-    return nextRow(0, 1);
+    return nextValue(0, 0);
 }

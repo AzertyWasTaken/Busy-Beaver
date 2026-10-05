@@ -1,106 +1,32 @@
 "use strict";
 import {newProgram} from "../runner.js";
 
-const DEC_VALUE = "negative";
-const INC_VALUE = "positive";
-
-function isUnknown(value) {
-    return value === INC_VALUE || value === DEC_VALUE;
-}
-
-function isNegative(value) {
-    return value === DEC_VALUE
-    || value !== INC_VALUE && value < 0;
-}
-
-function hasNegative(row) {
-    // An instruction with no negative value always applies, so it never halts
-    return row.some((v) => isNegative(v));
+function isRowValid(row) {
+    return row.at(-1) !== 0
+    && row.some((v) => v < 0);
 }
 
 export function enumerate(maxSize, maxSteps) {
-    const code = [];
-    const minIncCache = new Map();
+    const code = [[]];
 
-    function getCacheKey(rowIdx, colIdx) {
-        return colIdx * maxSize + rowIdx;
-    }
+    function* nextValue(currSize, recColumn) {
+        const row = code.at(-1);
 
-    function* enumRow(currSize, recColumn) {
-        const rowIdx = code.length - 1;
-        const row = code[rowIdx];
-
-        if (row.at(-1) === DEC_VALUE) {
-            if (hasNegative(row)) yield* nextRow(currSize, recColumn);
-        }
+        // Yield the code or start a new row
+        if (isRowValid(row)) yield* nextRow(currSize, recColumn);
 
         if (currSize >= maxSize) return;
 
-        const nextRecColumn = Math.max(recColumn, row.length + 1);
-        const cacheKey = getCacheKey(rowIdx, row.length);
+        // Extend the current row
+        const remainSize = maxSize - currSize;
+        const nextRecCol = Math.max(recColumn, row.length);
 
-        // ---- Decrement ----
+        for (let value = -remainSize; value <= remainSize; value++) {
+            if (value === 0 && recColumn < row.length) continue;
 
-        row.push(DEC_VALUE);
-        yield* enumRow(currSize + 1, nextRecColumn);
-        row.pop();
-
-        // ---- Ending increment ----
-
-        minIncCache.set(cacheKey, 1);
-
-        row.push(INC_VALUE);
-        if (hasNegative(row)) yield* nextRow(currSize + 1, nextRecColumn);
-        row.pop();
-
-        // ---- Resuming increment ----
-
-        const minValue = row.length >= recColumn ? 1 : 0;
-        minIncCache.set(cacheKey, minValue);
-
-        row.push(INC_VALUE);
-        yield* enumRow(currSize + minValue, nextRecColumn);
-        row.pop();
-
-        minIncCache.delete(cacheKey);
-    }
-
-    function* revealValue(currSize, recColumn, colIdx) {
-        const rowIdx = code.findIndex((row) => isUnknown(row[colIdx]));
-
-        // No unknowns left at this column: the program is complete.
-        if (rowIdx < 0) {
-            yield* nextRow(currSize, recColumn);
-            return;
-        }
-
-        const row = code[rowIdx];
-        const cell = row[colIdx];
-        const cacheKey = getCacheKey(rowIdx, colIdx);
-
-        if (cell === DEC_VALUE) {
-            const maxValue = maxSize - (currSize - 1);
-
-            for (let value = -maxValue; value < 0; value++) {
-                row[colIdx] = value;
-                yield* revealValue(currSize - 1 - value, recColumn, colIdx);
-            }
-
-            row[colIdx] = DEC_VALUE;
-            return;
-        }
-
-        if (cell === INC_VALUE) {
-            const minValue = minIncCache.get(cacheKey);
-            const maxValue = maxSize - (currSize - minValue);
-
-            for (let value = minValue; value <= maxValue; value++) {
-                row[colIdx] = value;
-                yield* revealValue(currSize - minValue + value, recColumn, colIdx);
-            }
-
-            row[colIdx] = INC_VALUE;
-            return;
+            row.push(value);
+            yield* nextValue(currSize + Math.abs(value), nextRecCol);
+            row.pop();
         }
     }
 
@@ -114,24 +40,16 @@ export function enumerate(maxSize, maxSteps) {
             return;
         }
 
-        if (prog.status === "halted") {
-            // Check if the code is full
-            if (currSize >= maxSize) {
-                if (!code.some((r) => r.some((v) => isUnknown(v))))
-                    yield [code, prog.steps];
-                return;
-            }
+        yield [code, prog.steps];
 
-            // The code is not full, so a longer program can still halt
-            code.push([]);
-            yield* enumRow(currSize, recColumn);
-            code.pop();
-            return;
-        }
+        // Check if the code is full
+        if (currSize >= maxSize) return;
 
-        // The program paused on an unknown value
-        yield* revealValue(currSize, recColumn, prog.currCounter);
+        // The code is not full, so a longer program can still halt
+        code.push([]);
+        yield* nextValue(currSize, recColumn);
+        code.pop();
     }
 
-    return nextRow(0, 1);
+    return nextValue(0, 0);
 }
